@@ -231,11 +231,19 @@
             background-color: #005ea6;
         }
 
-        #pass-display {
+        #timer-card, #pass-display {
             display: none;
             text-align: center;
             background: linear-gradient(135deg, #1f2233, #12141c);
             border: 2px dashed var(--accent);
+        }
+
+        .countdown-num {
+            font-size: 2.5rem;
+            font-family: monospace;
+            color: var(--accent);
+            font-weight: bold;
+            margin: 15px 0;
         }
 
         .pass-id {
@@ -464,7 +472,7 @@
 </head>
 <body>
 
-    <!-- EXTERNAL MONITOR DISPLAY (MCDONALD'S STYLE) -->
+    <!-- EXTERNAL MONITOR DISPLAY -->
     <div id="sec-monitor">
         <h1 style="font-size: 3rem;">🎃 GRUSELKELLER EINLASS 🎃</h1>
         <p class="subtitle" style="font-size: 1.4rem; color: var(--success);">✔ Berechtigte Codes für den Keller-Einlass:</p>
@@ -513,7 +521,7 @@
             </div>
         </div>
 
-        <!-- PAGE 2: REGELN, PASS & BEWERTUNG -->
+        <!-- PAGE 2: REGELN, TIMER, PASS & BEWERTUNG -->
         <div id="sec-regeln" class="page-section">
             <div class="card" id="rules-card">
                 <h2>Hausordnung & Regeln</h2>
@@ -523,7 +531,7 @@
                 <div class="rules-list">
                     <label class="rule-item">
                         <input type="checkbox" class="rule-chk">
-                        <span><strong>Altersfreigabe:</strong> Einlass ist ab 8 Jahren (darunter nur in Begleitung eines Erwachsenen).</span>
+                        <span><strong>Altersfreigabe:</strong> Einlass ist ab 8 Jahren.<br><small style="color: var(--muted);">(Unter 8 nur in Begleitung einer volljährigen Person)</small></span>
                     </label>
                     <label class="rule-item">
                         <input type="checkbox" class="rule-chk">
@@ -538,18 +546,26 @@
                         <span><strong>Foto-Verbot:</strong> Kein Blitzlicht im Keller, um andere Gäste nicht zu blenden.</span>
                     </label>
                 </div>
-                <button class="btn" id="pass-btn" disabled>Regeln akzeptieren & Pass generieren</button>
+                <button class="btn" id="pass-btn" disabled>Regeln akzeptieren & Anmelden</button>
+            </div>
+
+            <!-- TIMER CARD -->
+            <div class="card" id="timer-card">
+                <h2>Dein Erlebnis wird vorbereitet... 🕸️</h2>
+                <p class="story-p">Bitte habe einen kurzen Moment Geduld. Sobald der Countdown abläuft, erscheint dein persönlicher Code.</p>
+                <div class="countdown-num" id="countdown-timer">02:00</div>
+                <p style="font-size: 0.85rem; color: var(--muted);">Schaue danach auf den Monitor am Eingang – sobald dein Code dort erscheint, darfst du eintreten!</p>
             </div>
 
             <!-- PASS DISPLAY -->
             <div class="card" id="pass-display">
                 <h2>Dein Digitaler Einlass-Pass</h2>
-                <p class="subtitle">Sobald dieser Code auf dem Monitor erscheit dürft ihr rein:</p>
+                <p class="subtitle">Falls dieser Code auf dem Monitor am Eingang erscheint, darfst du rein:</p>
                 <div class="pass-id" id="pass-code">GK-8849</div>
                 <p style="font-size: 0.85rem; color: var(--success);">✔ Gültig & AGB akzeptiert</p>
             </div>
 
-            <!-- FEEDBACK CARD (ERST NACH PASS ERSTELLUNG SICHTBAR) -->
+            <!-- FEEDBACK CARD -->
             <div class="card" id="feedback-card" style="display: none;">
                 <h2>Nach dem Durchgang: Bewerten ⭐</h2>
                 <p class="story-p" style="font-size: 0.85rem;">Wie war dein Erlebnis im Keller?</p>
@@ -644,7 +660,7 @@
         <!-- Bottom Links -->
         <div class="admin-toggle">
             <a href="#" id="toggle-admin">⚙️ Organizer Login</a>
-            <a href="#monitor" onclick="enableMonitorView()">📺 Eingang-Monitor (McDonald's Style)</a>
+            <a href="#" id="toggle-monitor-link">📺 Live-Monitor</a>
         </div>
 
         <!-- Admin Panel Card -->
@@ -678,7 +694,7 @@
                     <div class="cat-stat-item"><span>🔊 Sound & Musik:</span><strong id="cat-sound">5.0 ★</strong></div>
                 </div>
 
-                <label>Gültige Einlass-Pässe (Live-Liste):</label>
+                <label>Aktive Einlass-Pässe (Live-Liste):</label>
                 <div class="pass-list" id="pass-log-list">
                     <div class="pass-item" style="color: var(--muted);">Noch keine Pässe erstellt.</div>
                 </div>
@@ -692,6 +708,8 @@
     <div id="toast">Erfolgreich gespeichert!</div>
 
     <script>
+        let currentPassCode = null;
+
         // Tab Navigation Logic
         function switchTab(tabName) {
             document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
@@ -729,25 +747,59 @@
             passBtn.disabled = !allDone;
         }
 
-        // Pass Generation
+        // Pass Generation with Timer
         passBtn.addEventListener('click', () => {
+            document.getElementById('rules-card').style.display = 'none';
+            document.getElementById('timer-card').style.display = 'block';
+
+            let timeLeft = 120; // 2 Minuten Vorbereitungszeit
+            const timerElem = document.getElementById('countdown-timer');
+
+            const countdownInterval = setInterval(() => {
+                timeLeft--;
+                let mins = Math.floor(timeLeft / 60);
+                let secs = timeLeft % 60;
+                timerElem.textContent = `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(countdownInterval);
+                    generateFinalPass();
+                }
+            }, 1000);
+        });
+
+        function generateFinalPass() {
             const randomNum = Math.floor(1000 + Math.random() * 9000);
             const code = `GK-${randomNum}`;
             const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            currentPassCode = code;
             
             document.getElementById('pass-code').textContent = code;
-            document.getElementById('rules-card').style.display = 'none';
+            document.getElementById('timer-card').style.display = 'none';
             document.getElementById('pass-display').style.display = 'block';
             document.getElementById('feedback-card').style.display = 'block';
 
+            // Pass mit Timestamp speichern
             let storedPasses = JSON.parse(localStorage.getItem('gk_pass_list') || '[]');
-            storedPasses.unshift({ code: code, time: time });
+            storedPasses.unshift({ code: code, time: time, timestamp: Date.now() });
             localStorage.setItem('gk_pass_list', JSON.stringify(storedPasses));
             
             updateAdminDashboard();
-        });
+        }
 
-        // Feedback Submission & Detailed Rating Calculation
+        // Filter: Entfernt Pässe älter als 60 Sekunden (1 Minute)
+        function getActivePasses() {
+            let storedPasses = JSON.parse(localStorage.getItem('gk_pass_list') || '[]');
+            const now = Date.now();
+            const activePasses = storedPasses.filter(p => (now - p.timestamp) < 60000);
+            
+            if (activePasses.length !== storedPasses.length) {
+                localStorage.setItem('gk_pass_list', JSON.stringify(activePasses));
+            }
+            return activePasses;
+        }
+
+        // Feedback Submission: Pass sofort löschen
         document.getElementById('feedback-form').addEventListener('submit', (e) => {
             e.preventDefault();
             
@@ -763,9 +815,29 @@
             storedRatings.push(ratingObj);
             localStorage.setItem('gk_ratings', JSON.stringify(storedRatings));
 
+            // Eigenen Pass sofort von der Monitor-Liste entfernen
+            if (currentPassCode) {
+                let storedPasses = JSON.parse(localStorage.getItem('gk_pass_list') || '[]');
+                storedPasses = storedPasses.filter(p => p.code !== currentPassCode);
+                localStorage.setItem('gk_pass_list', JSON.stringify(storedPasses));
+                currentPassCode = null;
+            }
+
             showToast('Vielen Dank für deine Bewertung! 🎃');
             document.getElementById('feedback-card').style.display = 'none';
             updateAdminDashboard();
+            updateMonitorGrid();
+        });
+
+        // Monitor-Link mit PIN 3110 sichern
+        document.getElementById('toggle-monitor-link').addEventListener('click', (e) => {
+            e.preventDefault();
+            const pin = prompt('Bitte Organizer-PIN für den Live-Monitor eingeben:');
+            if (pin === '3110') {
+                window.location.hash = '#monitor';
+            } else if (pin !== null) {
+                alert('Falsche PIN!');
+            }
         });
 
         // Monitor Mode
@@ -781,16 +853,16 @@
         }
 
         function updateMonitorGrid() {
-            let storedPasses = JSON.parse(localStorage.getItem('gk_pass_list') || '[]');
+            let activePasses = getActivePasses();
             const grid = document.getElementById('monitor-code-grid');
             
-            if(storedPasses.length === 0) {
-                grid.innerHTML = '<div class="monitor-card"><div class="monitor-code">Keine Codes</div></div>';
+            if(activePasses.length === 0) {
+                grid.innerHTML = '<div class="monitor-card"><div class="monitor-code">Warten...</div></div>';
             } else {
-                grid.innerHTML = storedPasses.map(p => `
+                grid.innerHTML = activePasses.map(p => `
                     <div class="monitor-card">
                         <div class="monitor-code">${p.code}</div>
-                        <div class="monitor-time">✔ AGB Akzeptiert</div>
+                        <div class="monitor-time">✔ Einlass berechtigt</div>
                     </div>
                 `).join('');
             }
@@ -811,12 +883,12 @@
             }
         }
 
-        // Auto-refresh Monitor
+        // Auto-refresh Monitor alle 2 Sekunden
         setInterval(() => {
             if(document.getElementById('sec-monitor').classList.contains('active')) {
                 updateMonitorGrid();
             }
-        }, 3000);
+        }, 2000);
 
         // Admin Panel & PIN (3110)
         const toggleAdmin = document.getElementById('toggle-admin');
@@ -852,8 +924,8 @@
         });
 
         function updateAdminDashboard() {
-            let storedPasses = JSON.parse(localStorage.getItem('gk_pass_list') || '[]');
-            document.getElementById('stat-passes').textContent = storedPasses.length;
+            let activePasses = getActivePasses();
+            document.getElementById('stat-passes').textContent = activePasses.length;
 
             let storedRatings = JSON.parse(localStorage.getItem('gk_ratings') || '[]');
             if (storedRatings.length > 0) {
@@ -883,10 +955,10 @@
             }
 
             const listContainer = document.getElementById('pass-log-list');
-            if (storedPasses.length === 0) {
-                listContainer.innerHTML = '<div class="pass-item" style="color: var(--muted);">Noch keine Pässe erstellt.</div>';
+            if (activePasses.length === 0) {
+                listContainer.innerHTML = '<div class="pass-item" style="color: var(--muted);">Keine aktiven Pässe.</div>';
             } else {
-                listContainer.innerHTML = storedPasses.map(p => `
+                listContainer.innerHTML = activePasses.map(p => `
                     <div class="pass-item">
                         <span style="color: var(--accent); font-weight: bold;">${p.code}</span>
                         <span style="color: var(--muted);">${p.time} Uhr</span>
