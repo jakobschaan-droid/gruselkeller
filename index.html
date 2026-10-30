@@ -249,7 +249,7 @@
 
         .queue-status {
             font-size: 0.95rem;
-            padding: 8px;
+            padding: 10px;
             border-radius: 6px;
             background: rgba(255, 102, 0, 0.15);
             color: var(--accent);
@@ -751,7 +751,7 @@
             passBtn.disabled = !allDone;
         }
 
-        // Pass Generation & Queue Management
+        // Pass Generation sofort (ohne Verzögerung) & direkt in Queue
         passBtn.addEventListener('click', () => {
             const randomNum = Math.floor(1000 + Math.random() * 9000);
             myPassCode = `GK-${randomNum}`;
@@ -764,6 +764,9 @@
             let queue = JSON.parse(localStorage.getItem('gk_queue') || '[]');
             queue.push({ code: myPassCode, created: Date.now(), startTime: null });
             localStorage.setItem('gk_queue', JSON.stringify(queue));
+            
+            // Sofort Signal senden
+            window.dispatchEvent(new Event('storage'));
 
             updateUserQueueStatus();
             updateAdminDashboard();
@@ -773,13 +776,15 @@
             let queue = JSON.parse(localStorage.getItem('gk_queue') || '[]');
             const now = Date.now();
 
+            // Entferne Einträge, die seit mehr als 60 Sekunden auf dem Monitor laufen
             queue = queue.filter(item => {
                 if (item.startTime !== null) {
-                    return (now - item.startTime) < 60000; // 60 Sekunden auf Monitor
+                    return (now - item.startTime) < 60000;
                 }
                 return true;
             });
 
+            // Aktiviere die ersten 3 Plätze, falls frei
             let activeCount = queue.filter(item => item.startTime !== null).length;
             for (let i = 0; i < queue.length; i++) {
                 if (activeCount < 3 && queue[i].startTime === null) {
@@ -815,7 +820,10 @@
             }
         }
 
-        setInterval(updateUserQueueStatus, 2000);
+        // Live-Update alle 1 Sekunde für das Handy
+        setInterval(() => {
+            updateUserQueueStatus();
+        }, 1000);
 
         // Feedback Submission
         document.getElementById('feedback-form').addEventListener('submit', (e) => {
@@ -839,6 +847,8 @@
                 localStorage.setItem('gk_queue', JSON.stringify(queue));
                 myPassCode = null;
             }
+
+            window.dispatchEvent(new Event('storage'));
 
             showToast('Vielen Dank für deine Bewertung! 🎃');
             document.getElementById('feedback-card').style.display = 'none';
@@ -900,11 +910,12 @@
             }
         }
 
+        // Live-Update für den Monitor (alle 1 Sekunde für sofortiges Reagieren)
         setInterval(() => {
             if(document.getElementById('sec-monitor').classList.contains('active')) {
                 updateMonitorGrid();
             }
-        }, 2000);
+        }, 1000);
 
         // Admin Panel & PIN (3110)
         const toggleAdmin = document.getElementById('toggle-admin');
@@ -944,9 +955,22 @@
             if (confirm('Möchtest du wirklich alle Bewertungen und aktiven Pässe unwiderruflich löschen?')) {
                 localStorage.removeItem('gk_queue');
                 localStorage.removeItem('gk_ratings');
+                localStorage.removeItem('gk_pass_list');
+                myPassCode = null;
+                
+                window.dispatchEvent(new Event('storage'));
+                
                 updateAdminDashboard();
                 updateMonitorGrid();
-                showToast('Alle Daten wurden zurückgesetzt!');
+                showToast('Alle Daten wurden vollständig gelöscht!');
+            }
+        });
+
+        // Auf Storage-Änderungen sofort reagieren
+        window.addEventListener('storage', () => {
+            updateAdminDashboard();
+            if(document.getElementById('sec-monitor').classList.contains('active')) {
+                updateMonitorGrid();
             }
         });
 
@@ -980,12 +1004,12 @@
                 document.getElementById('cat-sound').textContent = avgSou + ' ★';
                 document.getElementById('stat-rating').textContent = totalAvg + ' ★';
             } else {
-                document.getElementById('cat-ambiente').textContent = '5.0 ★';
-                document.getElementById('cat-erschrecker').textContent = '5.0 ★';
-                document.getElementById('cat-atmos').textContent = '5.0 ★';
-                document.getElementById('cat-licht').textContent = '5.0 ★';
-                document.getElementById('cat-sound').textContent = '5.0 ★';
-                document.getElementById('stat-rating').textContent = '5.0 ★';
+                document.getElementById('cat-ambiente').textContent = '0.0 ★';
+                document.getElementById('cat-erschrecker').textContent = '0.0 ★';
+                document.getElementById('cat-atmos').textContent = '0.0 ★';
+                document.getElementById('cat-licht').textContent = '0.0 ★';
+                document.getElementById('cat-sound').textContent = '0.0 ★';
+                document.getElementById('stat-rating').textContent = '0.0 ★';
             }
 
             const listContainer = document.getElementById('pass-log-list');
