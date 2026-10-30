@@ -43,7 +43,6 @@
             gap: 20px;
         }
 
-        /* Navigation Tabs */
         nav {
             display: flex;
             gap: 8px;
@@ -149,7 +148,6 @@
             border-bottom-color: var(--paypal-blue);
         }
 
-        /* Rules */
         .rules-list {
             display: flex;
             flex-direction: column;
@@ -656,7 +654,7 @@
                 <p class="story-p">
                     Der Eintritt zu unserem Gruselkeller ist komplett kostenlos! Wir stecken das alles in unserer Freizeit zusammen. Wenn es dir gefallen hat und du uns mit ein paar Cent oder Euro für neue Requisiten & Effekte unterstützen möchtest, freuen wir uns riesig – ein Muss ist das aber natürlich absolut nicht! ❤️
                 </p>
-                <a href="https://paypal.me/gruselkeller" target="_blank" class="btn donate-btn">
+                <a href="https://paypal.me/roland.trissl@gmx.de" target="_blank" class="btn donate-btn">
                     💳 Freiwillig per PayPal unterstützen
                 </a>
             </div>
@@ -885,8 +883,9 @@
                 <div class="setting-box">
                     <label for="admin-mode-select" style="color: var(--accent); font-weight: bold;">🎛️ Steuerungs-Modus:</label>
                     <select id="admin-mode-select" style="margin-top: 5px;">
-                        <option value="strict">Reißverschluss-Prinzip (Strikte Reihenfolge)</option>
+                        <option value="strict">Reißverschluss-Prinzip (Strikt max. 1 Gruppe auf Monitor)</option>
                         <option value="fill">Auffüll-Prinzip (Kleine Gruppen rücken nach)</option>
+                        <option value="manual">Reiner Manueller Einlass (Nur Force-Start Buttons)</option>
                     </select>
                 </div>
 
@@ -898,7 +897,7 @@
                 <div class="setting-box">
                     <label for="admin-timer-seconds" style="color: var(--accent); font-weight: bold;">⏱️ Aufruf-Intervall / Timer (Sekunden):</label>
                     <input type="number" id="admin-timer-seconds" min="10" max="300" value="60" style="margin-top: 5px;">
-                    <p style="font-size: 0.75rem; color: var(--muted); margin-top: 4px;">Zeit, nach der ein Code automatisch vom Monitor verschwindet.</p>
+                    <p style="font-size: 0.75rem; color: var(--muted); margin-top: 4px;">Zeit, nach der ein Code automatisch vom Monitor verschwindet (Inaktiv bei Manuellem Einlass).</p>
                 </div>
 
                 <button class="btn" id="save-settings-btn" style="margin-bottom: 15px;">💾 Einstellungen Speichern</button>
@@ -1012,26 +1011,43 @@
             const settings = getSettings();
             const timerMs = settings.timerSeconds * 1000;
 
-            queue = queue.filter(item => {
-                if (item.startTime !== null) {
-                    return (now - item.startTime) < timerMs;
-                }
-                return true;
-            });
+            // 1. Inaktive / abgelaufene Einträge ausfiltern (außer bei rein manuellem Modus)
+            if (settings.mode !== 'manual') {
+                queue = queue.filter(item => {
+                    if (item.startTime !== null) {
+                        return (now - item.startTime) < timerMs;
+                    }
+                    return true;
+                });
+            }
 
+            // Anzahlen der aktiven Einträge prüfen
+            let activeGroupsCount = queue.filter(item => item.startTime !== null).length;
             let activePersons = queue
                 .filter(item => item.startTime !== null)
                 .reduce((sum, item) => sum + (item.size || 1), 0);
 
-            for (let i = 0; i < queue.length; i++) {
-                if (queue[i].startTime === null) {
-                    let itemSize = queue[i].size || 1;
-                    if (activePersons + itemSize <= settings.maxPersons) {
-                        queue[i].startTime = Date.now();
-                        activePersons += itemSize;
-                    } else {
+            // 2. Automatische Freigabe (nur falls nicht auf "manual" gestellt)
+            if (settings.mode !== 'manual') {
+                for (let i = 0; i < queue.length; i++) {
+                    if (queue[i].startTime === null) {
+                        let itemSize = queue[i].size || 1;
+
                         if (settings.mode === 'strict') {
-                            break;
+                            // STRIKT: Immer genau maximal EINE Gruppe gleichzeitig auf dem Monitor!
+                            if (activeGroupsCount === 0) {
+                                queue[i].startTime = Date.now();
+                                activeGroupsCount++;
+                                activePersons += itemSize;
+                            }
+                            break; // Verhindert strikt nachfolgende Gruppen!
+                        } else if (settings.mode === 'fill') {
+                            // AUFFÜLLEN: Schaut auf die Gesamtpersonenzahl
+                            if (activePersons + itemSize <= settings.maxPersons) {
+                                queue[i].startTime = Date.now();
+                                activePersons += itemSize;
+                                activeGroupsCount++;
+                            }
                         }
                     }
                 }
@@ -1099,13 +1115,17 @@
         // FORCE START BUTTON LOGIK
         document.getElementById('force-start-btn').addEventListener('click', () => {
             let queue = JSON.parse(localStorage.getItem('gk_queue') || '[]');
-            let nextInLine = queue.find(item => item.startTime === null);
+            
+            // Wenn schon jemand auf dem Monitor steht, diesen löschen, um Platz für die neue Force-Gruppe zu machen
+            queue = queue.filter(item => item.startTime === null);
+
+            let nextInLine = queue[0];
 
             if (nextInLine) {
                 nextInLine.startTime = Date.now();
                 localStorage.setItem('gk_queue', JSON.stringify(queue));
                 window.dispatchEvent(new Event('storage'));
-                showToast(`Gruppe ${nextInLine.code} manuell auf den Monitor geholt! ⚡`);
+                showToast(`Gruppe ${nextInLine.code} manuell freigegeben! ⚡`);
             } else {
                 alert('Es ist aktuell keine Gruppe in der Warteschlange!');
             }
@@ -1135,7 +1155,6 @@
 
         document.getElementById('main-buzzer-trigger').addEventListener('click', triggerBuzzer);
         
-        // Keypress Trigger für Hardware-Buzzer (Space oder Enter)
         window.addEventListener('keydown', (e) => {
             if (document.getElementById('sec-buzzer').classList.contains('active')) {
                 if (e.code === 'Space' || e.code === 'Enter') {
@@ -1181,7 +1200,8 @@
 
         function updateMonitorGrid() {
             let settings = getSettings();
-            document.getElementById('monitor-subtitle').textContent = `✔ Berechtigte Codes (Max. ${settings.maxPersons} Personen zeitgleich):`;
+            let modeText = settings.mode === 'strict' ? 'Reißverschluss-Prinzip (Einzeltakt)' : (settings.mode === 'manual' ? 'Manueller Einlass' : `Auffüllung max. ${settings.maxPersons} Personen`);
+            document.getElementById('monitor-subtitle').textContent = `✔ Berechtigte Codes (${modeText}):`;
 
             let queue = processQueue();
             let activeOnMonitor = queue.filter(item => item.startTime !== null);
@@ -1374,4 +1394,5 @@
     </script>
 </body>
 </html>
+
 
