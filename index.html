@@ -60,7 +60,7 @@
             border: none;
             color: var(--muted);
             font-weight: bold;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.2s;
@@ -310,6 +310,29 @@
             color: var(--accent);
         }
 
+        .pass-list {
+            max-height: 180px;
+            overflow-y: auto;
+            background: var(--bg);
+            border: 1px solid #262938;
+            border-radius: 6px;
+            padding: 8px;
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+        }
+
+        .pass-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 4px;
+            border-bottom: 1px solid #1a1c29;
+            font-family: monospace;
+        }
+
+        .pass-item:last-child {
+            border-bottom: none;
+        }
+
         #toast {
             position: fixed;
             bottom: 20px;
@@ -363,9 +386,8 @@
             <div class="card" style="text-align: center;">
                 <h2>☕ Unterstütze das Projekt</h2>
                 <p class="story-p">
-                    Wir machen das komplett in unserer Freizeit! Wenn dir der Gruselkeller gefällt, freuen wir uns riesig über eine kleine digitale Spende für neue Requisiten, Kostüme & Effekte.
+                    Wir machen das komplett in unserer Freizeit! Wenn dir der Gruselkeller gefällt, freuen wir uns riesig über eine kleine digitale Spende für neue Requisiten, Effekte & Technik.
                 </p>
-                <!-- Hier kannst du deinen echten PayPal.me Link eintragen -->
                 <a href="https://paypal.me/gruselkeller" target="_blank" class="btn donate-btn">
                     💳 Per PayPal / Digital Pay spenden
                 </a>
@@ -402,7 +424,7 @@
                 <div class="rules-list">
                     <label class="rule-item">
                         <input type="checkbox" class="rule-chk">
-                        <span><strong>Altersfreigabe:</strong> Einlass unter 12 Jahren nur in Begleitung einer volljährigen Person (ab 8 Jahren).</span>
+                        <span><strong>Altersfreigabe:</strong> Einlass ist ab 8 Jahren.</span>
                     </label>
                     <label class="rule-item">
                         <input type="checkbox" class="rule-chk">
@@ -424,22 +446,25 @@
                 <h2>Dein Digitaler Einlass-Pass</h2>
                 <p class="subtitle">Zeige diesen Pass jetzt am Eingang vor:</p>
                 <div class="pass-id" id="pass-code">GK-8849</div>
-                <p style="font-size: 0.85rem; color: var(--success);">✔ Gültig für den heutigen Abend</p>
+                <p style="font-size: 0.85rem; color: var(--success);">✔ Gültig & AGB akzeptiert</p>
             </div>
         </div>
 
         <!-- PAGE 3: ÜBER UNS -->
         <div id="sec-about" class="page-section">
             <div class="card">
-                <h2>Über Uns 🩸</h2>
+                <h2>Über Uns 💀</h2>
                 <p class="story-p">
-                    <strong>Von einer spontanen Idee zum größten Horror-Highlight der Region!</strong>
+                    <strong>Von zwei Schnüren zu einem High-Tech Horror-Keller!</strong>
                 </p>
                 <p class="story-p">
-                    Wir sind eine Gruppe von Jugendlichen aus der Region, die vor 5 Jahren klein angefangen haben. Was mit ein paar einfachen Papp-Dekos und Taschenlampen begann, ist über die Jahre zu einem vollwertigen Gruselerlebnis gewachsen.
+                    Wir sind eine Gruppe von Jugendlichen aus der Region. Angefangen hat alles vor 5 Jahren: Ganz klein mit gerade einmal zwei Schnüren, einer Person in einer Badewanne und kaum Platz im Keller.
                 </p>
                 <p class="story-p">
-                    Jedes Jahr investieren wir Wochen an Arbeit, schweißen, basteln und tüfteln an neuen Effekten, um euch die krassesten Schreckmomente zu verpassen. Danke an jeden, der uns unterstützt! 🔥
+                    Aber anstatt jedes Jahr einfach das Gleiche zu machen, haben wir uns immer weiter gesteigert! Von Jahr zu Jahr haben wir mehr Raum erschlossen und die Qualität extrem nach oben geschraubt. Mittlerweile haben wir alles automatisiert und sogar eigene Klimaanlagen eingebaut!
+                </p>
+                <p class="story-p">
+                    Jedes Jahr stecken wir extrem viel Arbeit, Herzblut und Freizeit rein, um euch das krasseste Halloween-Erlebnis zu bieten. Danke an jeden Einzelnen, der uns besucht und unterstützt! 🔥
                 </p>
                 <a href="https://instagram.com/gruselkeller" target="_blank" class="insta-btn" style="width: 100%;">
                     📸 Besuche uns auf Instagram
@@ -457,7 +482,7 @@
             <h2>Veranstalter Dashboard</h2>
             <div id="admin-login-box">
                 <div class="form-group">
-                    <label for="admin-pin">PIN eingeben (Standard: 1031):</label>
+                    <label for="admin-pin">Bitte PIN eingeben:</label>
                     <input type="password" id="admin-pin" placeholder="PIN eingeben">
                 </div>
                 <button class="btn" id="login-btn">Einloggen</button>
@@ -465,14 +490,20 @@
             <div id="admin-content" style="display: none;">
                 <div class="stat-grid">
                     <div class="stat-box">
-                        <div class="stat-num" id="stat-passes">14</div>
+                        <div class="stat-num" id="stat-passes">0</div>
                         <div class="subtitle">Pässe erstellt</div>
                     </div>
                     <div class="stat-box">
-                        <div class="stat-num" id="stat-rating">4.8</div>
+                        <div class="stat-num" id="stat-rating">5.0</div>
                         <div class="subtitle">Ø Bewertung</div>
                     </div>
                 </div>
+
+                <label>Gültige Einlass-Pässe (Live-Liste):</label>
+                <div class="pass-list" id="pass-log-list">
+                    <div class="pass-item" style="color: var(--muted);">Noch keine Pässe erstellt.</div>
+                </div>
+
                 <button class="btn" id="print-qr-btn" style="background-color: #2c3e50; margin-bottom: 10px;">QR-Schild Drucken 🖨️</button>
                 <button class="btn" id="logout-btn" style="background-color: var(--danger);">Ausloggen</button>
             </div>
@@ -500,7 +531,7 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Direct QR-Code link handling (if URL contains #regeln, jump to rules directly)
+        // Direct QR-Code link handling
         window.addEventListener('DOMContentLoaded', () => {
             if (window.location.hash === '#regeln') {
                 switchTab('regeln');
@@ -521,16 +552,22 @@
             });
         });
 
+        // Pass Generation & Validation Log
         passBtn.addEventListener('click', () => {
             const randomNum = Math.floor(1000 + Math.random() * 9000);
-            passCode.textContent = `GK-${randomNum}`;
+            const code = `GK-${randomNum}`;
+            const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            
+            passCode.textContent = code;
             rulesCard.style.display = 'none';
             passDisplay.style.display = 'block';
 
-            let passes = localStorage.getItem('gk_passes') ? parseInt(localStorage.getItem('gk_passes')) : 14;
-            passes++;
-            localStorage.setItem('gk_passes', passes);
-            document.getElementById('stat-passes').textContent = passes;
+            // Store Valid Pass in LocalStorage
+            let storedPasses = JSON.parse(localStorage.getItem('gk_pass_list') || '[]');
+            storedPasses.unshift({ code: code, time: time });
+            localStorage.setItem('gk_pass_list', JSON.stringify(storedPasses));
+            
+            updateAdminDashboard();
         });
 
         // Feedback submission
@@ -540,7 +577,7 @@
             document.getElementById('feedback-form').reset();
         });
 
-        // Admin Panel Toggle & Login
+        // Admin Panel Toggle & Login (PIN: 3110)
         const toggleAdmin = document.getElementById('toggle-admin');
         const adminPanel = document.getElementById('admin-panel');
         const adminLoginBox = document.getElementById('admin-login-box');
@@ -556,10 +593,10 @@
         });
 
         loginBtn.addEventListener('click', () => {
-            if (adminPin.value === '1031') {
+            if (adminPin.value === '3110') {
                 adminLoginBox.style.display = 'none';
                 adminContent.style.display = 'block';
-                document.getElementById('stat-passes').textContent = localStorage.getItem('gk_passes') || 14;
+                updateAdminDashboard();
                 showToast('Erfolgreich eingeloggt!');
             } else {
                 alert('Falsche PIN!');
@@ -573,7 +610,25 @@
             adminPanel.style.display = 'none';
         });
 
-        // QR Code button generates direct link to #regeln
+        function updateAdminDashboard() {
+            let storedPasses = JSON.parse(localStorage.getItem('gk_pass_list') || '[]');
+            document.getElementById('stat-passes').textContent = storedPasses.length;
+
+            const listContainer = document.getElementById('pass-log-list');
+            if (storedPasses.length === 0) {
+                listContainer.innerHTML = '<div class="pass-item" style="color: var(--muted);">Noch keine Pässe erstellt.</div>';
+            } else {
+                listContainer.innerHTML = storedPasses.map(p => `
+                    <div class="pass-item">
+                        <span style="color: var(--accent); font-weight: bold;">${p.code}</span>
+                        <span style="color: var(--muted);">${p.time} Uhr</span>
+                        <span style="color: var(--success);">✔ Gültig</span>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Print QR Code
         document.getElementById('print-qr-btn').addEventListener('click', () => {
             const qrUrl = window.location.origin + window.location.pathname + '#regeln';
             const printWindow = window.open('', '_blank');
