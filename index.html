@@ -494,6 +494,53 @@
             font-weight: bold;
         }
 
+        /* BUZZER / KIOSK MODE STYLES */
+        #sec-buzzer {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: var(--bg);
+            z-index: 9998;
+            padding: 20px;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        #sec-buzzer.active {
+            display: flex;
+        }
+
+        .buzzer-btn {
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #ff4500, #cc0000);
+            border: 8px solid #660000;
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 12px 35px rgba(255, 0, 0, 0.5), inset 0 6px 15px rgba(255, 255, 255, 0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.1s, box-shadow 0.1s;
+            user-select: none;
+            margin: 20px 0;
+        }
+
+        .buzzer-btn:active {
+            transform: scale(0.93);
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.7), inset 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
         #toast {
             position: fixed;
             bottom: 20px;
@@ -504,7 +551,7 @@
             font-weight: bold;
             box-shadow: 0 4px 12px rgba(0,0,0,0.3);
             display: none;
-            z-index: 1000;
+            z-index: 10000;
         }
 
         .story-p {
@@ -542,6 +589,37 @@
         </div>
 
         <button onclick="window.location.hash=''" style="position: absolute; bottom: 20px; right: 20px; background: none; border: none; color: #444; cursor: pointer; font-size: 0.9rem;">[Monitor Schließen]</button>
+    </div>
+
+    <!-- BUZZER / KIOSK TERMINAL DISPLAY -->
+    <div id="sec-buzzer">
+        <h1 style="font-size: 2.5rem; color: var(--accent);">🎃 GRUSELKELLER KIOSK 🎃</h1>
+        <p class="subtitle" style="font-size: 1.2rem; margin-top: 5px;">Tippe auf den Buzzer, um deine Gruppe anzumelden!</p>
+
+        <div style="margin-top: 15px;">
+            <label style="font-size: 1rem; color: #38bdf8; font-weight: bold;">👥 Gruppengröße wählen:</label>
+            <select id="buzzer-group-select" style="width: 220px; text-align: center; font-size: 1.1rem; margin-top: 5px;">
+                <option value="1">1 Person</option>
+                <option value="2">2 Personen</option>
+                <option value="3" selected>3 Personen</option>
+                <option value="4">4 Personen</option>
+                <option value="5">5 Personen</option>
+            </select>
+        </div>
+
+        <div class="buzzer-btn" id="main-buzzer-trigger">
+            <span>🔴</span>
+            <span>BUZZER</span>
+            <span style="font-size: 0.9rem; margin-top: 5px; opacity: 0.8;">PASS DRUCKEN</span>
+        </div>
+
+        <div id="buzzer-result-card" style="display: none; background: var(--card-bg); border: 2px solid var(--accent); padding: 15px 25px; border-radius: 12px; margin-top: 10px;">
+            <div style="font-size: 0.9rem; color: var(--muted);">DEIN CODE HAS DU DIR GESICHERT:</div>
+            <div id="buzzer-result-code" style="font-family: monospace; font-size: 2.5rem; color: var(--accent); font-weight: bold;">GK-0000</div>
+            <div id="buzzer-result-info" style="color: var(--success); font-weight: bold; margin-top: 5px;">Sichtbar auf dem Haupt-Monitor sobald du dran bist!</div>
+        </div>
+
+        <button onclick="window.location.hash=''" style="position: absolute; bottom: 20px; right: 20px; background: none; border: none; color: #444; cursor: pointer; font-size: 0.9rem;">[Terminal Beenden]</button>
     </div>
 
     <!-- STANDARD WEBSITE -->
@@ -786,6 +864,12 @@
                 <button class="btn" id="login-btn">Einloggen</button>
             </div>
             <div id="admin-content" style="display: none;">
+                
+                <!-- FORCE START BUTTON -->
+                <button class="btn" id="force-start-btn" style="background: linear-gradient(45deg, #e67e22, #d35400); font-size: 1.1rem; padding: 16px; margin-bottom: 15px; border: 2px solid #f39c12; box-shadow: 0 4px 15px rgba(230, 126, 34, 0.4);">
+                    ⚡ Nächste Gruppe sofort freigeben (Force-Start)
+                </button>
+
                 <div class="stat-grid">
                     <div class="stat-box">
                         <div class="stat-num" id="stat-passes">0</div>
@@ -845,7 +929,8 @@
                 <a href="#" onclick="switchTab('impressum'); return false;">Impressum</a> | 
                 <a href="#" onclick="switchTab('datenschutz'); return false;">Datenschutz</a> | 
                 <a href="#" id="toggle-admin">⚙️ Organizer Login</a> | 
-                <a href="#" id="toggle-monitor-link">📺 Live-Monitor</a>
+                <a href="#" id="toggle-monitor-link">📺 Live-Monitor</a> | 
+                <a href="#" id="toggle-buzzer-link">🕹️ Buzzer / Kiosk-Terminal</a>
             </div>
             <div>© Gruselkeller Team</div>
         </footer>
@@ -856,7 +941,6 @@
     <script>
         let myPassCode = null;
 
-        // Hilfsfunktionen für Einstellungen
         function getSettings() {
             return {
                 mode: localStorage.getItem('gk_mode') || 'strict',
@@ -865,7 +949,6 @@
             };
         }
 
-        // Tab Navigation Logic
         function switchTab(tabName) {
             document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
@@ -887,14 +970,11 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Checkbox logic
         const checkboxes = document.querySelectorAll('.rule-chk');
         const passBtn = document.getElementById('pass-btn');
         const selectAllBtn = document.getElementById('select-all-btn');
 
-        checkboxes.forEach(chk => {
-            chk.addEventListener('change', checkAllDone);
-        });
+        checkboxes.forEach(chk => chk.addEventListener('change', checkAllDone));
 
         selectAllBtn.addEventListener('click', () => {
             checkboxes.forEach(chk => chk.checked = true);
@@ -906,7 +986,6 @@
             passBtn.disabled = !allDone;
         }
 
-        // Pass Generation & Queue Management
         passBtn.addEventListener('click', () => {
             const randomNum = Math.floor(1000 + Math.random() * 9000);
             myPassCode = `GK-${randomNum}`;
@@ -923,7 +1002,6 @@
             localStorage.setItem('gk_queue', JSON.stringify(queue));
             
             window.dispatchEvent(new Event('storage'));
-
             updateUserQueueStatus();
             updateAdminDashboard();
         });
@@ -934,7 +1012,6 @@
             const settings = getSettings();
             const timerMs = settings.timerSeconds * 1000;
 
-            // Veraltete Einträge entfernen (nach eingestellter Timer-Zeit)
             queue = queue.filter(item => {
                 if (item.startTime !== null) {
                     return (now - item.startTime) < timerMs;
@@ -942,21 +1019,17 @@
                 return true;
             });
 
-            // Aktuelle Personen-Anzahl auf dem Monitor berechnen
             let activePersons = queue
                 .filter(item => item.startTime !== null)
                 .reduce((sum, item) => sum + (item.size || 1), 0);
 
-            // Nachschub verarbeiten je nach gewähltem Modus
             for (let i = 0; i < queue.length; i++) {
                 if (queue[i].startTime === null) {
                     let itemSize = queue[i].size || 1;
-                    
                     if (activePersons + itemSize <= settings.maxPersons) {
                         queue[i].startTime = Date.now();
                         activePersons += itemSize;
                     } else {
-                        // Bei "strict" (Reißverschluss) wird gestoppt, sobald ein Code nicht reinpasst
                         if (settings.mode === 'strict') {
                             break;
                         }
@@ -993,10 +1066,8 @@
 
         setInterval(updateUserQueueStatus, 1000);
 
-        // Feedback Submission
         document.getElementById('feedback-form').addEventListener('submit', (e) => {
             e.preventDefault();
-            
             const ratingObj = {
                 ambiente: parseInt(document.getElementById('r-ambiente').value),
                 erschrecker: parseInt(document.getElementById('r-erschrecker').value),
@@ -1025,25 +1096,86 @@
             updateMonitorGrid();
         });
 
-        // Monitor-Link mit PIN 3110
+        // FORCE START BUTTON LOGIK
+        document.getElementById('force-start-btn').addEventListener('click', () => {
+            let queue = JSON.parse(localStorage.getItem('gk_queue') || '[]');
+            let nextInLine = queue.find(item => item.startTime === null);
+
+            if (nextInLine) {
+                nextInLine.startTime = Date.now();
+                localStorage.setItem('gk_queue', JSON.stringify(queue));
+                window.dispatchEvent(new Event('storage'));
+                showToast(`Gruppe ${nextInLine.code} manuell auf den Monitor geholt! ⚡`);
+            } else {
+                alert('Es ist aktuell keine Gruppe in der Warteschlange!');
+            }
+        });
+
+        // BUZZER TRIGGER LOGIK
+        function triggerBuzzer() {
+            const randomNum = Math.floor(1000 + Math.random() * 9000);
+            const buzCode = `GK-${randomNum}`;
+            const groupSize = parseInt(document.getElementById('buzzer-group-select').value);
+
+            let queue = JSON.parse(localStorage.getItem('gk_queue') || '[]');
+            queue.push({ code: buzCode, size: groupSize, created: Date.now(), startTime: null });
+            localStorage.setItem('gk_queue', JSON.stringify(queue));
+
+            window.dispatchEvent(new Event('storage'));
+
+            document.getElementById('buzzer-result-code').textContent = buzCode;
+            document.getElementById('buzzer-result-card').style.display = 'block';
+
+            showToast(`Buzzer gedrückt: Code ${buzCode} erstellt!`);
+
+            setTimeout(() => {
+                document.getElementById('buzzer-result-card').style.display = 'none';
+            }, 8000);
+        }
+
+        document.getElementById('main-buzzer-trigger').addEventListener('click', triggerBuzzer);
+        
+        // Keypress Trigger für Hardware-Buzzer (Space oder Enter)
+        window.addEventListener('keydown', (e) => {
+            if (document.getElementById('sec-buzzer').classList.contains('active')) {
+                if (e.code === 'Space' || e.code === 'Enter') {
+                    e.preventDefault();
+                    triggerBuzzer();
+                }
+            }
+        });
+
+        // LINKS LOGIK
         document.getElementById('toggle-monitor-link').addEventListener('click', (e) => {
             e.preventDefault();
             const pin = prompt('Bitte Organizer-PIN für den Live-Monitor eingeben:');
-            if (pin === '3110') {
-                window.location.hash = '#monitor';
-            } else if (pin !== null) {
-                alert('Falsche PIN!');
-            }
+            if (pin === '3110') window.location.hash = '#monitor';
+            else if (pin !== null) alert('Falsche PIN!');
+        });
+
+        document.getElementById('toggle-buzzer-link').addEventListener('click', (e) => {
+            e.preventDefault();
+            const pin = prompt('Bitte Organizer-PIN für den Kiosk-Buzzer eingeben:');
+            if (pin === '3110') window.location.hash = '#buzzer';
+            else if (pin !== null) alert('Falsche PIN!');
         });
 
         function enableMonitorView() {
             document.getElementById('sec-monitor').classList.add('active');
+            document.getElementById('sec-buzzer').classList.remove('active');
             document.getElementById('main-container').style.display = 'none';
             updateMonitorGrid();
         }
 
-        function disableMonitorView() {
+        function enableBuzzerView() {
+            document.getElementById('sec-buzzer').classList.add('active');
             document.getElementById('sec-monitor').classList.remove('active');
+            document.getElementById('main-container').style.display = 'none';
+        }
+
+        function disableViews() {
+            document.getElementById('sec-monitor').classList.remove('active');
+            document.getElementById('sec-buzzer').classList.remove('active');
             document.getElementById('main-container').style.display = 'flex';
         }
 
@@ -1072,14 +1204,9 @@
         window.addEventListener('hashchange', checkHash);
 
         function checkHash() {
-            if (window.location.hash === '#monitor') {
-                enableMonitorView();
-            } else {
-                disableMonitorView();
-                if (window.location.hash === '#regeln') {
-                    switchTab('regeln');
-                }
-            }
+            if (window.location.hash === '#monitor') enableMonitorView();
+            else if (window.location.hash === '#buzzer') enableBuzzerView();
+            else disableViews();
         }
 
         setInterval(() => {
@@ -1088,7 +1215,6 @@
             }
         }, 1000);
 
-        // Admin Panel & PIN (3110)
         const toggleAdmin = document.getElementById('toggle-admin');
         const adminPanel = document.getElementById('admin-panel');
         const adminLoginBox = document.getElementById('admin-login-box');
@@ -1108,7 +1234,6 @@
                 adminLoginBox.style.display = 'none';
                 adminContent.style.display = 'block';
                 
-                // Einstellungen laden
                 let settings = getSettings();
                 document.getElementById('admin-mode-select').value = settings.mode;
                 document.getElementById('admin-max-persons').value = settings.maxPersons;
@@ -1128,7 +1253,6 @@
             adminPanel.style.display = 'none';
         });
 
-        // Einstellungen Speichern Button
         document.getElementById('save-settings-btn').addEventListener('click', () => {
             const mode = document.getElementById('admin-mode-select').value;
             const maxPersons = parseInt(document.getElementById('admin-max-persons').value);
@@ -1146,7 +1270,6 @@
             }
         });
 
-        // Alle Daten zurücksetzen
         document.getElementById('reset-data-btn').addEventListener('click', () => {
             if (confirm('Möchtest du wirklich alle Bewertungen und aktiven Pässe unwiderruflich löschen?')) {
                 localStorage.removeItem('gk_queue');
@@ -1222,7 +1345,6 @@
             }
         }
 
-        // Print QR Code
         document.getElementById('print-qr-btn').addEventListener('click', () => {
             const qrUrl = window.location.origin + window.location.pathname + '#regeln';
             const printWindow = window.open('', '_blank');
@@ -1252,3 +1374,4 @@
     </script>
 </body>
 </html>
+
