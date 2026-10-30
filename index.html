@@ -231,27 +231,29 @@
             background-color: #005ea6;
         }
 
-        #timer-card, #pass-display {
+        #pass-display {
             display: none;
             text-align: center;
             background: linear-gradient(135deg, #1f2233, #12141c);
             border: 2px dashed var(--accent);
         }
 
-        .countdown-num {
-            font-size: 2.5rem;
-            font-family: monospace;
-            color: var(--accent);
-            font-weight: bold;
-            margin: 15px 0;
-        }
-
         .pass-id {
             font-family: monospace;
-            font-size: 2rem;
+            font-size: 2.2rem;
             letter-spacing: 3px;
             color: var(--accent);
             margin: 10px 0;
+            font-weight: bold;
+        }
+
+        .queue-status {
+            font-size: 0.95rem;
+            padding: 8px;
+            border-radius: 6px;
+            background: rgba(255, 102, 0, 0.15);
+            color: var(--accent);
+            margin-top: 10px;
             font-weight: bold;
         }
 
@@ -406,7 +408,7 @@
             height: 100vh;
             background-color: var(--bg);
             z-index: 9999;
-            padding: 30px;
+            padding: 40px 20px;
             flex-direction: column;
             align-items: center;
             box-sizing: border-box;
@@ -418,34 +420,38 @@
         }
 
         .monitor-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
             width: 100%;
-            max-width: 1200px;
-            margin-top: 25px;
+            max-width: 1000px;
+            margin-top: 40px;
+            flex-wrap: wrap;
         }
 
         .monitor-card {
             background: var(--card-bg);
-            border: 2px solid var(--accent);
-            border-radius: 12px;
-            padding: 15px;
+            border: 3px solid var(--accent);
+            border-radius: 16px;
+            padding: 25px 30px;
             text-align: center;
-            box-shadow: 0 0 15px rgba(255, 102, 0, 0.2);
+            box-shadow: 0 0 25px rgba(255, 102, 0, 0.3);
+            min-width: 260px;
+            flex: 1;
+            max-width: 300px;
         }
 
         .monitor-code {
             font-family: monospace;
-            font-size: 2.2rem;
+            font-size: 3rem;
             font-weight: bold;
             color: var(--accent);
         }
 
         .monitor-time {
-            font-size: 0.9rem;
+            font-size: 1.1rem;
             color: var(--success);
-            margin-top: 5px;
+            margin-top: 10px;
             font-weight: bold;
         }
 
@@ -472,14 +478,16 @@
 </head>
 <body>
 
-    <!-- EXTERNAL MONITOR DISPLAY -->
+    <!-- EXTERNAL MONITOR DISPLAY (PIN PROTECTED) -->
     <div id="sec-monitor">
-        <h1 style="font-size: 3rem;">🎃 GRUSELKELLER EINLASS 🎃</h1>
-        <p class="subtitle" style="font-size: 1.4rem; color: var(--success);">✔ Berechtigte Codes für den Keller-Einlass:</p>
+        <h1 style="font-size: 3.2rem;">🎃 GRUSELKELLER EINLASS 🎃</h1>
+        <p class="subtitle" style="font-size: 1.5rem; color: var(--success); margin-top: 10px;">✔ Berechtigte Codes für den Keller-Einlass (max. 3):</p>
+        
         <div class="monitor-grid" id="monitor-code-grid">
             <div class="monitor-card"><div class="monitor-code">Warten...</div></div>
         </div>
-        <button onclick="window.location.hash=''" style="position: absolute; bottom: 15px; right: 15px; background: none; border: none; color: #333; cursor: pointer;">[Beenden]</button>
+
+        <button onclick="window.location.hash=''" style="position: absolute; bottom: 20px; right: 20px; background: none; border: none; color: #444; cursor: pointer; font-size: 0.9rem;">[Monitor Schließen]</button>
     </div>
 
     <!-- STANDARD WEBSITE -->
@@ -521,7 +529,7 @@
             </div>
         </div>
 
-        <!-- PAGE 2: REGELN, TIMER, PASS & BEWERTUNG -->
+        <!-- PAGE 2: REGELN, PASS & BEWERTUNG -->
         <div id="sec-regeln" class="page-section">
             <div class="card" id="rules-card">
                 <h2>Hausordnung & Regeln</h2>
@@ -531,7 +539,7 @@
                 <div class="rules-list">
                     <label class="rule-item">
                         <input type="checkbox" class="rule-chk">
-                        <span><strong>Altersfreigabe:</strong> Einlass ist ab 8 Jahren.<br><small style="color: var(--muted);">(Unter 8 nur in Begleitung einer volljährigen Person)</small></span>
+                        <span><strong>Altersfreigabe:</strong> Einlass ab 8 Jahre (darunter nur in Begleitung eines Volljährigen).</span>
                     </label>
                     <label class="rule-item">
                         <input type="checkbox" class="rule-chk">
@@ -546,23 +554,18 @@
                         <span><strong>Foto-Verbot:</strong> Kein Blitzlicht im Keller, um andere Gäste nicht zu blenden.</span>
                     </label>
                 </div>
-                <button class="btn" id="pass-btn" disabled>Regeln akzeptieren & Anmelden</button>
-            </div>
-
-            <!-- TIMER CARD -->
-            <div class="card" id="timer-card">
-                <h2>Dein Erlebnis wird vorbereitet... 🕸️</h2>
-                <p class="story-p">Bitte habe einen kurzen Moment Geduld. Sobald der Countdown abläuft, erscheint dein persönlicher Code.</p>
-                <div class="countdown-num" id="countdown-timer">02:00</div>
-                <p style="font-size: 0.85rem; color: var(--muted);">Schaue danach auf den Monitor am Eingang – sobald dein Code dort erscheint, darfst du eintreten!</p>
+                <button class="btn" id="pass-btn" disabled>Regeln akzeptieren & Pass holen</button>
             </div>
 
             <!-- PASS DISPLAY -->
             <div class="card" id="pass-display">
-                <h2>Dein Digitaler Einlass-Pass</h2>
-                <p class="subtitle">Falls dieser Code auf dem Monitor am Eingang erscheint, darfst du rein:</p>
+                <h2>Dein Einlass-Pass</h2>
+                <p class="subtitle">Dein persönlicher Code:</p>
                 <div class="pass-id" id="pass-code">GK-8849</div>
-                <p style="font-size: 0.85rem; color: var(--success);">✔ Gültig & AGB akzeptiert</p>
+                
+                <div class="queue-status" id="user-queue-status">
+                    Prüfe Status...
+                </div>
             </div>
 
             <!-- FEEDBACK CARD -->
@@ -677,7 +680,7 @@
                 <div class="stat-grid">
                     <div class="stat-box">
                         <div class="stat-num" id="stat-passes">0</div>
-                        <div class="subtitle">Pässe erstellt</div>
+                        <div class="subtitle">Aktive Pässe</div>
                     </div>
                     <div class="stat-box">
                         <div class="stat-num" id="stat-rating">5.0 ★</div>
@@ -694,9 +697,9 @@
                     <div class="cat-stat-item"><span>🔊 Sound & Musik:</span><strong id="cat-sound">5.0 ★</strong></div>
                 </div>
 
-                <label>Aktive Einlass-Pässe (Live-Liste):</label>
+                <label>Aktive Pässe in der Warteschlange:</label>
                 <div class="pass-list" id="pass-log-list">
-                    <div class="pass-item" style="color: var(--muted);">Noch keine Pässe erstellt.</div>
+                    <div class="pass-item" style="color: var(--muted);">Keine Pässe in der Liste.</div>
                 </div>
 
                 <button class="btn" id="print-qr-btn" style="background-color: #2c3e50; margin-bottom: 10px;">QR-Schild Drucken 🖨️</button>
@@ -708,7 +711,7 @@
     <div id="toast">Erfolgreich gespeichert!</div>
 
     <script>
-        let currentPassCode = null;
+        let myPassCode = null;
 
         // Tab Navigation Logic
         function switchTab(tabName) {
@@ -747,59 +750,80 @@
             passBtn.disabled = !allDone;
         }
 
-        // Pass Generation with Timer
+        // Pass Generation & Queue Management
         passBtn.addEventListener('click', () => {
-            document.getElementById('rules-card').style.display = 'none';
-            document.getElementById('timer-card').style.display = 'block';
-
-            let timeLeft = 120; // 2 Minuten Vorbereitungszeit
-            const timerElem = document.getElementById('countdown-timer');
-
-            const countdownInterval = setInterval(() => {
-                timeLeft--;
-                let mins = Math.floor(timeLeft / 60);
-                let secs = timeLeft % 60;
-                timerElem.textContent = `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
-
-                if (timeLeft <= 0) {
-                    clearInterval(countdownInterval);
-                    generateFinalPass();
-                }
-            }, 1000);
-        });
-
-        function generateFinalPass() {
             const randomNum = Math.floor(1000 + Math.random() * 9000);
-            const code = `GK-${randomNum}`;
-            const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            currentPassCode = code;
+            myPassCode = `GK-${randomNum}`;
             
-            document.getElementById('pass-code').textContent = code;
-            document.getElementById('timer-card').style.display = 'none';
+            document.getElementById('pass-code').textContent = myPassCode;
+            document.getElementById('rules-card').style.display = 'none';
             document.getElementById('pass-display').style.display = 'block';
             document.getElementById('feedback-card').style.display = 'block';
 
-            // Pass mit Timestamp speichern
-            let storedPasses = JSON.parse(localStorage.getItem('gk_pass_list') || '[]');
-            storedPasses.unshift({ code: code, time: time, timestamp: Date.now() });
-            localStorage.setItem('gk_pass_list', JSON.stringify(storedPasses));
-            
+            // In LocalStorage-Warteschlange speichern
+            let queue = JSON.parse(localStorage.getItem('gk_queue') || '[]');
+            queue.push({ code: myPassCode, created: Date.now(), startTime: null });
+            localStorage.setItem('gk_queue', JSON.stringify(queue));
+
+            updateUserQueueStatus();
             updateAdminDashboard();
-        }
+        });
 
-        // Filter: Entfernt Pässe älter als 60 Sekunden (1 Minute)
-        function getActivePasses() {
-            let storedPasses = JSON.parse(localStorage.getItem('gk_pass_list') || '[]');
+        // Bereinigt und aktualisiert die Warteschlange
+        function processQueue() {
+            let queue = JSON.parse(localStorage.getItem('gk_queue') || '[]');
             const now = Date.now();
-            const activePasses = storedPasses.filter(p => (now - p.timestamp) < 60000);
-            
-            if (activePasses.length !== storedPasses.length) {
-                localStorage.setItem('gk_pass_list', JSON.stringify(activePasses));
+
+            // 1. Entferne Einträge, die seit mehr als 60 Sekunden auf dem Monitor laufen
+            queue = queue.filter(item => {
+                if (item.startTime !== null) {
+                    return (now - item.startTime) < 60000; // 60 Sekunden Ablaufzeit auf dem Monitor
+                }
+                return true;
+            });
+
+            // 2. Aktiviere die ersten 3 Einträge, falls sie noch keine Startzeit haben
+            let activeCount = queue.filter(item => item.startTime !== null).length;
+            for (let i = 0; i < queue.length; i++) {
+                if (activeCount < 3 && queue[i].startTime === null) {
+                    queue[i].startTime = Date.now();
+                    activeCount++;
+                }
             }
-            return activePasses;
+
+            localStorage.setItem('gk_queue', JSON.stringify(queue));
+            return queue;
         }
 
-        // Feedback Submission: Pass sofort löschen
+        // Aktualisiert den Hinweis auf dem Handy des Benutzers
+        function updateUserQueueStatus() {
+            if (!myPassCode) return;
+            
+            let queue = processQueue();
+            let myItem = queue.find(item => item.code === myPassCode);
+            const statusBox = document.getElementById('user-queue-status');
+
+            if (!myItem) {
+                statusBox.style.background = "rgba(46, 204, 113, 0.15)";
+                statusBox.style.color = "var(--success)";
+                statusBox.innerHTML = "✔ Dein Durchgang ist abgeschlossen oder dein Code ist abgelaufen.";
+            } else if (myItem.startTime !== null) {
+                statusBox.style.background = "rgba(46, 204, 113, 0.2)";
+                statusBox.style.color = "var(--success)";
+                statusBox.innerHTML = "🟢 DEIN CODE IST JETZT AUF DEM MONITOR!<br>Du darfst eintreten!";
+            } else {
+                // Berechne Warteplatz
+                let waitingBeforeMe = queue.filter(item => item.startTime === null && item.created < myItem.created).length + 1;
+                statusBox.style.background = "rgba(255, 102, 0, 0.15)";
+                statusBox.style.color = "var(--accent)";
+                statusBox.innerHTML = `⏳ Du bist in der Warteschleife (Platz ${waitingBeforeMe}).<br>Bitte habe kurz Geduld, bis dein Code auf dem Monitor erscheint!`;
+            }
+        }
+
+        // Live-Check für das Handy des Nutzers (alle 2 Sekunden)
+        setInterval(updateUserQueueStatus, 2000);
+
+        // Feedback Abschicken: Code sofort von der Liste löschen
         document.getElementById('feedback-form').addEventListener('submit', (e) => {
             e.preventDefault();
             
@@ -815,16 +839,17 @@
             storedRatings.push(ratingObj);
             localStorage.setItem('gk_ratings', JSON.stringify(storedRatings));
 
-            // Eigenen Pass sofort von der Monitor-Liste entfernen
-            if (currentPassCode) {
-                let storedPasses = JSON.parse(localStorage.getItem('gk_pass_list') || '[]');
-                storedPasses = storedPasses.filter(p => p.code !== currentPassCode);
-                localStorage.setItem('gk_pass_list', JSON.stringify(storedPasses));
-                currentPassCode = null;
+            // Eigenen Code sofort aus der Warteschlange löschen
+            if (myPassCode) {
+                let queue = JSON.parse(localStorage.getItem('gk_queue') || '[]');
+                queue = queue.filter(item => item.code !== myPassCode);
+                localStorage.setItem('gk_queue', JSON.stringify(queue));
+                myPassCode = null;
             }
 
             showToast('Vielen Dank für deine Bewertung! 🎃');
             document.getElementById('feedback-card').style.display = 'none';
+            updateUserQueueStatus();
             updateAdminDashboard();
             updateMonitorGrid();
         });
@@ -853,16 +878,18 @@
         }
 
         function updateMonitorGrid() {
-            let activePasses = getActivePasses();
+            let queue = processQueue();
+            // Nur aktive Codes (max 3) filtern
+            let activeOnMonitor = queue.filter(item => item.startTime !== null).slice(0, 3);
             const grid = document.getElementById('monitor-code-grid');
             
-            if(activePasses.length === 0) {
+            if (activeOnMonitor.length === 0) {
                 grid.innerHTML = '<div class="monitor-card"><div class="monitor-code">Warten...</div></div>';
             } else {
-                grid.innerHTML = activePasses.map(p => `
+                grid.innerHTML = activeOnMonitor.map(p => `
                     <div class="monitor-card">
                         <div class="monitor-code">${p.code}</div>
-                        <div class="monitor-time">✔ Einlass berechtigt</div>
+                        <div class="monitor-time">✔ Bitte Eintreten</div>
                     </div>
                 `).join('');
             }
@@ -924,8 +951,8 @@
         });
 
         function updateAdminDashboard() {
-            let activePasses = getActivePasses();
-            document.getElementById('stat-passes').textContent = activePasses.length;
+            let queue = processQueue();
+            document.getElementById('stat-passes').textContent = queue.length;
 
             let storedRatings = JSON.parse(localStorage.getItem('gk_ratings') || '[]');
             if (storedRatings.length > 0) {
@@ -955,14 +982,15 @@
             }
 
             const listContainer = document.getElementById('pass-log-list');
-            if (activePasses.length === 0) {
+            if (queue.length === 0) {
                 listContainer.innerHTML = '<div class="pass-item" style="color: var(--muted);">Keine aktiven Pässe.</div>';
             } else {
-                listContainer.innerHTML = activePasses.map(p => `
+                listContainer.innerHTML = queue.map(p => `
                     <div class="pass-item">
                         <span style="color: var(--accent); font-weight: bold;">${p.code}</span>
-                        <span style="color: var(--muted);">${p.time} Uhr</span>
-                        <span style="color: var(--success);">✔ Gültig</span>
+                        <span style="color: ${p.startTime !== null ? 'var(--success)' : 'var(--muted)'};">
+                            ${p.startTime !== null ? '✔ Auf Monitor' : '⏳ Warteschlange'}
+                        </span>
                     </div>
                 `).join('');
             }
