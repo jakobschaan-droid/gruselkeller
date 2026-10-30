@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gruselkeller Halloween</title>
+  <style>
+    :root {
+      --bg: #0d0d11;
+      --card-bg: #181822;
+      --accent: #ff6b00;
+      --accent-hover: #e05d00;
+      --text: #e0e0e0;
+      --muted: #a0a0b0;
+      --success: #00e676;
+      --danger: #ff5252;
+      --font: system-ui, -apple-system, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 15px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 500px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 25px;
+      position: relative;
+    }
+
+    h1 {
+      color: var(--accent);
+      font-size: 2.2rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 5px;
+      text-shadow: 0 0 10px rgba(255, 107, 0, 0.4);
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .admin-btn {
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--muted);
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 107, 0, 0.2);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    }
+
+    h2 {
+      font-size: 1.3rem;
+      color: #fff;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .rules-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .rule-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      background: rgba(0,0,0,0.2);
+      padding: 10px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .rule-item input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      margin-top: 2px;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+
+    .rule-text {
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+
+    .btn {
+      width: 100%;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 1.05rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-top: 15px;
+    }
+
+    .btn:disabled {
+      background: #333;
+      color: #777;
+      cursor: not-allowed;
+    }
+
+    .btn:not(:disabled):hover {
+      background: var(--accent-hover);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 107, 0, 0.1);
+    }
+
+    .ticket {
+      text-align: center;
+      border: 2px dashed var(--accent);
+      padding: 20px;
+      border-radius: 8px;
+      background: rgba(255, 107, 0, 0.05);
+    }
+
+    .ticket-num {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--accent);
+      letter-spacing: 3px;
+      margin: 10px 0;
+    }
+
+    .rating-group {
+      margin-bottom: 20px;
+    }
+
+    .rating-label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .stars {
+      display: flex;
+      gap: 10px;
+      font-size: 1.8rem;
+      cursor: pointer;
+    }
+
+    .star {
+      opacity: 0.3;
+      transition: opacity 0.2s, transform 0.1s;
+    }
+
+    .star.active {
+      opacity: 1;
+    }
+
+    .star:active {
+      transform: scale(1.2);
+    }
+
+    textarea, input[type="password"] {
+      width: 100%;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      padding: 12px;
+      color: #fff;
+      font-family: inherit;
+      resize: vertical;
+    }
+
+    textarea:focus, input[type="password"]:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .stat-card {
+      background: rgba(0,0,0,0.3);
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: var(--accent);
+    }
+
+    .stat-desc {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .comment-item {
+      background: rgba(0,0,0,0.3);
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+      border-left: 3px solid var(--accent);
+    }
+
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #print-area, #print-area * {
+        visibility: visible;
+      }
+      #print-area {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        color: #000;
+        background: #fff;
+        padding: 40px;
+        text-align: center;
+      }
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <button class="admin-btn" onclick="toggleAdmin()">⚙️ Organizer</button>
+      <h1>🎃 Gruselkeller</h1>
+      <p class="subtitle">Eintritt & Bewertung</p>
+    </header>
+
+    <!-- STEP 1: RULES -->
+    <div id="step-rules" class="card">
+      <h2>📜 Hausregeln</h2>
+      <p style="font-size:0.85rem; color: var(--muted); margin-bottom: 15px;">
+        Bitte lies und akzeptiere alle Regeln, um den Keller zu betreten.
+      </p>
+      
+      <ul class="rules-list">
+        <label class="rule-item">
+          <input type="checkbox" onchange="checkRules()">
+          <span class="rule-text"><strong>Altershinweis:</strong> Einlass unter 12 Jahren nur in Begleitung einer volljährigen Person (ab 8 Jahren).</span>
+        </label>
+        <label class="rule-item">
+          <input type="checkbox" onchange="checkRules()">
+          <span class="rule-text"><strong>Nicht anfassen:</strong> Erschrecker und Requisiten dürfen nicht berührt werden.</span>
+        </label>
+        <label class="rule-item">
+          <input type="checkbox" onchange="checkRules()">
+          <span class="rule-text"><strong>Licht auslassen:</strong> Keine eigenen Taschenlampen oder Smartphone-Lichter nutzen.</span>
+        </label>
+        <label class="rule-item">
+          <input type="checkbox" onchange="checkRules()">
+          <span class="rule-text"><strong>Aufpassen:</strong> Rennen und Drängeln ist strengstens verboten (Sturzgefahr).</span>
+        </label>
+        <label class="rule-item">
+          <input type="checkbox" onchange="checkRules()">
+          <span class="rule-text"><strong>Eigenverantwortung:</strong> Betreten auf eigene Gefahr. Bei Panik sofort Stop rufen.</span>
+        </label>
+      </ul>
+
+      <button id="btn-accept" class="btn" disabled onclick="acceptRules()">Ich akzeptiere die Regeln</button>
+    </div>
+
+    <!-- STEP 2: TICKET / PASS -->
+    <div id="step-ticket" class="card hidden">
+      <h2>🎟️ Einlass-Pass</h2>
+      <div class="ticket">
+        <p>Zeige diesen Pass am Eingang vor:</p>
+        <div class="ticket-num" id="ticket-id">#0000</div>
+        <p style="color: var(--success); font-weight: bold; font-size: 0.9rem;">✅ REGELN AKZEPTIERT</p>
+      </div>
+      <button class="btn btn-secondary" onclick="showFeedbackScreen()" style="margin-top:20px;">
+        Nach dem Besuch: Feedback geben 📝
+      </button>
+    </div>
+
+    <!-- STEP 3: FEEDBACK FORM -->
+    <div id="step-feedback" class="card hidden">
+      <h2>👻 Wie war es?</h2>
+      
+      <div class="rating-group">
+        <span class="rating-label">Gruselfaktor (💀):</span>
+        <div class="stars" id="rating-scare">
+          <span class="star" onclick="setRating('scare', 1)">💀</span>
+          <span class="star" onclick="setRating('scare', 2)">💀</span>
+          <span class="star" onclick="setRating('scare', 3)">💀</span>
+          <span class="star" onclick="setRating('scare', 4)">💀</span>
+          <span class="star" onclick="setRating('scare', 5)">💀</span>
+        </div>
+      </div>
+
+      <div class="rating-group">
+        <span class="rating-label">Atmosphäre & Deko (⭐):</span>
+        <div class="stars" id="rating-atmos">
+          <span class="star" onclick="setRating('atmos', 1)">⭐</span>
+          <span class="star" onclick="setRating('atmos', 2)">⭐</span>
+          <span class="star" onclick="setRating('atmos', 3)">⭐</span>
+          <span class="star" onclick="setRating('atmos', 4)">⭐</span>
+          <span class="star" onclick="setRating('atmos', 5)">⭐</span>
+        </div>
+      </div>
+
+      <div class="rating-group">
+        <span class="rating-label">Kommentar / Was hat dir besonders gefallen?</span>
+        <textarea id="feedback-text" rows="3" placeholder="Deine Meinung..."></textarea>
+      </div>
+
+      <button class="btn" onclick="submitFeedback()">Bewertung absenden</button>
+    </div>
+
+    <!-- THANK YOU SCREEN -->
+    <div id="step-thanks" class="card hidden" style="text-align: center;">
+      <h2>🎉 Vielen Dank!</h2>
+      <p style="color: var(--muted); margin-top: 10px;">Deine Bewertung wurde gespeichert. Wir hoffen, du hattest einen schrecklich guten Abend!</p>
+      <button class="btn btn-secondary" onclick="resetToHome()" style="margin-top: 20px;">Zurück zum Anfang</button>
+    </div>
+
+    <!-- ADMIN DASHBOARD -->
+    <div id="step-admin" class="card hidden">
+      <h2>⚙️ Veranstalter Dashboard</h2>
+      
+      <div id="admin-auth">
+        <p class="rating-label">Bitte PIN eingeben (Standard: 1031):</p>
+        <input type="password" id="admin-pin" placeholder="PIN" style="margin-bottom: 10px;">
+        <button class="btn" onclick="authAdmin()">Login</button>
+      </div>
+
+      <div id="admin-content" class="hidden">
+        <div class="stat-grid">
+          <div class="stat-card">
+            <div class="stat-value" id="stat-count">0</div>
+            <div class="stat-desc">Besucher / Feedback</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="stat-scare">0.0</div>
+            <div class="stat-desc">Ø Gruselfaktor</div>
+          </div>
+        </div>
+
+        <h3 style="color:#fff; font-size:1rem; margin-bottom: 10px;">Feedback-Kommentare</h3>
+        <div id="comments-list" style="max-height: 200px; overflow-y: auto; margin-bottom: 20px;">
+          <p style="color: var(--muted); font-size: 0.85rem;">Noch keine Kommentare.</p>
+        </div>
+
+        <button class="btn btn-secondary" onclick="generateQROverlay()" style="margin-bottom: 10px;">QR-Schild Drucken 🖨️</button>
+        <button class="btn" onclick="resetData()" style="background: var(--danger);">Daten zurücksetzen</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- PRINT OVERLAY AREA -->
+  <div id="print-area" class="hidden">
+    <h1 style="font-size: 2.5rem; margin-bottom: 10px;">🎃 GRUSELKELLER</h1>
+    <p style="font-size: 1.2rem; margin-bottom: 20px;">Scanne den QR-Code vor dem Betreten für Regeln & Einlass:</p>
+    <div id="qrcode-print" style="display: inline-block; padding: 20px; background: #fff; border: 2px solid #000;"></div>
+    <p style="margin-top: 20px; font-size: 0.9rem; color: #555;">Sicher & kontaktlos Regeln akzeptieren</p>
+  </div>
+
+  <script>
+    let scareRating = 0;
+    let atmosRating = 0;
+
+    function checkRules() {
+      const checkboxes = document.querySelectorAll('.rules-list input[type="checkbox"]');
+      const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+      document.getElementById('btn-accept').disabled = !allChecked;
+    }
+
+    function acceptRules() {
+      playGhostSound();
+      document.getElementById('step-rules').classList.add('hidden');
+      document.getElementById('step-ticket').classList.remove('hidden');
+      
+      const randomTicket = '#' + Math.floor(1000 + Math.random() * 9000);
+      document.getElementById('ticket-id').innerText = randomTicket;
+    }
+
+    function showFeedbackScreen() {
+      document.getElementById('step-ticket').classList.add('hidden');
+      document.getElementById('step-feedback').classList.remove('hidden');
+    }
+
+    function setRating(type, val) {
+      if(type === 'scare') {
+        scareRating = val;
+        updateStars('rating-scare', val);
+      } else {
+        atmosRating = val;
+        updateStars('rating-atmos', val);
+      }
+    }
+
+    function updateStars(containerId, val) {
+      const stars = document.querySelectorAll(`#${containerId} .star`);
+      stars.forEach((star, idx) => {
+        if (idx < val) {
+          star.classList.add('active');
+        } else {
+          star.classList.remove('active');
+        }
+      });
+    }
+
+    function submitFeedback() {
+      if(scareRating === 0 || atmosRating === 0) {
+        alert('Bitte gib mindestens eine Bewertung für Gruselfaktor und Atmosphäre ab!');
+        return;
+      }
+
+      const text = document.getElementById('feedback-text').value;
+      const feedbackData = {
+        scare: scareRating,
+        atmos: atmosRating,
+        text: text,
+        date: new Date().toISOString()
+      };
+
+      const existing = JSON.parse(localStorage.getItem('grusel_feedback') || '[]');
+      existing.push(feedbackData);
+      localStorage.setItem('grusel_feedback', JSON.stringify(existing));
+
+      document.getElementById('step-feedback').classList.add('hidden');
+      document.getElementById('step-thanks').classList.remove('hidden');
+    }
+
+    function resetToHome() {
+      location.reload();
+    }
+
+    function toggleAdmin() {
+      document.getElementById('step-rules').classList.add('hidden');
+      document.getElementById('step-ticket').classList.add('hidden');
+      document.getElementById('step-feedback').classList.add('hidden');
+      document.getElementById('step-thanks').classList.add('hidden');
+      document.getElementById('step-admin').classList.remove('hidden');
+    }
+
+    function authAdmin() {
+      const pin = document.getElementById('admin-pin').value;
+      if(pin === '1031') {
+        document.getElementById('admin-auth').classList.add('hidden');
+        document.getElementById('admin-content').classList.remove('hidden');
+        loadAdminData();
+      } else {
+        alert('Falsche PIN!');
+      }
+    }
+
+    function loadAdminData() {
+      const data = JSON.parse(localStorage.getItem('grusel_feedback') || '[]');
+      document.getElementById('stat-count').innerText = data.length;
+
+      if(data.length > 0) {
+        const avgScare = (data.reduce((acc, curr) => acc + curr.scare, 0) / data.length).toFixed(1);
+        document.getElementById('stat-scare').innerText = avgScare + ' / 5';
+      }
+
+      const commentsDiv = document.getElementById('comments-list');
+      commentsDiv.innerHTML = '';
+      data.forEach(item => {
+        if(item.text) {
+          const p = document.createElement('div');
+          p.className = 'comment-item';
+          p.innerText = `💀 ${item.scare}/5 - "${item.text}"`;
+          commentsDiv.appendChild(p);
+        }
+      });
+    }
+
+    function resetData() {
+      if(confirm('Möchtest du wirklich alle Bewertungen löschen?')) {
+        localStorage.removeItem('grusel_feedback');
+        loadAdminData();
+      }
+    }
+
+    function generateQROverlay() {
+      const printArea = document.getElementById('print-area');
+      const qrDiv = document.getElementById('qrcode-print');
+      qrDiv.innerHTML = '';
+      
+      new QRCode(qrDiv, {
+        text: window.location.href,
+        width: 200,
+        height: 200
+      });
+
+      printArea.classList.remove('hidden');
+      window.print();
+      printArea.classList.add('hidden');
+    }
+
+    function playGhostSound() {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(300, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(100, ctx.currentTime + 0.8);
+        gain.gain.setValueAtTime(0.3, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.8);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.8);
+      } catch(e) {}
+    }
+  </script>
+</body>
+</html>
