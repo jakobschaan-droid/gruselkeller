@@ -478,10 +478,10 @@
 </head>
 <body>
 
-    <!-- EXTERNAL MONITOR DISPLAY (PIN PROTECTED) -->
+    <!-- EXTERNAL MONITOR DISPLAY -->
     <div id="sec-monitor">
         <h1 style="font-size: 3.2rem;">🎃 GRUSELKELLER EINLASS 🎃</h1>
-        <p class="subtitle" style="font-size: 1.5rem; color: var(--success); margin-top: 10px;">✔ Berechtigte Codes für den Keller-Einlass (max. 3):</p>
+        <p class="subtitle" style="font-size: 1.4rem; color: var(--success); margin-top: 10px;">✔ Berechtigte Codes für den Keller-Einlass (max. 3):</p>
         
         <div class="monitor-grid" id="monitor-code-grid">
             <div class="monitor-card"><div class="monitor-code">Warten...</div></div>
@@ -702,8 +702,9 @@
                     <div class="pass-item" style="color: var(--muted);">Keine Pässe in der Liste.</div>
                 </div>
 
+                <button class="btn" id="reset-data-btn" style="background-color: var(--danger); margin-bottom: 10px;">🗑️ Alle Bewertungen & Pässe zurücksetzen</button>
                 <button class="btn" id="print-qr-btn" style="background-color: #2c3e50; margin-bottom: 10px;">QR-Schild Drucken 🖨️</button>
-                <button class="btn" id="logout-btn" style="background-color: var(--danger);">Ausloggen</button>
+                <button class="btn" id="logout-btn" style="background-color: #333;">Ausloggen</button>
             </div>
         </div>
     </div>
@@ -760,7 +761,6 @@
             document.getElementById('pass-display').style.display = 'block';
             document.getElementById('feedback-card').style.display = 'block';
 
-            // In LocalStorage-Warteschlange speichern
             let queue = JSON.parse(localStorage.getItem('gk_queue') || '[]');
             queue.push({ code: myPassCode, created: Date.now(), startTime: null });
             localStorage.setItem('gk_queue', JSON.stringify(queue));
@@ -769,20 +769,17 @@
             updateAdminDashboard();
         });
 
-        // Bereinigt und aktualisiert die Warteschlange
         function processQueue() {
             let queue = JSON.parse(localStorage.getItem('gk_queue') || '[]');
             const now = Date.now();
 
-            // 1. Entferne Einträge, die seit mehr als 60 Sekunden auf dem Monitor laufen
             queue = queue.filter(item => {
                 if (item.startTime !== null) {
-                    return (now - item.startTime) < 60000; // 60 Sekunden Ablaufzeit auf dem Monitor
+                    return (now - item.startTime) < 60000; // 60 Sekunden auf Monitor
                 }
                 return true;
             });
 
-            // 2. Aktiviere die ersten 3 Einträge, falls sie noch keine Startzeit haben
             let activeCount = queue.filter(item => item.startTime !== null).length;
             for (let i = 0; i < queue.length; i++) {
                 if (activeCount < 3 && queue[i].startTime === null) {
@@ -795,7 +792,6 @@
             return queue;
         }
 
-        // Aktualisiert den Hinweis auf dem Handy des Benutzers
         function updateUserQueueStatus() {
             if (!myPassCode) return;
             
@@ -812,7 +808,6 @@
                 statusBox.style.color = "var(--success)";
                 statusBox.innerHTML = "🟢 DEIN CODE IST JETZT AUF DEM MONITOR!<br>Du darfst eintreten!";
             } else {
-                // Berechne Warteplatz
                 let waitingBeforeMe = queue.filter(item => item.startTime === null && item.created < myItem.created).length + 1;
                 statusBox.style.background = "rgba(255, 102, 0, 0.15)";
                 statusBox.style.color = "var(--accent)";
@@ -820,10 +815,9 @@
             }
         }
 
-        // Live-Check für das Handy des Nutzers (alle 2 Sekunden)
         setInterval(updateUserQueueStatus, 2000);
 
-        // Feedback Abschicken: Code sofort von der Liste löschen
+        // Feedback Submission
         document.getElementById('feedback-form').addEventListener('submit', (e) => {
             e.preventDefault();
             
@@ -839,7 +833,6 @@
             storedRatings.push(ratingObj);
             localStorage.setItem('gk_ratings', JSON.stringify(storedRatings));
 
-            // Eigenen Code sofort aus der Warteschlange löschen
             if (myPassCode) {
                 let queue = JSON.parse(localStorage.getItem('gk_queue') || '[]');
                 queue = queue.filter(item => item.code !== myPassCode);
@@ -854,7 +847,7 @@
             updateMonitorGrid();
         });
 
-        // Monitor-Link mit PIN 3110 sichern
+        // Monitor-Link mit PIN 3110
         document.getElementById('toggle-monitor-link').addEventListener('click', (e) => {
             e.preventDefault();
             const pin = prompt('Bitte Organizer-PIN für den Live-Monitor eingeben:');
@@ -865,7 +858,6 @@
             }
         });
 
-        // Monitor Mode
         function enableMonitorView() {
             document.getElementById('sec-monitor').classList.add('active');
             document.getElementById('main-container').style.display = 'none';
@@ -879,7 +871,6 @@
 
         function updateMonitorGrid() {
             let queue = processQueue();
-            // Nur aktive Codes (max 3) filtern
             let activeOnMonitor = queue.filter(item => item.startTime !== null).slice(0, 3);
             const grid = document.getElementById('monitor-code-grid');
             
@@ -895,7 +886,6 @@
             }
         }
 
-        // Direct URL Handling
         window.addEventListener('DOMContentLoaded', checkHash);
         window.addEventListener('hashchange', checkHash);
 
@@ -910,7 +900,6 @@
             }
         }
 
-        // Auto-refresh Monitor alle 2 Sekunden
         setInterval(() => {
             if(document.getElementById('sec-monitor').classList.contains('active')) {
                 updateMonitorGrid();
@@ -950,6 +939,17 @@
             adminPanel.style.display = 'none';
         });
 
+        // Alle Daten zurücksetzen Button
+        document.getElementById('reset-data-btn').addEventListener('click', () => {
+            if (confirm('Möchtest du wirklich alle Bewertungen und aktiven Pässe unwiderruflich löschen?')) {
+                localStorage.removeItem('gk_queue');
+                localStorage.removeItem('gk_ratings');
+                updateAdminDashboard();
+                updateMonitorGrid();
+                showToast('Alle Daten wurden zurückgesetzt!');
+            }
+        });
+
         function updateAdminDashboard() {
             let queue = processQueue();
             document.getElementById('stat-passes').textContent = queue.length;
@@ -979,6 +979,13 @@
                 document.getElementById('cat-licht').textContent = avgLic + ' ★';
                 document.getElementById('cat-sound').textContent = avgSou + ' ★';
                 document.getElementById('stat-rating').textContent = totalAvg + ' ★';
+            } else {
+                document.getElementById('cat-ambiente').textContent = '5.0 ★';
+                document.getElementById('cat-erschrecker').textContent = '5.0 ★';
+                document.getElementById('cat-atmos').textContent = '5.0 ★';
+                document.getElementById('cat-licht').textContent = '5.0 ★';
+                document.getElementById('cat-sound').textContent = '5.0 ★';
+                document.getElementById('stat-rating').textContent = '5.0 ★';
             }
 
             const listContainer = document.getElementById('pass-log-list');
