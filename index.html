@@ -199,6 +199,18 @@
             background-color: var(--accent-hover);
         }
 
+        .btn-secondary {
+            background-color: #262938;
+            color: var(--text);
+            margin-bottom: 12px;
+            padding: 10px;
+            font-size: 0.9rem;
+        }
+
+        .btn-secondary:hover {
+            background-color: #32364a;
+        }
+
         .btn:disabled {
             background-color: #333;
             color: var(--muted);
@@ -228,7 +240,7 @@
 
         .pass-id {
             font-family: monospace;
-            font-size: 1.8rem;
+            font-size: 2rem;
             letter-spacing: 3px;
             color: var(--accent);
             margin: 10px 0;
@@ -262,6 +274,33 @@
             min-height: 80px;
         }
 
+        /* Category Star Rating */
+        .rating-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            background: var(--bg);
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
+
+        .rating-label {
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        .star-select {
+            background: transparent;
+            border: none;
+            color: var(--accent);
+            font-weight: bold;
+            font-size: 0.95rem;
+            width: auto;
+            padding: 0;
+            cursor: pointer;
+        }
+
         /* Sections Toggle */
         .page-section {
             display: none;
@@ -277,6 +316,9 @@
         .admin-toggle {
             text-align: center;
             margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
         }
 
         .admin-toggle a {
@@ -310,8 +352,25 @@
             color: var(--accent);
         }
 
+        .cat-stat-list {
+            background: var(--bg);
+            border: 1px solid #262938;
+            border-radius: 6px;
+            padding: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            font-size: 0.85rem;
+        }
+
+        .cat-stat-item {
+            display: flex;
+            justify-content: space-between;
+        }
+
         .pass-list {
-            max-height: 180px;
+            max-height: 150px;
             overflow-y: auto;
             background: var(--bg);
             border: 1px solid #262938;
@@ -329,8 +388,57 @@
             font-family: monospace;
         }
 
-        .pass-item:last-child {
-            border-bottom: none;
+        /* MONITOR MODE STYLES */
+        #sec-monitor {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: var(--bg);
+            z-index: 9999;
+            padding: 30px;
+            flex-direction: column;
+            align-items: center;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        #sec-monitor.active {
+            display: flex;
+        }
+
+        .monitor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 15px;
+            width: 100%;
+            max-width: 1200px;
+            margin-top: 25px;
+        }
+
+        .monitor-card {
+            background: var(--card-bg);
+            border: 2px solid var(--accent);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(255, 102, 0, 0.2);
+        }
+
+        .monitor-code {
+            font-family: monospace;
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        .monitor-time {
+            font-size: 0.9rem;
+            color: var(--success);
+            margin-top: 5px;
+            font-weight: bold;
         }
 
         #toast {
@@ -356,7 +464,18 @@
 </head>
 <body>
 
-    <div class="container">
+    <!-- EXTERNAL MONITOR DISPLAY (MCDONALD'S STYLE) -->
+    <div id="sec-monitor">
+        <h1 style="font-size: 3rem;">🎃 GRUSELKELLER EINLASS 🎃</h1>
+        <p class="subtitle" style="font-size: 1.4rem; color: var(--success);">✔ Berechtigte Codes für den Keller-Einlass:</p>
+        <div class="monitor-grid" id="monitor-code-grid">
+            <div class="monitor-card"><div class="monitor-code">Warten...</div></div>
+        </div>
+        <button onclick="window.location.hash=''" style="position: absolute; bottom: 15px; right: 15px; background: none; border: none; color: #333; cursor: pointer;">[Beenden]</button>
+    </div>
+
+    <!-- STANDARD WEBSITE -->
+    <div class="container" id="main-container">
         <header>
             <h1>🎃 GRUSELKELLER</h1>
             <p class="subtitle">Das krasseste Halloween-Erlebnis der Region</p>
@@ -377,7 +496,7 @@
             <div class="card" style="text-align: center;">
                 <h2>Bist du bereit für den Nervenkitzel?</h2>
                 <p class="story-p">
-                    Tritt ein in den dunkelsten Keller der Region! Erlebe echte Schreckmomente, Soundeffekte und eine einzigartige Horror-Atmosphäre.
+                    Tritt ein in den dunkelsten Keller der Region! Erlebe echte Schreckmomente, krasse Lichter & Soundeffekte und eine einzigartige Horror-Atmosphäre.
                 </p>
                 <button class="btn" onclick="switchTab('regeln')" style="margin-top: 10px;">👉 Jetzt Regeln akzeptieren & Einlass-Pass holen</button>
             </div>
@@ -392,39 +511,19 @@
                     💳 Per PayPal / Digital Pay spenden
                 </a>
             </div>
-
-            <!-- Feedback Card -->
-            <div class="card">
-                <h2>Feedback & Bewertung</h2>
-                <form id="feedback-form">
-                    <div class="form-group">
-                        <label for="scare-factor">Wie gruselig war es?</label>
-                        <select id="scare-factor" required>
-                            <option value="">Bitte wählen...</option>
-                            <option value="5">👻👻👻👻👻 Extrem schockierend!</option>
-                            <option value="4">😱 Richtig gruselig</option>
-                            <option value="3">🎃 Genau richtig</option>
-                            <option value="2">👻 Geht so</option>
-                            <option value="1">🥱 Eher langweilig</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="comment">Kommentar / Note an die Erschrecker:</label>
-                        <textarea id="comment" placeholder="Wer war am gruseligsten?"></textarea>
-                    </div>
-                    <button type="submit" class="btn">Feedback abschicken</button>
-                </form>
-            </div>
         </div>
 
-        <!-- PAGE 2: REGELN & PASS -->
+        <!-- PAGE 2: REGELN, PASS & BEWERTUNG -->
         <div id="sec-regeln" class="page-section">
             <div class="card" id="rules-card">
                 <h2>Hausordnung & Regeln</h2>
+                
+                <button class="btn btn-secondary" id="select-all-btn">⚡ Alle Regeln auf einmal akzeptieren</button>
+
                 <div class="rules-list">
                     <label class="rule-item">
                         <input type="checkbox" class="rule-chk">
-                        <span><strong>Altersfreigabe:</strong> Einlass ist ab 8 Jahren (darunter nur in Begleitung eines Volljährigen) .</span>
+                        <span><strong>Altersfreigabe:</strong> Einlass ist ab 8 Jahren (darunter nur in Begleitung eines Erwachsenen).</span>
                     </label>
                     <label class="rule-item">
                         <input type="checkbox" class="rule-chk">
@@ -442,11 +541,81 @@
                 <button class="btn" id="pass-btn" disabled>Regeln akzeptieren & Pass generieren</button>
             </div>
 
+            <!-- PASS DISPLAY -->
             <div class="card" id="pass-display">
                 <h2>Dein Digitaler Einlass-Pass</h2>
-                <p class="subtitle">Zeige diesen Pass jetzt am Eingang vor:</p>
+                <p class="subtitle">Sobald dieser Code auf dem Monitor erscheit dürft ihr rein:</p>
                 <div class="pass-id" id="pass-code">GK-8849</div>
                 <p style="font-size: 0.85rem; color: var(--success);">✔ Gültig & AGB akzeptiert</p>
+            </div>
+
+            <!-- FEEDBACK CARD (ERST NACH PASS ERSTELLUNG SICHTBAR) -->
+            <div class="card" id="feedback-card" style="display: none;">
+                <h2>Nach dem Durchgang: Bewerten ⭐</h2>
+                <p class="story-p" style="font-size: 0.85rem;">Wie war dein Erlebnis im Keller?</p>
+                
+                <form id="feedback-form">
+                    <div class="rating-row">
+                        <span class="rating-label">🕯️ Ambiente & Deko</span>
+                        <select class="star-select" id="r-ambiente">
+                            <option value="5">⭐⭐⭐⭐⭐ (5)</option>
+                            <option value="4">⭐⭐⭐⭐ (4)</option>
+                            <option value="3">⭐⭐⭐ (3)</option>
+                            <option value="2">⭐⭐ (2)</option>
+                            <option value="1">⭐ (1)</option>
+                        </select>
+                    </div>
+
+                    <div class="rating-row">
+                        <span class="rating-label">👻 Erschrecker & Performance</span>
+                        <select class="star-select" id="r-erschrecker">
+                            <option value="5">⭐⭐⭐⭐⭐ (5)</option>
+                            <option value="4">⭐⭐⭐⭐ (4)</option>
+                            <option value="3">⭐⭐⭐ (3)</option>
+                            <option value="2">⭐⭐ (2)</option>
+                            <option value="1">⭐ (1)</option>
+                        </select>
+                    </div>
+
+                    <div class="rating-row">
+                        <span class="rating-label">🌌 Atmosphäre & Raumgestaltung</span>
+                        <select class="star-select" id="r-atmos">
+                            <option value="5">⭐⭐⭐⭐⭐ (5)</option>
+                            <option value="4">⭐⭐⭐⭐ (4)</option>
+                            <option value="3">⭐⭐⭐ (3)</option>
+                            <option value="2">⭐⭐ (2)</option>
+                            <option value="1">⭐ (1)</option>
+                        </select>
+                    </div>
+
+                    <div class="rating-row">
+                        <span class="rating-label">💡 Licht- & Spezialeffekte</span>
+                        <select class="star-select" id="r-licht">
+                            <option value="5">⭐⭐⭐⭐⭐ (5)</option>
+                            <option value="4">⭐⭐⭐⭐ (4)</option>
+                            <option value="3">⭐⭐⭐ (3)</option>
+                            <option value="2">⭐⭐ (2)</option>
+                            <option value="1">⭐ (1)</option>
+                        </select>
+                    </div>
+
+                    <div class="rating-row">
+                        <span class="rating-label">🔊 Sound & Musik</span>
+                        <select class="star-select" id="r-sound">
+                            <option value="5">⭐⭐⭐⭐⭐ (5)</option>
+                            <option value="4">⭐⭐⭐⭐ (4)</option>
+                            <option value="3">⭐⭐⭐ (3)</option>
+                            <option value="2">⭐⭐ (2)</option>
+                            <option value="1">⭐ (1)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 15px;">
+                        <label for="comment">Kommentar (optional):</label>
+                        <textarea id="comment" placeholder="Wer war am gruseligsten? Was war am besten?"></textarea>
+                    </div>
+                    <button type="submit" class="btn">Bewertung abschicken</button>
+                </form>
             </div>
         </div>
 
@@ -455,16 +624,16 @@
             <div class="card">
                 <h2>Über Uns 💀</h2>
                 <p class="story-p">
-                    <strong>Von zwei Schnüren zu einem High-Tech Horror-Keller!</strong>
+                    <strong>Von zwei Schnüren zur echten Horror-Atmosphäre!</strong>
                 </p>
                 <p class="story-p">
                     Wir sind eine Gruppe von Jugendlichen aus der Region. Angefangen hat alles vor 5 Jahren: Ganz klein mit gerade einmal zwei Schnüren, einer Person in einer Badewanne und kaum Platz im Keller.
                 </p>
                 <p class="story-p">
-                    Aber anstatt jedes Jahr einfach das Gleiche zu machen, haben wir uns immer weiter gesteigert! Von Jahr zu Jahr haben wir mehr Raum erschlossen und die Qualität extrem nach oben geschraubt. Mittlerweile haben wir alles automatisiert und sogar eigene Klimaanlagen eingebaut!
+                    Aber anstatt jedes Jahr einfach das Gleiche zu machen, haben wir uns immer weiter gesteigert! Von Jahr zu Jahr haben wir mehr Raum erschlossen, verdammt viel Arbeit reingesteckt, neue Technik gelernt und coole Licht- & Soundeffekte verbaut.
                 </p>
                 <p class="story-p">
-                    Jedes Jahr stecken wir extrem viel Arbeit, Herzblut und Freizeit rein, um euch das krasseste Halloween-Erlebnis zu bieten. Danke an jeden Einzelnen, der uns besucht und unterstützt! 🔥
+                    Jedes Jahr stecken wir extrem viel Herzblut und Freizeit rein, um euch das krasseste Halloween-Erlebnis zu bieten. Danke an jeden Einzelnen, der uns besucht und unterstützt! 🔥
                 </p>
                 <a href="https://instagram.com/gruselkeller" target="_blank" class="insta-btn" style="width: 100%;">
                     📸 Besuche uns auf Instagram
@@ -472,9 +641,10 @@
             </div>
         </div>
 
-        <!-- Organizer Login Toggle -->
+        <!-- Bottom Links -->
         <div class="admin-toggle">
             <a href="#" id="toggle-admin">⚙️ Organizer Login</a>
+            <a href="#monitor" onclick="enableMonitorView()">📺 Eingang-Monitor (McDonald's Style)</a>
         </div>
 
         <!-- Admin Panel Card -->
@@ -494,9 +664,18 @@
                         <div class="subtitle">Pässe erstellt</div>
                     </div>
                     <div class="stat-box">
-                        <div class="stat-num" id="stat-rating">5.0</div>
-                        <div class="subtitle">Ø Bewertung</div>
+                        <div class="stat-num" id="stat-rating">5.0 ★</div>
+                        <div class="subtitle">Gesamt-Schnitt</div>
                     </div>
+                </div>
+
+                <label>Durchschnitt je Kategorie:</label>
+                <div class="cat-stat-list">
+                    <div class="cat-stat-item"><span>🕯️ Ambiente & Deko:</span><strong id="cat-ambiente">5.0 ★</strong></div>
+                    <div class="cat-stat-item"><span>👻 Erschrecker:</span><strong id="cat-erschrecker">5.0 ★</strong></div>
+                    <div class="cat-stat-item"><span>🌌 Atmosphäre & Wände:</span><strong id="cat-atmos">5.0 ★</strong></div>
+                    <div class="cat-stat-item"><span>💡 Licht-Effekte:</span><strong id="cat-licht">5.0 ★</strong></div>
+                    <div class="cat-stat-item"><span>🔊 Sound & Musik:</span><strong id="cat-sound">5.0 ★</strong></div>
                 </div>
 
                 <label>Gültige Einlass-Pässe (Live-Liste):</label>
@@ -531,38 +710,36 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Direct QR-Code link handling
-        window.addEventListener('DOMContentLoaded', () => {
-            if (window.location.hash === '#regeln') {
-                switchTab('regeln');
-            }
-        });
-
-        // Checkbox logic for enabling pass button
+        // Checkbox logic
         const checkboxes = document.querySelectorAll('.rule-chk');
         const passBtn = document.getElementById('pass-btn');
-        const rulesCard = document.getElementById('rules-card');
-        const passDisplay = document.getElementById('pass-display');
-        const passCode = document.getElementById('pass-code');
+        const selectAllBtn = document.getElementById('select-all-btn');
 
         checkboxes.forEach(chk => {
-            chk.addEventListener('change', () => {
-                const allDone = Array.from(checkboxes).every(c => c.checked);
-                passBtn.disabled = !allDone;
-            });
+            chk.addEventListener('change', checkAllDone);
         });
 
-        // Pass Generation & Validation Log
+        selectAllBtn.addEventListener('click', () => {
+            checkboxes.forEach(chk => chk.checked = true);
+            checkAllDone();
+        });
+
+        function checkAllDone() {
+            const allDone = Array.from(checkboxes).every(c => c.checked);
+            passBtn.disabled = !allDone;
+        }
+
+        // Pass Generation
         passBtn.addEventListener('click', () => {
             const randomNum = Math.floor(1000 + Math.random() * 9000);
             const code = `GK-${randomNum}`;
             const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
             
-            passCode.textContent = code;
-            rulesCard.style.display = 'none';
-            passDisplay.style.display = 'block';
+            document.getElementById('pass-code').textContent = code;
+            document.getElementById('rules-card').style.display = 'none';
+            document.getElementById('pass-display').style.display = 'block';
+            document.getElementById('feedback-card').style.display = 'block';
 
-            // Store Valid Pass in LocalStorage
             let storedPasses = JSON.parse(localStorage.getItem('gk_pass_list') || '[]');
             storedPasses.unshift({ code: code, time: time });
             localStorage.setItem('gk_pass_list', JSON.stringify(storedPasses));
@@ -570,14 +747,78 @@
             updateAdminDashboard();
         });
 
-        // Feedback submission
+        // Feedback Submission & Detailed Rating Calculation
         document.getElementById('feedback-form').addEventListener('submit', (e) => {
             e.preventDefault();
-            showToast('Danke für dein Feedback! 🎃');
-            document.getElementById('feedback-form').reset();
+            
+            const ratingObj = {
+                ambiente: parseInt(document.getElementById('r-ambiente').value),
+                erschrecker: parseInt(document.getElementById('r-erschrecker').value),
+                atmos: parseInt(document.getElementById('r-atmos').value),
+                licht: parseInt(document.getElementById('r-licht').value),
+                sound: parseInt(document.getElementById('r-sound').value)
+            };
+
+            let storedRatings = JSON.parse(localStorage.getItem('gk_ratings') || '[]');
+            storedRatings.push(ratingObj);
+            localStorage.setItem('gk_ratings', JSON.stringify(storedRatings));
+
+            showToast('Vielen Dank für deine Bewertung! 🎃');
+            document.getElementById('feedback-card').style.display = 'none';
+            updateAdminDashboard();
         });
 
-        // Admin Panel Toggle & Login (PIN: 3110)
+        // Monitor Mode
+        function enableMonitorView() {
+            document.getElementById('sec-monitor').classList.add('active');
+            document.getElementById('main-container').style.display = 'none';
+            updateMonitorGrid();
+        }
+
+        function disableMonitorView() {
+            document.getElementById('sec-monitor').classList.remove('active');
+            document.getElementById('main-container').style.display = 'flex';
+        }
+
+        function updateMonitorGrid() {
+            let storedPasses = JSON.parse(localStorage.getItem('gk_pass_list') || '[]');
+            const grid = document.getElementById('monitor-code-grid');
+            
+            if(storedPasses.length === 0) {
+                grid.innerHTML = '<div class="monitor-card"><div class="monitor-code">Keine Codes</div></div>';
+            } else {
+                grid.innerHTML = storedPasses.map(p => `
+                    <div class="monitor-card">
+                        <div class="monitor-code">${p.code}</div>
+                        <div class="monitor-time">✔ AGB Akzeptiert</div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Direct URL Handling
+        window.addEventListener('DOMContentLoaded', checkHash);
+        window.addEventListener('hashchange', checkHash);
+
+        function checkHash() {
+            if (window.location.hash === '#monitor') {
+                enableMonitorView();
+            } else {
+                disableMonitorView();
+                if (window.location.hash === '#regeln') {
+                    switchTab('regeln');
+                }
+            }
+        }
+
+        // Auto-refresh Monitor
+        setInterval(() => {
+            if(document.getElementById('sec-monitor').classList.contains('active')) {
+                updateMonitorGrid();
+            }
+        }, 3000);
+
+        // Admin Panel & PIN (3110)
         const toggleAdmin = document.getElementById('toggle-admin');
         const adminPanel = document.getElementById('admin-panel');
         const adminLoginBox = document.getElementById('admin-login-box');
@@ -613,6 +854,33 @@
         function updateAdminDashboard() {
             let storedPasses = JSON.parse(localStorage.getItem('gk_pass_list') || '[]');
             document.getElementById('stat-passes').textContent = storedPasses.length;
+
+            let storedRatings = JSON.parse(localStorage.getItem('gk_ratings') || '[]');
+            if (storedRatings.length > 0) {
+                let sumAmb = 0, sumErs = 0, sumAtm = 0, sumLic = 0, sumSou = 0;
+                storedRatings.forEach(r => {
+                    sumAmb += r.ambiente;
+                    sumErs += r.erschrecker;
+                    sumAtm += r.atmos;
+                    sumLic += r.licht;
+                    sumSou += r.sound;
+                });
+                let count = storedRatings.length;
+                let avgAmb = (sumAmb / count).toFixed(1);
+                let avgErs = (sumErs / count).toFixed(1);
+                let avgAtm = (sumAtm / count).toFixed(1);
+                let avgLic = (sumLic / count).toFixed(1);
+                let avgSou = (sumSou / count).toFixed(1);
+                
+                let totalAvg = ((parseFloat(avgAmb) + parseFloat(avgErs) + parseFloat(avgAtm) + parseFloat(avgLic) + parseFloat(avgSou)) / 5).toFixed(1);
+
+                document.getElementById('cat-ambiente').textContent = avgAmb + ' ★';
+                document.getElementById('cat-erschrecker').textContent = avgErs + ' ★';
+                document.getElementById('cat-atmos').textContent = avgAtm + ' ★';
+                document.getElementById('cat-licht').textContent = avgLic + ' ★';
+                document.getElementById('cat-sound').textContent = avgSou + ' ★';
+                document.getElementById('stat-rating').textContent = totalAvg + ' ★';
+            }
 
             const listContainer = document.getElementById('pass-log-list');
             if (storedPasses.length === 0) {
