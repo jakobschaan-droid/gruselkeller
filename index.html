@@ -504,25 +504,6 @@
             transform: scale(0.93);
         }
 
-        /* IN-PAGE PIN MODAL OVERLAY */
-        .pin-modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.85);
-            z-index: 10001;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .pin-modal-overlay.active {
-            display: flex;
-        }
-
         #toast {
             position: fixed;
             bottom: 20px;
@@ -561,24 +542,11 @@
 </head>
 <body>
 
-    <!-- IN-PAGE PIN MODAL -->
-    <div class="pin-modal-overlay" id="pin-modal">
-        <div class="card" style="width: 100%; max-width: 320px; text-align: center;">
-            <h2 id="pin-modal-title">PIN Eingabe</h2>
-            <div class="form-group" style="margin-top: 15px;">
-                <label for="modal-pin-input">Bitte PIN eingeben:</label>
-                <input type="password" id="modal-pin-input" placeholder="PIN eingeben">
-            </div>
-            <button class="btn" id="modal-pin-submit">Bestätigen</button>
-            <button class="btn btn-secondary" id="modal-pin-cancel" style="margin-top: 8px; margin-bottom: 0;">Abbrechen</button>
-        </div>
-    </div>
-
     <!-- EXTERNAL MONITOR DISPLAY -->
     <div id="sec-monitor">
         <h1 style="font-size: 3.2rem;">🎃 GRUSELKELLER EINLASS 🎃</h1>
         <p class="subtitle" id="monitor-subtitle" style="font-size: 1.4rem; color: var(--success); margin-top: 10px;">✔ Berechtigte Codes für den Keller-Einlass:</p>
-        
+
         <div class="monitor-grid" id="monitor-code-grid">
             <div class="monitor-card"><div class="monitor-code">Warten...</div></div>
         </div>
@@ -609,7 +577,7 @@
         </div>
 
         <div id="buzzer-result-card" style="display: none; background: var(--card-bg); border: 2px solid var(--accent); padding: 15px 25px; border-radius: 12px; margin-top: 10px;">
-            <div style="font-size: 0.9rem; color: var(--muted);">DEIN CODE HAS DU DIR GESICHERT:</div>
+            <div style="font-size: 0.9rem; color: var(--muted);">DEIN CODE HAST DU DIR GESICHERT:</div>
             <div id="buzzer-result-code" style="font-family: monospace; font-size: 2.5rem; color: var(--accent); font-weight: bold;">GK-0000</div>
             <div id="buzzer-result-info" style="color: var(--success); font-weight: bold; margin-top: 5px;">Sichtbar auf dem Haupt-Monitor sobald du dran bist!</div>
         </div>
@@ -661,7 +629,7 @@
         <div id="sec-regeln" class="page-section">
             <div class="card" id="rules-card">
                 <h2>Hausordnung & Regeln</h2>
-                
+
                 <button class="btn btn-secondary" id="select-all-btn">⚡ Alle Regeln auf einmal akzeptieren</button>
 
                 <div class="rules-list">
@@ -704,7 +672,7 @@
                 <p class="subtitle">Dein persönlicher Code:</p>
                 <div class="pass-id" id="pass-code">GK-8849</div>
                 <div id="pass-group-info" style="color: #38bdf8; font-weight: bold; margin-bottom: 10px;">👥 3 Personen</div>
-                
+
                 <div class="queue-status" id="user-queue-status">
                     Prüfe Status...
                 </div>
@@ -714,7 +682,7 @@
             <div class="card" id="feedback-card" style="display: none;">
                 <h2>Nach dem Durchgang: Bewerten ⭐</h2>
                 <p class="story-p" style="font-size: 0.85rem;">Wie war dein Erlebnis im Keller?</p>
-                
+
                 <form id="feedback-form">
                     <div class="rating-row">
                         <span class="rating-label">🕯️ Ambiente & Deko</span>
@@ -858,11 +826,21 @@
                 </div>
                 <button class="btn" id="login-btn">Einloggen</button>
             </div>
+
             <div id="admin-content" style="display: none;">
-                
+
                 <button class="btn" id="force-start-btn" style="background: linear-gradient(45deg, #e67e22, #d35400); font-size: 1.1rem; padding: 16px; margin-bottom: 15px; border: 2px solid #f39c12;">
                     ⚡ Nächste Gruppe sofort freigeben (Force-Start)
                 </button>
+
+                <div class="setting-box">
+                    <label style="color: var(--accent); font-weight: bold;">🎛️ Organizer-Menü</label>
+                    <div style="display: grid; gap: 8px; margin-top: 10px;">
+                        <button class="btn" id="admin-open-monitor-btn">📺 Live-Monitor öffnen</button>
+                        <button class="btn btn-secondary" id="admin-open-buzzer-btn">🕹️ Buzzer / Kiosk öffnen</button>
+                        <button class="btn btn-secondary" id="admin-close-views-btn">🏠 Zurück zur Website</button>
+                    </div>
+                </div>
 
                 <div class="stat-grid">
                     <div class="stat-box">
@@ -919,11 +897,9 @@
 
         <footer>
             <div class="footer-links">
-                <a href="#" onclick="switchTab('impressum'); return false;">Impressum</a> | 
-                <a href="#" onclick="switchTab('datenschutz'); return false;">Datenschutz</a> | 
-                <a href="#" id="toggle-admin">⚙️ Organizer Login</a> | 
-                <a href="#" id="toggle-monitor-link">📺 Live-Monitor</a> | 
-                <a href="#" id="toggle-buzzer-link">🕹️ Buzzer / Kiosk-Terminal</a>
+                <a href="#" onclick="switchTab('impressum'); return false;">Impressum</a> |
+                <a href="#" onclick="switchTab('datenschutz'); return false;">Datenschutz</a> |
+                <a href="#" id="toggle-admin">⚙️ Organizer Login</a>
             </div>
             <div>© Gruselkeller Team</div>
         </footer>
@@ -933,7 +909,6 @@
 
     <script>
         let myPassCode = null;
-        let pendingTargetHash = '';
 
         function getSettings() {
             return {
@@ -942,32 +917,6 @@
                 timerSeconds: parseInt(localStorage.getItem('gk_timer_seconds') || '60')
             };
         }
-
-        function openPinModal(targetHash, title) {
-            pendingTargetHash = targetHash;
-            document.getElementById('pin-modal-title').textContent = title || 'PIN Eingabe';
-            document.getElementById('modal-pin-input').value = '';
-            document.getElementById('pin-modal').classList.add('active');
-            document.getElementById('modal-pin-input').focus();
-        }
-
-        function closePinModal() {
-            document.getElementById('pin-modal').classList.remove('active');
-            pendingTargetHash = '';
-        }
-
-        document.getElementById('modal-pin-cancel').addEventListener('click', closePinModal);
-
-        document.getElementById('modal-pin-submit').addEventListener('click', () => {
-            const inputVal = document.getElementById('modal-pin-input').value;
-            if (inputVal === '3110') {
-                const target = pendingTargetHash;
-                closePinModal();
-                window.location.hash = target;
-            } else {
-                alert('Falsche PIN!');
-            }
-        });
 
         function switchTab(tabName) {
             document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
@@ -1010,7 +959,7 @@
             const randomNum = Math.floor(1000 + Math.random() * 9000);
             myPassCode = `GK-${randomNum}`;
             const groupSize = parseInt(document.getElementById('group-size-select').value);
-            
+
             document.getElementById('pass-code').textContent = myPassCode;
             document.getElementById('pass-group-info').textContent = `👥 ${groupSize} Person${groupSize > 1 ? 'en' : ''}`;
             document.getElementById('rules-card').style.display = 'none';
@@ -1020,7 +969,7 @@
             let queue = JSON.parse(localStorage.getItem('gk_queue') || '[]');
             queue.push({ code: myPassCode, size: groupSize, created: Date.now(), startTime: null });
             localStorage.setItem('gk_queue', JSON.stringify(queue));
-            
+
             window.dispatchEvent(new Event('storage'));
             updateUserQueueStatus();
             updateAdminDashboard();
@@ -1075,7 +1024,7 @@
 
         function updateUserQueueStatus() {
             if (!myPassCode) return;
-            
+
             let queue = processQueue();
             let myItem = queue.find(item => item.code === myPassCode);
             const statusBox = document.getElementById('user-queue-status');
@@ -1128,7 +1077,7 @@
             updateMonitorGrid();
         });
 
-        // FORCE START BUTTON LOGIK
+        // FORCE START BUTTON
         document.getElementById('force-start-btn').addEventListener('click', () => {
             let queue = JSON.parse(localStorage.getItem('gk_queue') || '[]');
             queue = queue.filter(item => item.startTime === null);
@@ -1168,7 +1117,7 @@
         }
 
         document.getElementById('main-buzzer-trigger').addEventListener('click', triggerBuzzer);
-        
+
         window.addEventListener('keydown', (e) => {
             if (document.getElementById('sec-buzzer').classList.contains('active')) {
                 if (e.code === 'Space' || e.code === 'Enter') {
@@ -1176,16 +1125,6 @@
                     triggerBuzzer();
                 }
             }
-        });
-
-        document.getElementById('toggle-monitor-link').addEventListener('click', (e) => {
-            e.preventDefault();
-            openPinModal('#monitor', '📺 Live-Monitor PIN');
-        });
-
-        document.getElementById('toggle-buzzer-link').addEventListener('click', (e) => {
-            e.preventDefault();
-            openPinModal('#buzzer', '🕹️ Kiosk-Buzzer PIN');
         });
 
         function enableMonitorView() {
@@ -1215,7 +1154,7 @@
             let queue = processQueue();
             let activeOnMonitor = queue.filter(item => item.startTime !== null);
             const grid = document.getElementById('monitor-code-grid');
-            
+
             if (activeOnMonitor.length === 0) {
                 grid.innerHTML = '<div class="monitor-card"><div class="monitor-code">Warten...</div></div>';
             } else {
@@ -1262,7 +1201,7 @@
             if (adminPin.value === '3110') {
                 adminLoginBox.style.display = 'none';
                 adminContent.style.display = 'block';
-                
+
                 let settings = getSettings();
                 document.getElementById('admin-mode-select').value = settings.mode;
                 document.getElementById('admin-max-persons').value = settings.maxPersons;
@@ -1291,7 +1230,7 @@
                 localStorage.setItem('gk_mode', mode);
                 localStorage.setItem('gk_max_persons', maxPersons);
                 localStorage.setItem('gk_timer_seconds', timerSeconds);
-                
+
                 window.dispatchEvent(new Event('storage'));
                 showToast('Einstellungen gespeichert!');
             } else {
@@ -1305,13 +1244,28 @@
                 localStorage.removeItem('gk_ratings');
                 localStorage.removeItem('gk_pass_list');
                 myPassCode = null;
-                
+
                 window.dispatchEvent(new Event('storage'));
-                
+
                 updateAdminDashboard();
                 updateMonitorGrid();
                 showToast('Alle Daten wurden vollständig gelöscht!');
             }
+        });
+
+        document.getElementById('admin-open-monitor-btn').addEventListener('click', () => {
+            window.location.hash = '#monitor';
+            showToast('Live-Monitor geöffnet');
+        });
+
+        document.getElementById('admin-open-buzzer-btn').addEventListener('click', () => {
+            window.location.hash = '#buzzer';
+            showToast('Buzzer/Kiosk geöffnet');
+        });
+
+        document.getElementById('admin-close-views-btn').addEventListener('click', () => {
+            window.location.hash = '';
+            showToast('Zur Website zurück');
         });
 
         window.addEventListener('storage', () => {
@@ -1341,7 +1295,7 @@
                 let avgAtm = (sumAtm / count).toFixed(1);
                 let avgLic = (sumLic / count).toFixed(1);
                 let avgSou = (sumSou / count).toFixed(1);
-                
+
                 let totalAvg = ((parseFloat(avgAmb) + parseFloat(avgErs) + parseFloat(avgAtm) + parseFloat(avgLic) + parseFloat(avgSou)) / 5).toFixed(1);
 
                 document.getElementById('cat-ambiente').textContent = avgAmb + ' ★';
