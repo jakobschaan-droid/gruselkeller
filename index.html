@@ -1,571 +1,605 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gruselkeller Halloween</title>
-  <style>
-    :root {
-      --bg: #0d0d11;
-      --card-bg: #181822;
-      --accent: #ff6b00;
-      --accent-hover: #e05d00;
-      --text: #e0e0e0;
-      --muted: #a0a0b0;
-      --success: #00e676;
-      --danger: #ff5252;
-      --font: system-ui, -apple-system, sans-serif;
-    }
-    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gruselkeller | Das Halloween-Highlight</title>
+    <style>
+        :root {
+            --bg: #0b0c11;
+            --card-bg: #161822;
+            --accent: #ff6600;
+            --accent-hover: #e55d00;
+            --text: #f0f0f0;
+            --muted: #9aa0a6;
+            --success: #2ecc71;
+            --danger: #e74c3c;
+            --paypal-blue: #0070ba;
+            --font: system-ui, -apple-system, sans-serif;
+        }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    body {
-      background-color: var(--bg);
-      color: var(--text);
-      font-family: var(--font);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px 15px;
-    }
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 15px;
+        }
 
-    .container {
-      width: 100%;
-      max-width: 500px;
-    }
+        .container {
+            width: 100%;
+            max-width: 480px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
 
-    header {
-      text-align: center;
-      margin-bottom: 25px;
-      position: relative;
-    }
+        /* Navigation Tabs */
+        nav {
+            display: flex;
+            gap: 8px;
+            background: var(--card-bg);
+            padding: 6px;
+            border-radius: 12px;
+            border: 1px solid #262938;
+        }
 
-    h1 {
-      color: var(--accent);
-      font-size: 2.2rem;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin-bottom: 5px;
-      text-shadow: 0 0 10px rgba(255, 107, 0, 0.4);
-    }
+        .nav-btn {
+            flex: 1;
+            padding: 10px;
+            background: transparent;
+            border: none;
+            color: var(--muted);
+            font-weight: bold;
+            font-size: 0.9rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
 
-    .subtitle {
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
+        .nav-btn.active {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 2px 8px rgba(255, 102, 0, 0.4);
+        }
 
-    .admin-btn {
-      position: absolute;
-      top: 0;
-      right: 0;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.1);
-      color: var(--muted);
-      padding: 6px 10px;
-      border-radius: 6px;
-      font-size: 0.8rem;
-      cursor: pointer;
-    }
+        header {
+            text-align: center;
+            padding: 15px 0 5px 0;
+        }
 
-    .card {
-      background: var(--card-bg);
-      border: 1px solid rgba(255, 107, 0, 0.2);
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 20px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-    }
+        h1 {
+            color: var(--accent);
+            font-size: 2.2rem;
+            margin-bottom: 5px;
+            text-shadow: 0 0 12px rgba(255, 102, 0, 0.4);
+        }
 
-    h2 {
-      font-size: 1.3rem;
-      color: #fff;
-      margin-bottom: 15px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+        .subtitle {
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
 
-    .rules-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
+        .insta-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 12px;
+            padding: 8px 16px;
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            color: white;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: transform 0.2s;
+        }
 
-    .rule-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      background: rgba(0,0,0,0.2);
-      padding: 10px 12px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
+        .insta-btn:hover {
+            transform: translateY(-2px);
+        }
 
-    .rule-item input[type="checkbox"] {
-      width: 20px;
-      height: 20px;
-      margin-top: 2px;
-      accent-color: var(--accent);
-      cursor: pointer;
-    }
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid #262938;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+        }
 
-    .rule-text {
-      font-size: 0.95rem;
-      line-height: 1.4;
-    }
+        h2 {
+            font-size: 1.25rem;
+            margin-bottom: 15px;
+            color: var(--text);
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 8px;
+        }
 
-    .btn {
-      width: 100%;
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      padding: 14px;
-      border-radius: 8px;
-      font-size: 1.05rem;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.2s;
-      margin-top: 15px;
-    }
+        /* Rules */
+        .rules-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
 
-    .btn:disabled {
-      background: #333;
-      color: #777;
-      cursor: not-allowed;
-    }
+        .rule-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
 
-    .btn:not(:disabled):hover {
-      background: var(--accent-hover);
-    }
+        .rule-item input[type="checkbox"] {
+            appearance: none;
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--muted);
+            border-radius: 6px;
+            background: var(--bg);
+            display: grid;
+            place-content: center;
+            cursor: pointer;
+            margin-top: 1px;
+            flex-shrink: 0;
+            transition: all 0.2s;
+        }
 
-    .btn-secondary {
-      background: transparent;
-      border: 1px solid var(--accent);
-      color: var(--accent);
-    }
+        .rule-item input[type="checkbox"]:checked {
+            background-color: var(--accent);
+            border-color: var(--accent);
+        }
 
-    .btn-secondary:hover {
-      background: rgba(255, 107, 0, 0.1);
-    }
+        .rule-item input[type="checkbox"]::before {
+            content: "";
+            width: 10px;
+            height: 6px;
+            border-left: 2px solid white;
+            border-bottom: 2px solid white;
+            transform: rotate(-45deg) translate(1px, -1px);
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
 
-    .ticket {
-      text-align: center;
-      border: 2px dashed var(--accent);
-      padding: 20px;
-      border-radius: 8px;
-      background: rgba(255, 107, 0, 0.05);
-    }
+        .rule-item input[type="checkbox"]:checked::before {
+            opacity: 1;
+        }
 
-    .ticket-num {
-      font-size: 2rem;
-      font-weight: bold;
-      color: var(--accent);
-      letter-spacing: 3px;
-      margin: 10px 0;
-    }
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+        }
 
-    .rating-group {
-      margin-bottom: 20px;
-    }
+        .btn:hover {
+            background-color: var(--accent-hover);
+        }
 
-    .rating-label {
-      display: block;
-      margin-bottom: 8px;
-      font-size: 0.95rem;
-      color: var(--muted);
-    }
+        .btn:disabled {
+            background-color: #333;
+            color: var(--muted);
+            cursor: not-allowed;
+        }
 
-    .stars {
-      display: flex;
-      gap: 10px;
-      font-size: 1.8rem;
-      cursor: pointer;
-    }
+        .donate-btn {
+            background-color: var(--paypal-blue);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 1.05rem;
+        }
 
-    .star {
-      opacity: 0.3;
-      transition: opacity 0.2s, transform 0.1s;
-    }
+        .donate-btn:hover {
+            background-color: #005ea6;
+        }
 
-    .star.active {
-      opacity: 1;
-    }
+        #pass-display {
+            display: none;
+            text-align: center;
+            background: linear-gradient(135deg, #1f2233, #12141c);
+            border: 2px dashed var(--accent);
+        }
 
-    .star:active {
-      transform: scale(1.2);
-    }
+        .pass-id {
+            font-family: monospace;
+            font-size: 1.8rem;
+            letter-spacing: 3px;
+            color: var(--accent);
+            margin: 10px 0;
+            font-weight: bold;
+        }
 
-    textarea, input[type="password"] {
-      width: 100%;
-      background: rgba(0,0,0,0.3);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 8px;
-      padding: 12px;
-      color: #fff;
-      font-family: inherit;
-      resize: vertical;
-    }
+        .form-group {
+            margin-bottom: 15px;
+        }
 
-    textarea:focus, input[type="password"]:focus {
-      outline: none;
-      border-color: var(--accent);
-    }
+        label {
+            display: block;
+            font-size: 0.9rem;
+            margin-bottom: 6px;
+            color: var(--muted);
+        }
 
-    .hidden {
-      display: none !important;
-    }
+        select, textarea, input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            background: var(--bg);
+            border: 1px solid #262938;
+            color: var(--text);
+            border-radius: 6px;
+            font-family: var(--font);
+            font-size: 0.95rem;
+        }
 
-    .stat-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 20px;
-    }
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
 
-    .stat-card {
-      background: rgba(0,0,0,0.3);
-      padding: 15px;
-      border-radius: 8px;
-      text-align: center;
-    }
+        /* Sections Toggle */
+        .page-section {
+            display: none;
+            flex-direction: column;
+            gap: 20px;
+        }
 
-    .stat-value {
-      font-size: 1.8rem;
-      font-weight: bold;
-      color: var(--accent);
-    }
+        .page-section.active {
+            display: flex;
+        }
 
-    .stat-desc {
-      font-size: 0.8rem;
-      color: var(--muted);
-      margin-top: 4px;
-    }
+        /* Admin */
+        .admin-toggle {
+            text-align: center;
+            margin-top: 10px;
+        }
 
-    .comment-item {
-      background: rgba(0,0,0,0.3);
-      padding: 12px;
-      border-radius: 8px;
-      margin-bottom: 10px;
-      font-size: 0.9rem;
-      border-left: 3px solid var(--accent);
-    }
+        .admin-toggle a {
+            color: var(--muted);
+            font-size: 0.8rem;
+            text-decoration: none;
+        }
 
-    @media print {
-      body * {
-        visibility: hidden;
-      }
-      #print-area, #print-area * {
-        visibility: visible;
-      }
-      #print-area {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        color: #000;
-        background: #fff;
-        padding: 40px;
-        text-align: center;
-      }
-    }
-  </style>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+        #admin-panel {
+            display: none;
+            border-color: #d35400;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .stat-box {
+            background: var(--bg);
+            padding: 10px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .stat-num {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        #toast {
+            position: fixed;
+            bottom: 20px;
+            background: var(--success);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            display: none;
+            z-index: 1000;
+        }
+
+        .story-p {
+            line-height: 1.6;
+            color: #d0d0d0;
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+        }
+    </style>
 </head>
 <body>
 
-  <div class="container">
-    <header>
-      <button class="admin-btn" onclick="toggleAdmin()">⚙️ Organizer</button>
-      <h1>🎃 Gruselkeller</h1>
-      <p class="subtitle">Eintritt & Bewertung</p>
-    </header>
+    <div class="container">
+        <header>
+            <h1>🎃 GRUSELKELLER</h1>
+            <p class="subtitle">Das krasseste Halloween-Erlebnis der Region</p>
+            <a href="https://instagram.com/gruselkeller" target="_blank" class="insta-btn">
+                📸 Folge uns auf Instagram (@gruselkeller)
+            </a>
+        </header>
 
-    <!-- STEP 1: RULES -->
-    <div id="step-rules" class="card">
-      <h2>📜 Hausregeln</h2>
-      <p style="font-size:0.85rem; color: var(--muted); margin-bottom: 15px;">
-        Bitte lies und akzeptiere alle Regeln, um den Keller zu betreten.
-      </p>
-      
-      <ul class="rules-list">
-        <label class="rule-item">
-          <input type="checkbox" onchange="checkRules()">
-          <span class="rule-text"><strong>Altershinweis:</strong> Einlass unter 8 Jahren nur in Begleitung einer volljährigen Person.</span>
-        </label>
-        <label class="rule-item">
-          <input type="checkbox" onchange="checkRules()">
-          <span class="rule-text"><strong>Nicht anfassen:</strong> Erschrecker und Requisiten dürfen nicht berührt werden.</span>
-        </label>
-        <label class="rule-item">
-          <input type="checkbox" onchange="checkRules()">
-          <span class="rule-text"><strong>Licht auslassen:</strong> Keine eigenen Taschenlampen oder Smartphone-Lichter nutzen.</span>
-        </label>
-        <label class="rule-item">
-          <input type="checkbox" onchange="checkRules()">
-          <span class="rule-text"><strong>Aufpassen:</strong> Rennen und Drängeln ist strengstens verboten (Sturzgefahr).</span>
-        </label>
-        <label class="rule-item">
-          <input type="checkbox" onchange="checkRules()">
-          <span class="rule-text"><strong>Eigenverantwortung:</strong> Betreten auf eigene Gefahr. Bei Panik sofort Stop rufen.</span>
-        </label>
-      </ul>
+        <!-- Navigation Tabs -->
+        <nav>
+            <button class="nav-btn active" onclick="switchTab('home')">🏠 Start</button>
+            <button class="nav-btn" onclick="switchTab('regeln')">📜 Einlass & Regeln</button>
+            <button class="nav-btn" onclick="switchTab('about')">💀 Über uns</button>
+        </nav>
 
-      <button id="btn-accept" class="btn" disabled onclick="acceptRules()">Ich akzeptiere die Regeln</button>
-    </div>
+        <!-- PAGE 1: HOME -->
+        <div id="sec-home" class="page-section active">
+            <div class="card" style="text-align: center;">
+                <h2>Bist du bereit für den Nervenkitzel?</h2>
+                <p class="story-p">
+                    Tritt ein in den dunkelsten Keller der Region! Erlebe echte Schreckmomente, Soundeffekte und eine einzigartige Horror-Atmosphäre.
+                </p>
+                <button class="btn" onclick="switchTab('regeln')" style="margin-top: 10px;">👉 Jetzt Regeln akzeptieren & Einlass-Pass holen</button>
+            </div>
 
-    <!-- STEP 2: TICKET / PASS -->
-    <div id="step-ticket" class="card hidden">
-      <h2>🎟️ Einlass-Pass</h2>
-      <div class="ticket">
-        <p>Zeige diesen Pass am Eingang vor:</p>
-        <div class="ticket-num" id="ticket-id">#0000</div>
-        <p style="color: var(--success); font-weight: bold; font-size: 0.9rem;">✅ REGELN AKZEPTIERT</p>
-      </div>
-      <button class="btn btn-secondary" onclick="showFeedbackScreen()" style="margin-top:20px;">
-        Nach dem Besuch: Feedback geben 📝
-      </button>
-    </div>
+            <!-- Donation Card -->
+            <div class="card" style="text-align: center;">
+                <h2>☕ Unterstütze das Projekt</h2>
+                <p class="story-p">
+                    Wir machen das komplett in unserer Freizeit! Wenn dir der Gruselkeller gefällt, freuen wir uns riesig über eine kleine digitale Spende für neue Requisiten, Kostüme & Effekte.
+                </p>
+                <!-- Hier kannst du deinen echten PayPal.me Link eintragen -->
+                <a href="https://paypal.me/gruselkeller" target="_blank" class="btn donate-btn">
+                    💳 Per PayPal / Digital Pay spenden
+                </a>
+            </div>
 
-    <!-- STEP 3: FEEDBACK FORM -->
-    <div id="step-feedback" class="card hidden">
-      <h2>👻 Wie war es?</h2>
-      
-      <div class="rating-group">
-        <span class="rating-label">Gruselfaktor (💀):</span>
-        <div class="stars" id="rating-scare">
-          <span class="star" onclick="setRating('scare', 1)">💀</span>
-          <span class="star" onclick="setRating('scare', 2)">💀</span>
-          <span class="star" onclick="setRating('scare', 3)">💀</span>
-          <span class="star" onclick="setRating('scare', 4)">💀</span>
-          <span class="star" onclick="setRating('scare', 5)">💀</span>
-        </div>
-      </div>
-
-      <div class="rating-group">
-        <span class="rating-label">Atmosphäre & Deko (⭐):</span>
-        <div class="stars" id="rating-atmos">
-          <span class="star" onclick="setRating('atmos', 1)">⭐</span>
-          <span class="star" onclick="setRating('atmos', 2)">⭐</span>
-          <span class="star" onclick="setRating('atmos', 3)">⭐</span>
-          <span class="star" onclick="setRating('atmos', 4)">⭐</span>
-          <span class="star" onclick="setRating('atmos', 5)">⭐</span>
-        </div>
-      </div>
-
-      <div class="rating-group">
-        <span class="rating-label">Kommentar / Was hat dir besonders gefallen?</span>
-        <textarea id="feedback-text" rows="3" placeholder="Deine Meinung..."></textarea>
-      </div>
-
-      <button class="btn" onclick="submitFeedback()">Bewertung absenden</button>
-    </div>
-
-    <!-- THANK YOU SCREEN -->
-    <div id="step-thanks" class="card hidden" style="text-align: center;">
-      <h2>🎉 Vielen Dank!</h2>
-      <p style="color: var(--muted); margin-top: 10px;">Deine Bewertung wurde gespeichert. Wir hoffen, du hattest einen schrecklich guten Abend!</p>
-      <button class="btn btn-secondary" onclick="resetToHome()" style="margin-top: 20px;">Zurück zum Anfang</button>
-    </div>
-
-    <!-- ADMIN DASHBOARD -->
-    <div id="step-admin" class="card hidden">
-      <h2>⚙️ Veranstalter Dashboard</h2>
-      
-      <div id="admin-auth">
-        <p class="rating-label">Bitte PIN eingeben:</p>
-        <input type="password" id="admin-pin" placeholder="PIN" style="margin-bottom: 10px;">
-        <button class="btn" onclick="authAdmin()">Login</button>
-      </div>
-
-      <div id="admin-content" class="hidden">
-        <div class="stat-grid">
-          <div class="stat-card">
-            <div class="stat-value" id="stat-count">0</div>
-            <div class="stat-desc">Besucher / Feedback</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-value" id="stat-scare">0.0</div>
-            <div class="stat-desc">Ø Gruselfaktor</div>
-          </div>
+            <!-- Feedback Card -->
+            <div class="card">
+                <h2>Feedback & Bewertung</h2>
+                <form id="feedback-form">
+                    <div class="form-group">
+                        <label for="scare-factor">Wie gruselig war es?</label>
+                        <select id="scare-factor" required>
+                            <option value="">Bitte wählen...</option>
+                            <option value="5">👻👻👻👻👻 Extrem schockierend!</option>
+                            <option value="4">😱 Richtig gruselig</option>
+                            <option value="3">🎃 Genau richtig</option>
+                            <option value="2">👻 Geht so</option>
+                            <option value="1">🥱 Eher langweilig</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="comment">Kommentar / Note an die Erschrecker:</label>
+                        <textarea id="comment" placeholder="Wer war am gruseligsten?"></textarea>
+                    </div>
+                    <button type="submit" class="btn">Feedback abschicken</button>
+                </form>
+            </div>
         </div>
 
-        <h3 style="color:#fff; font-size:1rem; margin-bottom: 10px;">Feedback-Kommentare</h3>
-        <div id="comments-list" style="max-height: 200px; overflow-y: auto; margin-bottom: 20px;">
-          <p style="color: var(--muted); font-size: 0.85rem;">Noch keine Kommentare.</p>
+        <!-- PAGE 2: REGELN & PASS -->
+        <div id="sec-regeln" class="page-section">
+            <div class="card" id="rules-card">
+                <h2>Hausordnung & Regeln</h2>
+                <div class="rules-list">
+                    <label class="rule-item">
+                        <input type="checkbox" class="rule-chk">
+                        <span><strong>Altersfreigabe:</strong> Einlass unter 12 Jahren nur in Begleitung einer volljährigen Person (ab 8 Jahren).</span>
+                    </label>
+                    <label class="rule-item">
+                        <input type="checkbox" class="rule-chk">
+                        <span><strong>Kein Anfassen:</strong> Die Erschrecker dürfen nicht berührt werden. Gleiches gilt umgekehrt.</span>
+                    </label>
+                    <label class="rule-item">
+                        <input type="checkbox" class="rule-chk">
+                        <span><strong>Keine Gewalt:</strong> Bei Panik sofort "Stopp" rufen. Vandalismus führt zum sofortigen Verweis.</span>
+                    </label>
+                    <label class="rule-item">
+                        <input type="checkbox" class="rule-chk">
+                        <span><strong>Foto-Verbot:</strong> Kein Blitzlicht im Keller, um andere Gäste nicht zu blenden.</span>
+                    </label>
+                </div>
+                <button class="btn" id="pass-btn" disabled>Regeln akzeptieren & Pass generieren</button>
+            </div>
+
+            <div class="card" id="pass-display">
+                <h2>Dein Digitaler Einlass-Pass</h2>
+                <p class="subtitle">Zeige diesen Pass jetzt am Eingang vor:</p>
+                <div class="pass-id" id="pass-code">GK-8849</div>
+                <p style="font-size: 0.85rem; color: var(--success);">✔ Gültig für den heutigen Abend</p>
+            </div>
         </div>
 
-        <button class="btn btn-secondary" onclick="generateQROverlay()" style="margin-bottom: 10px;">QR-Schild Drucken 🖨️</button>
-        <button class="btn" onclick="resetData()" style="background: var(--danger);">Daten zurücksetzen</button>
-      </div>
+        <!-- PAGE 3: ÜBER UNS -->
+        <div id="sec-about" class="page-section">
+            <div class="card">
+                <h2>Über Uns 🩸</h2>
+                <p class="story-p">
+                    <strong>Von einer spontanen Idee zum größten Horror-Highlight der Region!</strong>
+                </p>
+                <p class="story-p">
+                    Wir sind eine Gruppe von Jugendlichen aus der Region, die vor 5 Jahren klein angefangen haben. Was mit ein paar einfachen Papp-Dekos und Taschenlampen begann, ist über die Jahre zu einem vollwertigen Gruselerlebnis gewachsen.
+                </p>
+                <p class="story-p">
+                    Jedes Jahr investieren wir Wochen an Arbeit, schweißen, basteln und tüfteln an neuen Effekten, um euch die krassesten Schreckmomente zu verpassen. Danke an jeden, der uns unterstützt! 🔥
+                </p>
+                <a href="https://instagram.com/gruselkeller" target="_blank" class="insta-btn" style="width: 100%;">
+                    📸 Besuche uns auf Instagram
+                </a>
+            </div>
+        </div>
+
+        <!-- Organizer Login Toggle -->
+        <div class="admin-toggle">
+            <a href="#" id="toggle-admin">⚙️ Organizer Login</a>
+        </div>
+
+        <!-- Admin Panel Card -->
+        <div class="card" id="admin-panel">
+            <h2>Veranstalter Dashboard</h2>
+            <div id="admin-login-box">
+                <div class="form-group">
+                    <label for="admin-pin">PIN eingeben (Standard: 1031):</label>
+                    <input type="password" id="admin-pin" placeholder="PIN eingeben">
+                </div>
+                <button class="btn" id="login-btn">Einloggen</button>
+            </div>
+            <div id="admin-content" style="display: none;">
+                <div class="stat-grid">
+                    <div class="stat-box">
+                        <div class="stat-num" id="stat-passes">14</div>
+                        <div class="subtitle">Pässe erstellt</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-num" id="stat-rating">4.8</div>
+                        <div class="subtitle">Ø Bewertung</div>
+                    </div>
+                </div>
+                <button class="btn" id="print-qr-btn" style="background-color: #2c3e50; margin-bottom: 10px;">QR-Schild Drucken 🖨️</button>
+                <button class="btn" id="logout-btn" style="background-color: var(--danger);">Ausloggen</button>
+            </div>
+        </div>
     </div>
 
-  </div>
+    <div id="toast">Erfolgreich gespeichert!</div>
 
-  <!-- PRINT OVERLAY AREA -->
-  <div id="print-area" class="hidden">
-    <h1 style="font-size: 2.5rem; margin-bottom: 10px;">🎃 GRUSELKELLER</h1>
-    <p style="font-size: 1.2rem; margin-bottom: 20px;">Scanne den QR-Code vor dem Betreten für Regeln & Einlass:</p>
-    <div id="qrcode-print" style="display: inline-block; padding: 20px; background: #fff; border: 2px solid #000;"></div>
-    <p style="margin-top: 20px; font-size: 0.9rem; color: #555;">Sicher & kontaktlos Regeln akzeptieren</p>
-  </div>
+    <script>
+        // Tab Navigation Logic
+        function switchTab(tabName) {
+            document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
 
-  <script>
-    let scareRating = 0;
-    let atmosRating = 0;
-
-    function checkRules() {
-      const checkboxes = document.querySelectorAll('.rules-list input[type="checkbox"]');
-      const allChecked = Array.from(checkboxes).every(cb => cb.checked);
-      document.getElementById('btn-accept').disabled = !allChecked;
-    }
-
-    function acceptRules() {
-      playGhostSound();
-      document.getElementById('step-rules').classList.add('hidden');
-      document.getElementById('step-ticket').classList.remove('hidden');
-      
-      const randomTicket = '#' + Math.floor(1000 + Math.random() * 9000);
-      document.getElementById('ticket-id').innerText = randomTicket;
-    }
-
-    function showFeedbackScreen() {
-      document.getElementById('step-ticket').classList.add('hidden');
-      document.getElementById('step-feedback').classList.remove('hidden');
-    }
-
-    function setRating(type, val) {
-      if(type === 'scare') {
-        scareRating = val;
-        updateStars('rating-scare', val);
-      } else {
-        atmosRating = val;
-        updateStars('rating-atmos', val);
-      }
-    }
-
-    function updateStars(containerId, val) {
-      const stars = document.querySelectorAll(`#${containerId} .star`);
-      stars.forEach((star, idx) => {
-        if (idx < val) {
-          star.classList.add('active');
-        } else {
-          star.classList.remove('active');
+            if(tabName === 'home') {
+                document.getElementById('sec-home').classList.add('active');
+                document.querySelectorAll('.nav-btn')[0].classList.add('active');
+            } else if(tabName === 'regeln') {
+                document.getElementById('sec-regeln').classList.add('active');
+                document.querySelectorAll('.nav-btn')[1].classList.add('active');
+            } else if(tabName === 'about') {
+                document.getElementById('sec-about').classList.add('active');
+                document.querySelectorAll('.nav-btn')[2].classList.add('active');
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-      });
-    }
 
-    function submitFeedback() {
-      if(scareRating === 0 || atmosRating === 0) {
-        alert('Bitte gib mindestens eine Bewertung für Gruselfaktor und Atmosphäre ab!');
-        return;
-      }
+        // Direct QR-Code link handling (if URL contains #regeln, jump to rules directly)
+        window.addEventListener('DOMContentLoaded', () => {
+            if (window.location.hash === '#regeln') {
+                switchTab('regeln');
+            }
+        });
 
-      const text = document.getElementById('feedback-text').value;
-      const feedbackData = {
-        scare: scareRating,
-        atmos: atmosRating,
-        text: text,
-        date: new Date().toISOString()
-      };
+        // Checkbox logic for enabling pass button
+        const checkboxes = document.querySelectorAll('.rule-chk');
+        const passBtn = document.getElementById('pass-btn');
+        const rulesCard = document.getElementById('rules-card');
+        const passDisplay = document.getElementById('pass-display');
+        const passCode = document.getElementById('pass-code');
 
-      const existing = JSON.parse(localStorage.getItem('grusel_feedback') || '[]');
-      existing.push(feedbackData);
-      localStorage.setItem('grusel_feedback', JSON.stringify(existing));
+        checkboxes.forEach(chk => {
+            chk.addEventListener('change', () => {
+                const allDone = Array.from(checkboxes).every(c => c.checked);
+                passBtn.disabled = !allDone;
+            });
+        });
 
-      document.getElementById('step-feedback').classList.add('hidden');
-      document.getElementById('step-thanks').classList.remove('hidden');
-    }
+        passBtn.addEventListener('click', () => {
+            const randomNum = Math.floor(1000 + Math.random() * 9000);
+            passCode.textContent = `GK-${randomNum}`;
+            rulesCard.style.display = 'none';
+            passDisplay.style.display = 'block';
 
-    function resetToHome() {
-      location.reload();
-    }
+            let passes = localStorage.getItem('gk_passes') ? parseInt(localStorage.getItem('gk_passes')) : 14;
+            passes++;
+            localStorage.setItem('gk_passes', passes);
+            document.getElementById('stat-passes').textContent = passes;
+        });
 
-    function toggleAdmin() {
-      document.getElementById('step-rules').classList.add('hidden');
-      document.getElementById('step-ticket').classList.add('hidden');
-      document.getElementById('step-feedback').classList.add('hidden');
-      document.getElementById('step-thanks').classList.add('hidden');
-      document.getElementById('step-admin').classList.remove('hidden');
-    }
+        // Feedback submission
+        document.getElementById('feedback-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            showToast('Danke für dein Feedback! 🎃');
+            document.getElementById('feedback-form').reset();
+        });
 
-    function authAdmin() {
-      const pin = document.getElementById('admin-pin').value;
-      if(pin === '1031') {
-        document.getElementById('admin-auth').classList.add('hidden');
-        document.getElementById('admin-content').classList.remove('hidden');
-        loadAdminData();
-      } else {
-        alert('Falsche PIN!');
-      }
-    }
+        // Admin Panel Toggle & Login
+        const toggleAdmin = document.getElementById('toggle-admin');
+        const adminPanel = document.getElementById('admin-panel');
+        const adminLoginBox = document.getElementById('admin-login-box');
+        const adminContent = document.getElementById('admin-content');
+        const loginBtn = document.getElementById('login-btn');
+        const adminPin = document.getElementById('admin-pin');
+        const logoutBtn = document.getElementById('logout-btn');
 
-    function loadAdminData() {
-      const data = JSON.parse(localStorage.getItem('grusel_feedback') || '[]');
-      document.getElementById('stat-count').innerText = data.length;
+        toggleAdmin.addEventListener('click', (e) => {
+            e.preventDefault();
+            adminPanel.style.display = adminPanel.style.display === 'block' ? 'none' : 'block';
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        });
 
-      if(data.length > 0) {
-        const avgScare = (data.reduce((acc, curr) => acc + curr.scare, 0) / data.length).toFixed(1);
-        document.getElementById('stat-scare').innerText = avgScare + ' / 5';
-      }
+        loginBtn.addEventListener('click', () => {
+            if (adminPin.value === '1031') {
+                adminLoginBox.style.display = 'none';
+                adminContent.style.display = 'block';
+                document.getElementById('stat-passes').textContent = localStorage.getItem('gk_passes') || 14;
+                showToast('Erfolgreich eingeloggt!');
+            } else {
+                alert('Falsche PIN!');
+            }
+        });
 
-      const commentsDiv = document.getElementById('comments-list');
-      commentsDiv.innerHTML = '';
-      data.forEach(item => {
-        if(item.text) {
-          const p = document.createElement('div');
-          p.className = 'comment-item';
-          p.innerText = `💀 ${item.scare}/5 - "${item.text}"`;
-          commentsDiv.appendChild(p);
+        logoutBtn.addEventListener('click', () => {
+            adminContent.style.display = 'none';
+            adminLoginBox.style.display = 'block';
+            adminPin.value = '';
+            adminPanel.style.display = 'none';
+        });
+
+        // QR Code button generates direct link to #regeln
+        document.getElementById('print-qr-btn').addEventListener('click', () => {
+            const qrUrl = window.location.origin + window.location.pathname + '#regeln';
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html>
+                <head><title>QR-Code Gruselkeller</title></head>
+                <body style="text-align: center; font-family: sans-serif; padding-top: 50px;">
+                    <h1>🎃 GRUSELKELLER EINLASS 🎃</h1>
+                    <p style="font-size: 20px;">Scanne den QR-Code, um die Regeln zu akzeptieren:</p>
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(qrUrl)}" alt="QR Code">
+                    <p style="margin-top: 20px; font-weight: bold; font-size: 24px;">@gruselkeller</p>
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print();
+        });
+
+        function showToast(text) {
+            const toast = document.getElementById('toast');
+            toast.textContent = text;
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
         }
-      });
-    }
-
-    function resetData() {
-      if(confirm('Möchtest du wirklich alle Bewertungen löschen?')) {
-        localStorage.removeItem('grusel_feedback');
-        loadAdminData();
-      }
-    }
-
-    function generateQROverlay() {
-      const printArea = document.getElementById('print-area');
-      const qrDiv = document.getElementById('qrcode-print');
-      qrDiv.innerHTML = '';
-      
-      new QRCode(qrDiv, {
-        text: window.location.href,
-        width: 200,
-        height: 200
-      });
-
-      printArea.classList.remove('hidden');
-      window.print();
-      printArea.classList.add('hidden');
-    }
-
-    function playGhostSound() {
-      try {
-        const ctx = new (window.AudioContext || window.webkitAudioContext)();
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(300, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(100, ctx.currentTime + 0.8);
-        gain.gain.setValueAtTime(0.3, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.8);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start();
-        osc.stop(ctx.currentTime + 0.8);
-      } catch(e) {}
-    }
-  </script>
+    </script>
 </body>
 </html>
