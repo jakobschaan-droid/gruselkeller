@@ -322,19 +322,31 @@
             display: flex;
         }
 
-        /* Admin */
-        .admin-toggle {
+        /* Footer & Admin links */
+        footer {
+            margin-top: 20px;
             text-align: center;
-            margin-top: 10px;
+            font-size: 0.8rem;
+            color: var(--muted);
             display: flex;
-            justify-content: center;
-            gap: 15px;
+            flex-direction: column;
+            gap: 10px;
         }
 
-        .admin-toggle a {
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
             color: var(--muted);
-            font-size: 0.8rem;
             text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
         }
 
         #admin-panel {
@@ -473,6 +485,13 @@
             color: #d0d0d0;
             font-size: 0.95rem;
             margin-bottom: 12px;
+        }
+
+        .legal-p {
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: #b0b5bc;
+            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -660,10 +679,51 @@
             </div>
         </div>
 
-        <!-- Bottom Links -->
-        <div class="admin-toggle">
-            <a href="#" id="toggle-admin">⚙️ Organizer Login</a>
-            <a href="#" id="toggle-monitor-link">📺 Live-Monitor</a>
+        <!-- PAGE 4: IMPRESSUM -->
+        <div id="sec-impressum" class="page-section">
+            <div class="card">
+                <h2>Impressum</h2>
+                <p class="legal-p"><strong>Angaben gemäß § 5 DDG:</strong></p>
+                <p class="legal-p">
+                    Gruselkeller Team<br>
+                    Jakob Thorsten Schaan, Johannes Benjamin Schaan, David Trissel<br>
+                    Friedensstraße 3<br>
+                    Fautenbach
+                </p>
+                <p class="legal-p"><strong>Kontakt:</strong></p>
+                <p class="legal-p">
+                    E-Mail: jakob.schaan@gmail.com<br>
+                    Telefon: +49 151 17530499
+                </p>
+                <p class="legal-p"><strong>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV:</strong></p>
+                <p class="legal-p">
+                    Jakob Thorsten Schaan, Johannes Benjamin Schaan, David Trissel<br>
+                    Friedensstraße 3, Fautenbach
+                </p>
+            </div>
+        </div>
+
+        <!-- PAGE 5: DATENSCHUTZ -->
+        <div id="sec-datenschutz" class="page-section">
+            <div class="card">
+                <h2>Datenschutzerklärung</h2>
+                <p class="legal-p"><strong>1. Datenschutz auf einen Blick</strong></p>
+                <p class="legal-p">
+                    Wir nehmen den Schutz eurer persönlichen Daten sehr ernst. Diese Webseite speichert keine personenbezogenen Daten auf externen Servern.
+                </p>
+                <p class="legal-p"><strong>2. Hosting über GitHub Pages</strong></p>
+                <p class="legal-p">
+                    Diese Webseite wird über GitHub Pages (GitHub Inc., 88 Colin P Kelly Jr St, San Francisco, CA 94107, USA) bereitgestellt. Beim Aufruf der Seite erfasst GitHub automatisch Informationen in sog. Server-Log-Dateien (z. B. IP-Adresse, Webbrowser, Betriebssystem).
+                </p>
+                <p class="legal-p"><strong>3. Lokale Speicherung (LocalStorage)</strong></p>
+                <p class="legal-p">
+                    Zur Steuerung der Einlass-Warteschlange und zur Erfassung von anonymen Bewertungen verwendet diese App den lokalen Speicher deines Browsers (LocalStorage). Dabei werden zufällig generierte Einlass-Codes und die abgegebenen Sterne-Bewertungen lokal im Browser auf deinem Gerät gespeichert. Es findet keine dauerhafte personenbezogene Speicherung statt.
+                </p>
+                <p class="legal-p"><strong>4. Externe Dienste & Links</strong></p>
+                <p class="legal-p">
+                    Diese Webseite enthält Verlinkungen zu externen Anbietern (Instagram, PayPal). Beim Anklicken dieser Links verlässt du unsere Webseite.
+                </p>
+            </div>
         </div>
 
         <!-- Admin Panel Card -->
@@ -707,6 +767,17 @@
                 <button class="btn" id="logout-btn" style="background-color: #333;">Ausloggen</button>
             </div>
         </div>
+
+        <!-- FOOTER WITH LEGAL LINKS & ORGANIZER OPTIONS -->
+        <footer>
+            <div class="footer-links">
+                <a href="#" onclick="switchTab('impressum'); return false;">Impressum</a> | 
+                <a href="#" onclick="switchTab('datenschutz'); return false;">Datenschutz</a> | 
+                <a href="#" id="toggle-admin">⚙️ Organizer Login</a> | 
+                <a href="#" id="toggle-monitor-link">📺 Live-Monitor</a>
+            </div>
+            <div>© Gruselkeller Team</div>
+        </footer>
     </div>
 
     <div id="toast">Erfolgreich gespeichert!</div>
@@ -728,6 +799,10 @@
             } else if(tabName === 'about') {
                 document.getElementById('sec-about').classList.add('active');
                 document.querySelectorAll('.nav-btn')[2].classList.add('active');
+            } else if(tabName === 'impressum') {
+                document.getElementById('sec-impressum').classList.add('active');
+            } else if(tabName === 'datenschutz') {
+                document.getElementById('sec-datenschutz').classList.add('active');
             }
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -751,7 +826,7 @@
             passBtn.disabled = !allDone;
         }
 
-        // Pass Generation sofort (ohne Verzögerung) & direkt in Queue
+        // Pass Generation & Queue Management
         passBtn.addEventListener('click', () => {
             const randomNum = Math.floor(1000 + Math.random() * 9000);
             myPassCode = `GK-${randomNum}`;
@@ -765,7 +840,6 @@
             queue.push({ code: myPassCode, created: Date.now(), startTime: null });
             localStorage.setItem('gk_queue', JSON.stringify(queue));
             
-            // Sofort Signal senden
             window.dispatchEvent(new Event('storage'));
 
             updateUserQueueStatus();
@@ -776,7 +850,6 @@
             let queue = JSON.parse(localStorage.getItem('gk_queue') || '[]');
             const now = Date.now();
 
-            // Entferne Einträge, die seit mehr als 60 Sekunden auf dem Monitor laufen
             queue = queue.filter(item => {
                 if (item.startTime !== null) {
                     return (now - item.startTime) < 60000;
@@ -784,7 +857,6 @@
                 return true;
             });
 
-            // Aktiviere die ersten 3 Plätze, falls frei
             let activeCount = queue.filter(item => item.startTime !== null).length;
             for (let i = 0; i < queue.length; i++) {
                 if (activeCount < 3 && queue[i].startTime === null) {
@@ -820,10 +892,7 @@
             }
         }
 
-        // Live-Update alle 1 Sekunde für das Handy
-        setInterval(() => {
-            updateUserQueueStatus();
-        }, 1000);
+        setInterval(updateUserQueueStatus, 1000);
 
         // Feedback Submission
         document.getElementById('feedback-form').addEventListener('submit', (e) => {
@@ -910,7 +979,6 @@
             }
         }
 
-        // Live-Update für den Monitor (alle 1 Sekunde für sofortiges Reagieren)
         setInterval(() => {
             if(document.getElementById('sec-monitor').classList.contains('active')) {
                 updateMonitorGrid();
@@ -950,7 +1018,7 @@
             adminPanel.style.display = 'none';
         });
 
-        // Alle Daten zurücksetzen Button
+        // Alle Daten zurücksetzen
         document.getElementById('reset-data-btn').addEventListener('click', () => {
             if (confirm('Möchtest du wirklich alle Bewertungen und aktiven Pässe unwiderruflich löschen?')) {
                 localStorage.removeItem('gk_queue');
@@ -966,7 +1034,6 @@
             }
         });
 
-        // Auf Storage-Änderungen sofort reagieren
         window.addEventListener('storage', () => {
             updateAdminDashboard();
             if(document.getElementById('sec-monitor').classList.contains('active')) {
