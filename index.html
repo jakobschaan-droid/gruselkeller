@@ -561,16 +561,16 @@
 </head>
 <body>
 
-    <!-- IN-PAGE PIN MODAL FOR COMPATIBILITY WITH OLD PHONES -->
+    <!-- IN-PAGE PIN MODAL -->
     <div class="pin-modal-overlay" id="pin-modal">
         <div class="card" style="width: 100%; max-width: 320px; text-align: center;">
             <h2 id="pin-modal-title">PIN Eingabe</h2>
             <div class="form-group" style="margin-top: 15px;">
                 <label for="modal-pin-input">Bitte PIN eingeben:</label>
-                <input type="password" id="modal-pin-input" placeholder="3110">
+                <input type="password" id="modal-pin-input" placeholder="PIN eingeben">
             </div>
             <button class="btn" id="modal-pin-submit">Bestätigen</button>
-            <button class="btn btn-secondary" onclick="closePinModal()" style="margin-top: 8px; margin-bottom: 0;">Abbrechen</button>
+            <button class="btn btn-secondary" id="modal-pin-cancel" style="margin-top: 8px; margin-bottom: 0;">Abbrechen</button>
         </div>
     </div>
 
@@ -651,7 +651,7 @@
                 <p class="story-p">
                     Der Eintritt zu unserem Gruselkeller ist komplett kostenlos! Wir stecken das alles in unserer Freizeit zusammen. Wenn es dir gefallen hat und du uns mit ein paar Cent oder Euro für neue Requisiten & Effekte unterstützen möchtest, freuen wir uns riesig – ein Muss ist das aber natürlich absolut nicht! ❤️
                 </p>
-                <a href="https://paypal.me/Roland.trissl@gmx.de" target="_blank" class="btn donate-btn">
+                <a href="https://paypal.me/gruselkeller" target="_blank" class="btn donate-btn">
                     💳 Freiwillig per PayPal unterstützen
                 </a>
             </div>
@@ -943,7 +943,6 @@
             };
         }
 
-        // IN-PAGE PIN MODAL LOGIC (FÜR ALTE SAMSUNGS & MOBILE BROWSER)
         function openPinModal(targetHash, title) {
             pendingTargetHash = targetHash;
             document.getElementById('pin-modal-title').textContent = title || 'PIN Eingabe';
@@ -957,11 +956,14 @@
             pendingTargetHash = '';
         }
 
+        document.getElementById('modal-pin-cancel').addEventListener('click', closePinModal);
+
         document.getElementById('modal-pin-submit').addEventListener('click', () => {
             const inputVal = document.getElementById('modal-pin-input').value;
             if (inputVal === '3110') {
+                const target = pendingTargetHash;
                 closePinModal();
-                window.location.hash = pendingTargetHash;
+                window.location.hash = target;
             } else {
                 alert('Falsche PIN!');
             }
@@ -1176,7 +1178,6 @@
             }
         });
 
-        // FOOTER LINKS (NEU: IN-PAGE MODAL STATT BROWSER PROMPT)
         document.getElementById('toggle-monitor-link').addEventListener('click', (e) => {
             e.preventDefault();
             openPinModal('#monitor', '📺 Live-Monitor PIN');
@@ -1402,4 +1403,3 @@
     </script>
 </body>
 </html>
-
