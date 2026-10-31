@@ -37,7 +37,7 @@
 
         .container {
             width: 100%;
-            max-width: 480px;
+            max-width: 520px;
             display: flex;
             flex-direction: column;
             gap: 20px;
@@ -121,24 +121,6 @@
             border-radius: 12px;
             padding: 20px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-        }
-
-        #sec-home .card {
-            border: 1px solid rgba(255, 102, 0, 0.35);
-            box-shadow: 0 10px 25px rgba(255, 102, 0, 0.12);
-        }
-
-        #sec-home .btn {
-            font-size: 1.08rem;
-            padding: 16px 18px;
-            border-radius: 12px;
-            box-shadow: 0 10px 20px rgba(255, 102, 0, 0.28);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        #sec-home .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 14px 24px rgba(255, 102, 0, 0.35);
         }
 
         .donate-card {
@@ -229,6 +211,12 @@
             text-align: center;
             text-decoration: none;
             display: block;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 18px rgba(255, 102, 0, 0.25);
         }
 
         .btn-secondary {
@@ -243,6 +231,8 @@
             background-color: #333;
             color: var(--muted);
             cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
         }
 
         .donate-btn {
@@ -525,10 +515,16 @@
             align-items: center;
             justify-content: center;
             margin: 20px 0;
+            transition: transform 0.18s ease, opacity 0.2s ease;
         }
 
         .buzzer-btn:active {
             transform: scale(0.93);
+        }
+
+        .buzzer-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
         }
 
         #toast {
@@ -565,6 +561,67 @@
             border: 1px solid #262938;
             margin-bottom: 12px;
         }
+
+        .home-register {
+            background: linear-gradient(180deg, rgba(255,102,0,0.22), rgba(22,24,34,1));
+            border: 2px solid rgba(255, 102, 0, 0.7);
+            box-shadow: 0 15px 35px rgba(255, 102, 0, 0.2), inset 0 0 25px rgba(255,102,0,0.12);
+            padding: 22px 20px;
+        }
+
+        .home-register-top {
+            text-align: center;
+            margin-bottom: 18px;
+        }
+
+        .home-tag {
+            display: inline-block;
+            background: rgba(255, 102, 0, 0.15);
+            border: 1px solid rgba(255, 102, 0, 0.5);
+            color: #ffb380;
+            font-weight: bold;
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 7px 12px;
+            border-radius: 999px;
+            margin-bottom: 10px;
+        }
+
+        .home-register h2 {
+            font-size: 1.55rem;
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .home-register-grid {
+            display: grid;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .home-register select {
+            font-size: 1rem;
+            padding: 13px 12px;
+            background: rgba(11, 12, 17, 0.9);
+            border: 2px solid rgba(255, 102, 0, 0.45);
+            border-radius: 10px;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
+        }
+
+        .home-cta-btn {
+            padding: 16px 14px;
+            font-size: 1.08rem;
+            font-weight: 900;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent), #ff8f3d);
+            box-shadow: 0 12px 25px rgba(255, 102, 0, 0.38);
+        }
+
+        #home-group-select {
+            width: 100%;
+        }
     </style>
 </head>
 <body>
@@ -588,10 +645,11 @@
 
         <div style="margin-top: 15px;">
             <label style="font-size: 1rem; color: #38bdf8; font-weight: bold;">👥 Gruppengröße wählen:</label>
-            <select id="buzzer-group-select" style="width: 220px; text-align: center; font-size: 1.1rem; margin-top: 5px;">
+            <select id="buzzer-group-select" style="width: 220px; text-align: center; font-size: 1.1rem; margin-top: 5px;" required>
+                <option value="" selected disabled hidden>Bitte auswählen</option>
                 <option value="1">1 Person</option>
                 <option value="2">2 Personen</option>
-                <option value="3" selected>3 Personen</option>
+                <option value="3">3 Personen</option>
                 <option value="4">4 Personen</option>
                 <option value="5">5 Personen</option>
             </select>
@@ -631,8 +689,31 @@
 
         <!-- PAGE 1: HOME -->
         <div id="sec-home" class="page-section active">
+            <div class="card home-register">
+                <div class="home-register-top">
+                    <div class="home-tag">Schneller Einlass</div>
+                    <h2>Pass sichern & direkt anmelden</h2>
+                </div>
+
+                <div class="home-register-grid">
+                    <label for="home-group-select" style="color: #ffb380; font-weight: bold; font-size: 0.9rem;">👥 Gruppengröße</label>
+                    <select id="home-group-select" required>
+                        <option value="" selected disabled hidden>Bitte auswählen</option>
+                        <option value="1">1 Person</option>
+                        <option value="2">2 Personen</option>
+                        <option value="3">3 Personen</option>
+                        <option value="4">4 Personen</option>
+                        <option value="5">5 Personen</option>
+                    </select>
+
+                    <button class="btn home-cta-btn" id="home-pass-btn">
+                        🚪 Jetzt Einlass-Pass holen
+                    </button>
+                </div>
+            </div>
+
             <div class="card" style="text-align: center; padding: 26px 20px; background: linear-gradient(180deg, rgba(255,102,0,0.06), rgba(22,24,34,1));">
-                <h2 style="font-size: 1.6rem; margin-bottom: 14px;">Bist du bereit für den Nervenkitzel?</h2>
+                <h2 style="font-size: 1.5rem; margin-bottom: 14px; border-bottom: none;">Bist du bereit für den Nervenkitzel?</h2>
                 <p class="story-p" style="font-size: 1rem; line-height: 1.7;">
                     Tritt ein in den dunkelsten Keller der Region! Erlebe echte Schreckmomente, krasse Lichter & Soundeffekte und eine einzigartige Horror-Atmosphäre.
                 </p>
@@ -947,6 +1028,8 @@
 
     <script>
         let myPassCode = null;
+        let lastBuzzerPress = 0;
+        const BUZZER_COOLDOWN_MS = 15000;
 
         function getSettings() {
             return {
@@ -982,6 +1065,9 @@
         const passBtn = document.getElementById('pass-btn');
         const selectAllBtn = document.getElementById('select-all-btn');
         const groupSizeSelect = document.getElementById('group-size-select');
+        const homeGroupSelect = document.getElementById('home-group-select');
+        const homePassBtn = document.getElementById('home-pass-btn');
+        const buzzerTrigger = document.getElementById('main-buzzer-trigger');
 
         checkboxes.forEach(chk => chk.addEventListener('change', checkAllDone));
 
@@ -995,26 +1081,19 @@
             passBtn.disabled = !allDone;
         }
 
-        groupSizeSelect.addEventListener('invalid', (event) => {
-            event.target.setCustomValidity('Bitte füllen Sie dieses Feld aus!');
-        });
-
-        groupSizeSelect.addEventListener('input', () => {
-            groupSizeSelect.setCustomValidity('');
-        });
-
-        passBtn.addEventListener('click', () => {
-            if (!groupSizeSelect.value) {
-                groupSizeSelect.setCustomValidity('Bitte füllen Sie dieses Feld aus!');
-                groupSizeSelect.reportValidity();
-                return;
+        function validateAndReturnGroupSize(selectEl) {
+            if (!selectEl.value) {
+                selectEl.setCustomValidity('Bitte füllen Sie dieses Feld aus!');
+                selectEl.reportValidity();
+                return null;
             }
+            selectEl.setCustomValidity('');
+            return parseInt(selectEl.value, 10);
+        }
 
-            groupSizeSelect.setCustomValidity('');
-
+        function createPass(groupSize) {
             const randomNum = Math.floor(1000 + Math.random() * 9000);
             myPassCode = `GK-${randomNum}`;
-            const groupSize = parseInt(groupSizeSelect.value);
 
             document.getElementById('pass-code').textContent = myPassCode;
             document.getElementById('pass-group-info').textContent = `👥 ${groupSize} Person${groupSize > 1 ? 'en' : ''}`;
@@ -1029,6 +1108,37 @@
             window.dispatchEvent(new Event('storage'));
             updateUserQueueStatus();
             updateAdminDashboard();
+        }
+
+        groupSizeSelect.addEventListener('invalid', (event) => {
+            event.target.setCustomValidity('Bitte füllen Sie dieses Feld aus!');
+        });
+
+        groupSizeSelect.addEventListener('input', () => {
+            groupSizeSelect.setCustomValidity('');
+        });
+
+        homeGroupSelect.addEventListener('invalid', (event) => {
+            event.target.setCustomValidity('Bitte füllen Sie dieses Feld aus!');
+        });
+
+        homeGroupSelect.addEventListener('input', () => {
+            homeGroupSelect.setCustomValidity('');
+        });
+
+        passBtn.addEventListener('click', () => {
+            const groupSize = validateAndReturnGroupSize(groupSizeSelect);
+            if (groupSize === null) return;
+            createPass(groupSize);
+        });
+
+        homePassBtn.addEventListener('click', () => {
+            const groupSize = validateAndReturnGroupSize(homeGroupSelect);
+            if (groupSize === null) return;
+
+            groupSizeSelect.value = String(groupSize);
+            switchTab('regeln');
+            showToast('Bitte Regeln akzeptieren und Pass holen!');
         });
 
         function processQueue() {
@@ -1150,11 +1260,54 @@
             }
         });
 
+        function updateBuzzerButtonState() {
+            const now = Date.now();
+            const remaining = BUZZER_COOLDOWN_MS - (now - lastBuzzerPress);
+
+            if (remaining > 0) {
+                const seconds = Math.ceil(remaining / 1000);
+                buzzerTrigger.disabled = true;
+                buzzerTrigger.style.opacity = '0.65';
+                buzzerTrigger.innerHTML = `
+                    <span>⏳</span>
+                    <span>WAIT</span>
+                    <span style="font-size: 0.9rem; margin-top: 5px; opacity: 0.8;">${seconds}s</span>
+                `;
+            } else {
+                buzzerTrigger.disabled = false;
+                buzzerTrigger.style.opacity = '1';
+                buzzerTrigger.innerHTML = `
+                    <span>🔴</span>
+                    <span>BUZZER</span>
+                    <span style="font-size: 0.9rem; margin-top: 5px; opacity: 0.8;">PASS DRUCKEN</span>
+                `;
+            }
+        }
+
         // BUZZER TRIGGER LOGIK
         function triggerBuzzer() {
+            const now = Date.now();
+
+            if (now - lastBuzzerPress < BUZZER_COOLDOWN_MS) {
+                const secs = Math.ceil((BUZZER_COOLDOWN_MS - (now - lastBuzzerPress)) / 1000);
+                showToast(`Bitte warte ${secs} Sekunden, bevor du erneut drückst!`);
+                updateBuzzerButtonState();
+                return;
+            }
+
+            const groupSelect = document.getElementById('buzzer-group-select');
+
+            if (!groupSelect.value) {
+                showToast('Bitte wählen Sie eine Gruppengröße aus!');
+                return;
+            }
+
+            lastBuzzerPress = now;
+            updateBuzzerButtonState();
+
             const randomNum = Math.floor(1000 + Math.random() * 9000);
             const buzCode = `GK-${randomNum}`;
-            const groupSize = parseInt(document.getElementById('buzzer-group-select').value);
+            const groupSize = parseInt(groupSelect.value, 10);
 
             let queue = JSON.parse(localStorage.getItem('gk_queue') || '[]');
             queue.push({ code: buzCode, size: groupSize, created: Date.now(), startTime: null });
@@ -1170,9 +1323,13 @@
             setTimeout(() => {
                 document.getElementById('buzzer-result-card').style.display = 'none';
             }, 8000);
+
+            setTimeout(() => {
+                updateBuzzerButtonState();
+            }, BUZZER_COOLDOWN_MS);
         }
 
-        document.getElementById('main-buzzer-trigger').addEventListener('click', triggerBuzzer);
+        buzzerTrigger.addEventListener('click', triggerBuzzer);
 
         window.addEventListener('keydown', (e) => {
             const isTextInput = ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName);
@@ -1422,6 +1579,8 @@
                 toast.style.display = 'none';
             }, 3000);
         }
+
+        updateBuzzerButtonState();
     </script>
 </body>
 </html>
