@@ -516,6 +516,7 @@
             justify-content: center;
             margin: 20px 0;
             transition: transform 0.18s ease, opacity 0.2s ease;
+            outline: none;
         }
 
         .buzzer-btn:active {
@@ -655,7 +656,7 @@
             </select>
         </div>
 
-        <div class="buzzer-btn" id="main-buzzer-trigger">
+        <div class="buzzer-btn" id="main-buzzer-trigger" tabindex="0" aria-label="Buzzer für Pass">
             <span>🔴</span>
             <span>BUZZER</span>
             <span style="font-size: 0.9rem; margin-top: 5px; opacity: 0.8;">PASS DRUCKEN</span>
@@ -1031,6 +1032,9 @@
         let lastBuzzerPress = 0;
         const BUZZER_COOLDOWN_MS = 15000;
 
+        const buzzerTrigger = document.getElementById('main-buzzer-trigger');
+        const buzzerGroupSelect = document.getElementById('buzzer-group-select');
+
         function getSettings() {
             return {
                 mode: localStorage.getItem('gk_mode') || 'strict',
@@ -1067,7 +1071,6 @@
         const groupSizeSelect = document.getElementById('group-size-select');
         const homeGroupSelect = document.getElementById('home-group-select');
         const homePassBtn = document.getElementById('home-pass-btn');
-        const buzzerTrigger = document.getElementById('main-buzzer-trigger');
 
         checkboxes.forEach(chk => chk.addEventListener('change', checkAllDone));
 
@@ -1266,6 +1269,7 @@
 
             if (remaining > 0) {
                 const seconds = Math.ceil(remaining / 1000);
+
                 buzzerTrigger.disabled = true;
                 buzzerTrigger.style.opacity = '0.65';
                 buzzerTrigger.innerHTML = `
@@ -1273,16 +1277,28 @@
                     <span>WAIT</span>
                     <span style="font-size: 0.9rem; margin-top: 5px; opacity: 0.8;">${seconds}s</span>
                 `;
-            } else {
-                buzzerTrigger.disabled = false;
-                buzzerTrigger.style.opacity = '1';
-                buzzerTrigger.innerHTML = `
-                    <span>🔴</span>
-                    <span>BUZZER</span>
-                    <span style="font-size: 0.9rem; margin-top: 5px; opacity: 0.8;">PASS DRUCKEN</span>
-                `;
+
+                buzzerGroupSelect.value = '';
+                return;
             }
+
+            buzzerTrigger.disabled = false;
+            buzzerTrigger.style.opacity = '1';
+            buzzerTrigger.innerHTML = `
+                <span>🔴</span>
+                <span>BUZZER</span>
+                <span style="font-size: 0.9rem; margin-top: 5px; opacity: 0.8;">PASS DRUCKEN</span>
+            `;
+
+            if (!document.activeElement || !['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) {
+                buzzerTrigger.focus();
+            }
+
+            buzzerGroupSelect.value = '';
         }
+
+        // Live-Cooldown-Update
+        setInterval(updateBuzzerButtonState, 250);
 
         // BUZZER TRIGGER LOGIK
         function triggerBuzzer() {
@@ -1315,6 +1331,9 @@
 
             window.dispatchEvent(new Event('storage'));
 
+            groupSelect.value = '';
+            buzzerTrigger.focus();
+
             document.getElementById('buzzer-result-code').textContent = buzCode;
             document.getElementById('buzzer-result-card').style.display = 'block';
 
@@ -1322,7 +1341,7 @@
 
             setTimeout(() => {
                 document.getElementById('buzzer-result-card').style.display = 'none';
-            }, 8000);
+            }, 12000);
 
             setTimeout(() => {
                 updateBuzzerButtonState();
@@ -1330,6 +1349,13 @@
         }
 
         buzzerTrigger.addEventListener('click', triggerBuzzer);
+
+        buzzerTrigger.addEventListener('keydown', (e) => {
+            if (e.code === 'Space' || e.code === 'Enter') {
+                e.preventDefault();
+                triggerBuzzer();
+            }
+        });
 
         window.addEventListener('keydown', (e) => {
             const isTextInput = ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName);
@@ -1359,6 +1385,7 @@
             document.getElementById('sec-buzzer').classList.add('active');
             document.getElementById('sec-monitor').classList.remove('active');
             document.getElementById('main-container').style.display = 'none';
+            buzzerTrigger.focus();
         }
 
         function disableViews() {
