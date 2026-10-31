@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gruselkeller | Das Halloween-Highlight</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         :root {
             --bg: #0b0c11;
@@ -24,7 +25,6 @@
             padding: 0;
         }
 
-        
         body {
             background-color: var(--bg);
             color: var(--text);
@@ -414,7 +414,6 @@
             font-family: monospace;
         }
 
-        /* MONITOR MODE STYLES */
         #sec-monitor {
             display: none;
             position: fixed;
@@ -478,7 +477,6 @@
             font-weight: bold;
         }
 
-        /* BUZZER / KIOSK MODE STYLES */
         #sec-buzzer {
             display: none;
             position: fixed;
@@ -628,7 +626,6 @@
 </head>
 <body>
 
-    <!-- EXTERNAL MONITOR DISPLAY -->
     <div id="sec-monitor">
         <h1 style="font-size: 3.2rem;">🎃 GRUSELKELLER EINLASS 🎃</h1>
         <p class="subtitle" id="monitor-subtitle" style="font-size: 1.4rem; color: var(--success); margin-top: 10px;">✔ Berechtigte Codes für den Keller-Einlass:</p>
@@ -640,7 +637,6 @@
         <button onclick="window.location.hash=''" style="position: absolute; bottom: 20px; right: 20px; background: none; border: none; color: #444; cursor: pointer; font-size: 0.9rem;">[Monitor Schließen]</button>
     </div>
 
-    <!-- BUZZER / KIOSK TERMINAL DISPLAY -->
     <div id="sec-buzzer">
         <h1 style="font-size: 2.5rem; color: var(--accent);">🎃 GRUSELKELLER KIOSK 🎃</h1>
         <p class="subtitle" style="font-size: 1.2rem; margin-top: 5px;">Tippe auf den Buzzer, um deine Gruppe anzumelden!</p>
@@ -672,7 +668,6 @@
         <button onclick="window.location.hash=''" style="position: absolute; bottom: 20px; right: 20px; background: none; border: none; color: #444; cursor: pointer; font-size: 0.9rem;">[Terminal Beenden]</button>
     </div>
 
-    <!-- STANDARD WEBSITE -->
     <div class="container" id="main-container">
         <header>
             <h1>🎃 GRUSELKELLER</h1>
@@ -682,14 +677,12 @@
             </a>
         </header>
 
-        <!-- Navigation Tabs -->
         <nav>
             <button class="nav-btn active" onclick="switchTab('home')">🏠 Start</button>
             <button class="nav-btn" onclick="switchTab('regeln')">📜 Einlass & Regeln</button>
             <button class="nav-btn" onclick="switchTab('about')">💀 Über uns</button>
         </nav>
 
-        <!-- PAGE 1: HOME -->
         <div id="sec-home" class="page-section active">
             <div class="card home-register">
                 <div class="home-register-top">
@@ -724,7 +717,6 @@
                 </button>
             </div>
 
-            <!-- Spenden-Card -->
             <div class="card donate-card" style="text-align: center;">
                 <span class="badge-voluntary">✨ 100% Freiwillig & Ohne Zwang</span>
                 <h2>☕ Unterstütze das Projekt</h2>
@@ -737,7 +729,6 @@
             </div>
         </div>
 
-        <!-- PAGE 2: REGELN, PASS & BEWERTUNG -->
         <div id="sec-regeln" class="page-section">
             <div class="card" id="rules-card">
                 <h2>Hausordnung & Regeln</h2>
@@ -779,7 +770,6 @@
                 <button class="btn" id="pass-btn" disabled>Regeln akzeptieren & Pass holen</button>
             </div>
 
-            <!-- PASS DISPLAY -->
             <div class="card" id="pass-display">
                 <h2>Dein Einlass-Pass</h2>
                 <p class="subtitle">Dein persönlicher Code:</p>
@@ -791,7 +781,6 @@
                 </div>
             </div>
 
-            <!-- FEEDBACK CARD -->
             <div class="card" id="feedback-card" style="display: none;">
                 <h2>Nach dem Durchgang: Bewerten ⭐</h2>
                 <p class="story-p" style="font-size: 0.85rem;">Wie war dein Erlebnis im Keller?</p>
@@ -861,7 +850,6 @@
             </div>
         </div>
 
-        <!-- PAGE 3: ÜBER UNS -->
         <div id="sec-about" class="page-section">
             <div class="card">
                 <h2>Über Uns 💀</h2>
@@ -883,7 +871,6 @@
             </div>
         </div>
 
-        <!-- PAGE 4: IMPRESSUM -->
         <div id="sec-impressum" class="page-section">
             <div class="card">
                 <h2>Impressum</h2>
@@ -906,7 +893,6 @@
             </div>
         </div>
 
-        <!-- PAGE 5: DATENSCHUTZ -->
         <div id="sec-datenschutz" class="page-section">
             <div class="card">
                 <h2>Datenschutzerklärung</h2>
@@ -929,7 +915,6 @@
             </div>
         </div>
 
-        <!-- Admin Panel Card -->
         <div class="card" id="admin-panel">
             <h2>Veranstalter Dashboard</h2>
             <div id="admin-login-box">
@@ -941,7 +926,6 @@
             </div>
 
             <div id="admin-content" style="display: none;">
-
                 <button class="btn" id="force-start-btn" style="background: linear-gradient(45deg, #e67e22, #d35400); font-size: 1.1rem; padding: 16px; margin-bottom: 15px; border: 2px solid #f39c12;">
                     ⚡ Nächste Gruppe sofort freigeben (Force-Start)
                 </button>
@@ -959,7 +943,7 @@
                     <label style="color: var(--accent); font-weight: bold;">🔔 Externer Buzzer</label>
                     <label style="display: flex; align-items: center; gap: 10px; margin-top: 8px;">
                         <input type="checkbox" id="admin-buzzer-hotkey">
-                        <span>Mit Tastendruck <strong>B</strong> aktivieren</span>
+                        <span>Mit Tastendruck <strong>B</strong> Force-Start auslösen</span>
                     </label>
                 </div>
 
@@ -1029,20 +1013,110 @@
     <div id="toast">Erfolgreich gespeichert!</div>
 
     <script>
-        let myPassCode = null;
+        const SUPABASE_URL = 'https://ztcvxszayrfyupslvgnt.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_oDYuO7dNU74I472U1UQTgA_11UwAxKw';
+
+        const useSupabase = true;
+        const supabase = useSupabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+
+        let myPassCode = localStorage.getItem('gk_my_pass_code') || null;
         let lastBuzzerPress = 0;
         const BUZZER_COOLDOWN_MS = 15000;
 
         const buzzerTrigger = document.getElementById('main-buzzer-trigger');
         const buzzerGroupSelect = document.getElementById('buzzer-group-select');
 
-        function getSettings() {
+        function resetBuzzerSelection() {
+            if (buzzerGroupSelect) buzzerGroupSelect.value = '';
+        }
+
+        function getLocalJSON(key, fallback) {
+            try {
+                const raw = localStorage.getItem(key);
+                return raw ? JSON.parse(raw) : fallback;
+            } catch {
+                return fallback;
+            }
+        }
+
+        function setLocalJSON(key, value) {
+            localStorage.setItem(key, JSON.stringify(value));
+        }
+
+        function readSettingsLocal() {
             return {
                 mode: localStorage.getItem('gk_mode') || 'strict',
-                maxPersons: parseInt(localStorage.getItem('gk_max_persons') || '5'),
-                timerSeconds: parseInt(localStorage.getItem('gk_timer_seconds') || '60'),
+                maxPersons: Number(localStorage.getItem('gk_max_persons') || '5'),
+                timerSeconds: Number(localStorage.getItem('gk_timer_seconds') || '60'),
                 buzzerHotkeyEnabled: localStorage.getItem('gk_buzzer_hotkey') === '1'
             };
+        }
+
+        async function getSettings() {
+            if (useSupabase && supabase) {
+                const { data, error } = await supabase.from('settings').select('*').eq('id', 'main').maybeSingle();
+
+                if (error && !error.message.includes('No rows')) {
+                    console.error('Settings error:', error);
+                }
+
+                if (!data) {
+                    const defaults = {
+                        mode: 'strict',
+                        maxPersons: 5,
+                        timerSeconds: 60,
+                        buzzerHotkeyEnabled: false
+                    };
+
+                    await saveSettingsToDB(defaults);
+                    return defaults;
+                }
+
+                const settings = {
+                    mode: data.mode || 'strict',
+                    maxPersons: Number(data.max_persons || 5),
+                    timerSeconds: Number(data.timer_seconds || 60),
+                    buzzerHotkeyEnabled: !!data.buzzer_hotkey_enabled
+                };
+
+                localStorage.setItem('gk_mode', settings.mode);
+                localStorage.setItem('gk_max_persons', String(settings.maxPersons));
+                localStorage.setItem('gk_timer_seconds', String(settings.timerSeconds));
+                localStorage.setItem('gk_buzzer_hotkey', settings.buzzerHotkeyEnabled ? '1' : '0');
+
+                return settings;
+            }
+
+            return readSettingsLocal();
+        }
+
+        async function saveSettingsToDB(settings) {
+            if (useSupabase && supabase) {
+                const payload = {
+                    id: 'main',
+                    mode: settings.mode,
+                    max_persons: settings.maxPersons,
+                    timer_seconds: settings.timerSeconds,
+                    buzzer_hotkey_enabled: settings.buzzerHotkeyEnabled
+                };
+
+                const { error } = await supabase.from('settings').upsert(payload);
+                if (error) {
+                    console.error('saveSettingsToDB error:', error);
+                    return false;
+                }
+                return true;
+            }
+
+            localStorage.setItem('gk_mode', settings.mode);
+            localStorage.setItem('gk_max_persons', String(settings.maxPersons));
+            localStorage.setItem('gk_timer_seconds', String(settings.timerSeconds));
+            localStorage.setItem('gk_buzzer_hotkey', settings.buzzerHotkeyEnabled ? '1' : '0');
+            return true;
+        }
+
+        function getSettingsSync() {
+            return readSettingsLocal();
         }
 
         function switchTab(tabName) {
@@ -1063,6 +1137,7 @@
             } else if(tabName === 'datenschutz') {
                 document.getElementById('sec-datenschutz').classList.add('active');
             }
+
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -1095,9 +1170,149 @@
             return parseInt(selectEl.value, 10);
         }
 
-        function createPass(groupSize) {
+        async function getQueue() {
+            if (useSupabase && supabase) {
+                const { data, error } = await supabase.from('queue').select('*').order('created_at', { ascending: true });
+                if (error) {
+                    console.error('Queue error:', error);
+                    return [];
+                }
+                return data || [];
+            }
+
+            return getLocalJSON('gk_queue', []);
+        }
+
+        async function addQueueItem(item) {
+            if (useSupabase && supabase) {
+                const { error } = await supabase.from('queue').insert([item]);
+                if (error) {
+                    console.error('addQueueItem error:', error);
+                    return false;
+                }
+                return true;
+            }
+
+            const queue = getLocalJSON('gk_queue', []);
+            queue.push(item);
+            setLocalJSON('gk_queue', queue);
+            return true;
+        }
+
+        async function updateQueueStarted(code, startedAtIso) {
+            if (useSupabase && supabase) {
+                const { error } = await supabase
+                    .from('queue')
+                    .update({ started_at: startedAtIso })
+                    .eq('code', code);
+
+                if (error) {
+                    console.error('updateQueueStarted error:', error);
+                    return false;
+                }
+                return true;
+            }
+
+            const queue = getLocalJSON('gk_queue', []);
+            const updated = queue.map(item => item.code === code ? { ...item, started_at: startedAtIso } : item);
+            setLocalJSON('gk_queue', updated);
+            return true;
+        }
+
+        async function deleteQueueByCode(code) {
+            if (useSupabase && supabase) {
+                const { error } = await supabase.from('queue').delete().eq('code', code);
+                if (error) {
+                    console.error('deleteQueueByCode error:', error);
+                    return false;
+                }
+                return true;
+            }
+
+            const queue = getLocalJSON('gk_queue', []).filter(item => item.code !== code);
+            setLocalJSON('gk_queue', queue);
+            return true;
+        }
+
+        async function clearQueue() {
+            if (useSupabase && supabase) {
+                const { error } = await supabase.from('queue').delete().neq('code', '');
+                if (error) console.error(error);
+                return;
+            }
+
+            localStorage.removeItem('gk_queue');
+        }
+
+        async function clearRatings() {
+            if (useSupabase && supabase) {
+                const { error } = await supabase.from('ratings').delete().neq('id', '');
+                if (error) console.error(error);
+                return;
+            }
+
+            localStorage.removeItem('gk_ratings');
+        }
+
+        function processQueue(queue) {
+            const items = Array.isArray(queue) ? queue : [];
+            const now = Date.now();
+            const settings = getSettingsSync();
+            const timerMs = Number(settings.timerSeconds || 60) * 1000;
+
+            return items.filter(item => {
+                if (item.started_at) {
+                    const started = new Date(item.started_at).getTime();
+                    return (now - started) < timerMs;
+                }
+                return true;
+            });
+        }
+
+        function addLocalStorageListener() {
+            window.addEventListener('storage', () => {
+                if (!useSupabase) {
+                    refreshAll();
+                }
+            });
+        }
+
+        async function ensureQueueAutomation() {
+            const settings = await getSettings();
+            if (settings.mode === 'manual') return;
+
+            const queue = await getQueue();
+            const activeItems = processQueue(queue);
+            let activeGroupsCount = activeItems.filter(item => item.started_at).length;
+            let activePersons = activeItems
+                .filter(item => item.started_at)
+                .reduce((sum, item) => sum + Number(item.size || 1), 0);
+
+            for (const item of queue) {
+                if (item.started_at) continue;
+
+                const itemSize = Number(item.size || 1);
+
+                if (settings.mode === 'strict') {
+                    if (activeGroupsCount === 0) {
+                        await updateQueueStarted(item.code, new Date().toISOString());
+                        activeGroupsCount++;
+                        activePersons += itemSize;
+                    }
+                } else if (settings.mode === 'fill') {
+                    if (activePersons + itemSize <= settings.maxPersons) {
+                        await updateQueueStarted(item.code, new Date().toISOString());
+                        activeGroupsCount++;
+                        activePersons += itemSize;
+                    }
+                }
+            }
+        }
+
+        async function createPass(groupSize) {
             const randomNum = Math.floor(1000 + Math.random() * 9000);
             myPassCode = `GK-${randomNum}`;
+            localStorage.setItem('gk_my_pass_code', myPassCode);
 
             document.getElementById('pass-code').textContent = myPassCode;
             document.getElementById('pass-group-info').textContent = `👥 ${groupSize} Person${groupSize > 1 ? 'en' : ''}`;
@@ -1105,13 +1320,15 @@
             document.getElementById('pass-display').style.display = 'block';
             document.getElementById('feedback-card').style.display = 'block';
 
-            let queue = JSON.parse(localStorage.getItem('gk_queue') || '[]');
-            queue.push({ code: myPassCode, size: groupSize, created: Date.now(), startTime: null });
-            localStorage.setItem('gk_queue', JSON.stringify(queue));
+            const item = {
+                code: myPassCode,
+                size: groupSize,
+                created_at: new Date().toISOString(),
+                started_at: null
+            };
 
-            window.dispatchEvent(new Event('storage'));
-            updateUserQueueStatus();
-            updateAdminDashboard();
+            await addQueueItem(item);
+            await refreshAll();
         }
 
         groupSizeSelect.addEventListener('invalid', (event) => {
@@ -1130,10 +1347,10 @@
             homeGroupSelect.setCustomValidity('');
         });
 
-        passBtn.addEventListener('click', () => {
+        passBtn.addEventListener('click', async () => {
             const groupSize = validateAndReturnGroupSize(groupSizeSelect);
             if (groupSize === null) return;
-            createPass(groupSize);
+            await createPass(groupSize);
         });
 
         homePassBtn.addEventListener('click', () => {
@@ -1145,126 +1362,94 @@
             showToast('Bitte Regeln akzeptieren und Pass holen!');
         });
 
-        function processQueue() {
-            let queue = JSON.parse(localStorage.getItem('gk_queue') || '[]');
-            const now = Date.now();
-            const settings = getSettings();
-            const timerMs = settings.timerSeconds * 1000;
-
-            if (settings.mode !== 'manual') {
-                queue = queue.filter(item => {
-                    if (item.startTime !== null) {
-                        return (now - item.startTime) < timerMs;
-                    }
-                    return true;
-                });
-            }
-
-            let activeGroupsCount = queue.filter(item => item.startTime !== null).length;
-            let activePersons = queue
-                .filter(item => item.startTime !== null)
-                .reduce((sum, item) => sum + (item.size || 1), 0);
-
-            if (settings.mode !== 'manual') {
-                for (let i = 0; i < queue.length; i++) {
-                    if (queue[i].startTime === null) {
-                        let itemSize = queue[i].size || 1;
-
-                        if (settings.mode === 'strict') {
-                            if (activeGroupsCount === 0) {
-                                queue[i].startTime = Date.now();
-                                activeGroupsCount++;
-                                activePersons += itemSize;
-                            }
-                            break;
-                        } else if (settings.mode === 'fill') {
-                            if (activePersons + itemSize <= settings.maxPersons) {
-                                queue[i].startTime = Date.now();
-                                activePersons += itemSize;
-                                activeGroupsCount++;
-                            }
-                        }
-                    }
-                }
-            }
-
-            localStorage.setItem('gk_queue', JSON.stringify(queue));
-            return queue;
-        }
-
-        function updateUserQueueStatus() {
+        async function updateUserQueueStatus() {
             if (!myPassCode) return;
 
-            let queue = processQueue();
-            let myItem = queue.find(item => item.code === myPassCode);
+            await ensureQueueAutomation();
+            const queue = processQueue(await getQueue());
+            const myItem = queue.find(item => item.code === myPassCode);
             const statusBox = document.getElementById('user-queue-status');
 
             if (!myItem) {
                 statusBox.style.background = "rgba(46, 204, 113, 0.15)";
                 statusBox.style.color = "var(--success)";
                 statusBox.innerHTML = "✔ Dein Durchgang ist abgeschlossen oder dein Code ist abgelaufen.";
-            } else if (myItem.startTime !== null) {
+                return;
+            }
+
+            if (myItem.started_at) {
                 statusBox.style.background = "rgba(46, 204, 113, 0.2)";
                 statusBox.style.color = "var(--success)";
                 statusBox.innerHTML = "🟢 DEIN CODE IST JETZT AUF DEM MONITOR!<br>Du darfst eintreten!";
             } else {
-                let waitingBeforeMe = queue.filter(item => item.startTime === null && item.created < myItem.created).length + 1;
+                const beforeMe = queue.filter(item => !item.started_at && new Date(item.created_at).getTime() < new Date(myItem.created_at).getTime()).length + 1;
                 statusBox.style.background = "rgba(255, 102, 0, 0.15)";
                 statusBox.style.color = "var(--accent)";
-                statusBox.innerHTML = `⏳ Du bist in der Warteschleife (Platz ${waitingBeforeMe}).<br>Bitte habe kurz Geduld, bis dein Code auf dem Monitor erscheint!`;
+                statusBox.innerHTML = `⏳ Du bist in der Warteschleife (Platz ${beforeMe}).<br>Bitte habe kurz Geduld, bis dein Code auf dem Monitor erscheint!`;
             }
         }
 
-        setInterval(updateUserQueueStatus, 1000);
+        setInterval(async () => {
+            await updateUserQueueStatus();
+        }, 1000);
 
-        document.getElementById('feedback-form').addEventListener('submit', (e) => {
+        document.getElementById('feedback-form').addEventListener('submit', async (e) => {
             e.preventDefault();
+
             const ratingObj = {
-                ambiente: parseInt(document.getElementById('r-ambiente').value),
-                erschrecker: parseInt(document.getElementById('r-erschrecker').value),
-                atmos: parseInt(document.getElementById('r-atmos').value),
-                licht: parseInt(document.getElementById('r-licht').value),
-                sound: parseInt(document.getElementById('r-sound').value)
+                ambiente: Number(document.getElementById('r-ambiente').value),
+                erschrecker: Number(document.getElementById('r-erschrecker').value),
+                atmos: Number(document.getElementById('r-atmos').value),
+                licht: Number(document.getElementById('r-licht').value),
+                sound: Number(document.getElementById('r-sound').value)
             };
 
-            let storedRatings = JSON.parse(localStorage.getItem('gk_ratings') || '[]');
-            storedRatings.push(ratingObj);
-            localStorage.setItem('gk_ratings', JSON.stringify(storedRatings));
-
-            if (myPassCode) {
-                let queue = JSON.parse(localStorage.getItem('gk_queue') || '[]');
-                queue = queue.filter(item => item.code !== myPassCode);
-                localStorage.setItem('gk_queue', JSON.stringify(queue));
-                myPassCode = null;
+            if (useSupabase && supabase) {
+                const { error } = await supabase.from('ratings').insert([ratingObj]);
+                if (error) {
+                    console.error('rating insert error:', error);
+                    alert('Fehler beim Speichern der Bewertung');
+                    return;
+                }
+            } else {
+                let storedRatings = getLocalJSON('gk_ratings', []);
+                storedRatings.push(ratingObj);
+                setLocalJSON('gk_ratings', storedRatings);
             }
 
-            window.dispatchEvent(new Event('storage'));
+            if (myPassCode) {
+                await deleteQueueByCode(myPassCode);
+                myPassCode = null;
+                localStorage.removeItem('gk_my_pass_code');
+            }
 
             showToast('Vielen Dank für deine Bewertung! 🎃');
             document.getElementById('feedback-card').style.display = 'none';
-            updateUserQueueStatus();
-            updateAdminDashboard();
-            updateMonitorGrid();
+            await refreshAll();
+            await updateMonitorGrid();
         });
 
-        // FORCE START BUTTON
-        document.getElementById('force-start-btn').addEventListener('click', () => {
-            let queue = JSON.parse(localStorage.getItem('gk_queue') || '[]');
-            queue = queue.filter(item => item.startTime === null);
+        async function forceStartNextGroup() {
+            const queue = await getQueue();
+            const nextInLine = queue.find(item => !item.started_at);
 
-            let nextInLine = queue[0];
-
-            if (nextInLine) {
-                nextInLine.startTime = Date.now();
-                localStorage.setItem('gk_queue', JSON.stringify(queue));
-                window.dispatchEvent(new Event('storage'));
-                showToast(`Gruppe ${nextInLine.code} manuell freigegeben! ⚡`);
-            } else {
-                alert('Es ist aktuell keine Gruppe in der Warteschlange!');
+            if (!nextInLine) {
+                showToast('Es ist aktuell keine Gruppe in der Warteschlange!');
+                return;
             }
+
+            await updateQueueStarted(nextInLine.code, new Date().toISOString());
+            await refreshAll();
+            showToast(`Gruppe ${nextInLine.code} manuell freigegeben! ⚡`);
+        }
+
+        document.getElementById('force-start-btn').addEventListener('click', async () => {
+            await forceStartNextGroup();
         });
 
         function updateBuzzerButtonState() {
+            if (!buzzerTrigger) return;
+
             const now = Date.now();
             const remaining = BUZZER_COOLDOWN_MS - (now - lastBuzzerPress);
 
@@ -1279,7 +1464,6 @@
                     <span style="font-size: 0.9rem; margin-top: 5px; opacity: 0.8;">${seconds}s</span>
                 `;
 
-                buzzerGroupSelect.value = '';
                 return;
             }
 
@@ -1294,15 +1478,11 @@
             if (!document.activeElement || !['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) {
                 buzzerTrigger.focus();
             }
-
-            buzzerGroupSelect.value = '';
         }
 
-        // Live-Cooldown-Update
         setInterval(updateBuzzerButtonState, 250);
 
-        // BUZZER TRIGGER LOGIK
-        function triggerBuzzer() {
+        async function triggerBuzzer() {
             const now = Date.now();
 
             if (now - lastBuzzerPress < BUZZER_COOLDOWN_MS) {
@@ -1320,21 +1500,21 @@
             }
 
             lastBuzzerPress = now;
+            resetBuzzerSelection();
             updateBuzzerButtonState();
 
             const randomNum = Math.floor(1000 + Math.random() * 9000);
             const buzCode = `GK-${randomNum}`;
             const groupSize = parseInt(groupSelect.value, 10);
 
-            let queue = JSON.parse(localStorage.getItem('gk_queue') || '[]');
-            queue.push({ code: buzCode, size: groupSize, created: Date.now(), startTime: null });
-            localStorage.setItem('gk_queue', JSON.stringify(queue));
+            const item = {
+                code: buzCode,
+                size: groupSize,
+                created_at: new Date().toISOString(),
+                started_at: null
+            };
 
-            window.dispatchEvent(new Event('storage'));
-
-            groupSelect.value = '';
-            buzzerTrigger.focus();
-
+            await addQueueItem(item);
             document.getElementById('buzzer-result-code').textContent = buzCode;
             document.getElementById('buzzer-result-card').style.display = 'block';
 
@@ -1347,6 +1527,8 @@
             setTimeout(() => {
                 updateBuzzerButtonState();
             }, BUZZER_COOLDOWN_MS);
+
+            await refreshAll();
         }
 
         buzzerTrigger.addEventListener('click', triggerBuzzer);
@@ -1358,12 +1540,14 @@
             }
         });
 
-        window.addEventListener('keydown', (e) => {
+        window.addEventListener('keydown', async (e) => {
             const isTextInput = ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName);
 
-            if (!isTextInput && getSettings().buzzerHotkeyEnabled && (e.key.toLowerCase() === 'b' || e.code === 'KeyB')) {
+            const settings = await getSettings();
+
+            if (!isTextInput && settings.buzzerHotkeyEnabled && (e.key.toLowerCase() === 'b' || e.code === 'KeyB')) {
                 e.preventDefault();
-                triggerBuzzer();
+                await forceStartNextGroup();
                 return;
             }
 
@@ -1393,15 +1577,20 @@
             document.getElementById('sec-monitor').classList.remove('active');
             document.getElementById('sec-buzzer').classList.remove('active');
             document.getElementById('main-container').style.display = 'flex';
+            resetBuzzerSelection();
         }
 
-        function updateMonitorGrid() {
-            let settings = getSettings();
-            let modeText = settings.mode === 'strict' ? 'Reißverschluss-Prinzip (Einzeltakt)' : (settings.mode === 'manual' ? 'Manueller Einlass' : `Auffüllung max. ${settings.maxPersons} Personen`);
+        async function updateMonitorGrid() {
+            await ensureQueueAutomation();
+            const settings = await getSettings();
+            const modeText = settings.mode === 'strict'
+                ? 'Reißverschluss-Prinzip (Einzeltakt)'
+                : (settings.mode === 'manual' ? 'Manueller Einlass' : `Auffüllung max. ${settings.maxPersons} Personen`);
+
             document.getElementById('monitor-subtitle').textContent = `✔ Berechtigte Codes (${modeText}):`;
 
-            let queue = processQueue();
-            let activeOnMonitor = queue.filter(item => item.startTime !== null);
+            const queue = processQueue(await getQueue());
+            const activeOnMonitor = queue.filter(item => item.started_at);
             const grid = document.getElementById('monitor-code-grid');
 
             if (activeOnMonitor.length === 0) {
@@ -1426,9 +1615,9 @@
             else disableViews();
         }
 
-        setInterval(() => {
+        setInterval(async () => {
             if(document.getElementById('sec-monitor').classList.contains('active')) {
-                updateMonitorGrid();
+                await updateMonitorGrid();
             }
         }, 1000);
 
@@ -1446,18 +1635,18 @@
             window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
         });
 
-        loginBtn.addEventListener('click', () => {
+        loginBtn.addEventListener('click', async () => {
             if (adminPin.value === '3110') {
                 adminLoginBox.style.display = 'none';
                 adminContent.style.display = 'block';
 
-                let settings = getSettings();
+                const settings = await getSettings();
                 document.getElementById('admin-mode-select').value = settings.mode;
                 document.getElementById('admin-max-persons').value = settings.maxPersons;
                 document.getElementById('admin-timer-seconds').value = settings.timerSeconds;
                 document.getElementById('admin-buzzer-hotkey').checked = settings.buzzerHotkeyEnabled;
 
-                updateAdminDashboard();
+                await updateAdminDashboard();
                 showToast('Erfolgreich eingeloggt!');
             } else {
                 alert('Falsche PIN!');
@@ -1471,37 +1660,44 @@
             adminPanel.style.display = 'none';
         });
 
-        document.getElementById('save-settings-btn').addEventListener('click', () => {
+        document.getElementById('save-settings-btn').addEventListener('click', async () => {
             const mode = document.getElementById('admin-mode-select').value;
-            const maxPersons = parseInt(document.getElementById('admin-max-persons').value);
-            const timerSeconds = parseInt(document.getElementById('admin-timer-seconds').value);
+            const maxPersons = parseInt(document.getElementById('admin-max-persons').value, 10);
+            const timerSeconds = parseInt(document.getElementById('admin-timer-seconds').value, 10);
             const buzzerHotkeyEnabled = document.getElementById('admin-buzzer-hotkey').checked;
 
             if (maxPersons >= 1 && timerSeconds >= 10) {
-                localStorage.setItem('gk_mode', mode);
-                localStorage.setItem('gk_max_persons', maxPersons);
-                localStorage.setItem('gk_timer_seconds', timerSeconds);
-                localStorage.setItem('gk_buzzer_hotkey', buzzerHotkeyEnabled ? '1' : '0');
+                const settings = {
+                    mode,
+                    maxPersons,
+                    timerSeconds,
+                    buzzerHotkeyEnabled
+                };
 
-                window.dispatchEvent(new Event('storage'));
-                showToast('Einstellungen gespeichert!');
+                const saved = await saveSettingsToDB(settings);
+
+                if (saved) {
+                    localStorage.setItem('gk_mode', mode);
+                    localStorage.setItem('gk_max_persons', String(maxPersons));
+                    localStorage.setItem('gk_timer_seconds', String(timerSeconds));
+                    localStorage.setItem('gk_buzzer_hotkey', buzzerHotkeyEnabled ? '1' : '0');
+
+                    await refreshAll();
+                    showToast('Einstellungen gespeichert!');
+                }
             } else {
                 alert('Ungültige Werte! Mindestens 1 Person und 10 Sekunden Timer eintragen.');
             }
         });
 
-        document.getElementById('reset-data-btn').addEventListener('click', () => {
+        document.getElementById('reset-data-btn').addEventListener('click', async () => {
             if (confirm('Möchtest du wirklich alle Bewertungen und aktiven Pässe unwiderruflich löschen?')) {
-                localStorage.removeItem('gk_queue');
-                localStorage.removeItem('gk_ratings');
-                localStorage.removeItem('gk_pass_list');
-                localStorage.removeItem('gk_buzzer_hotkey');
+                await clearQueue();
+                await clearRatings();
+                localStorage.removeItem('gk_my_pass_code');
                 myPassCode = null;
 
-                window.dispatchEvent(new Event('storage'));
-
-                updateAdminDashboard();
-                updateMonitorGrid();
+                await refreshAll();
                 showToast('Alle Daten wurden vollständig gelöscht!');
             }
         });
@@ -1521,35 +1717,44 @@
             showToast('Zur Website zurück');
         });
 
-        window.addEventListener('storage', () => {
-            updateAdminDashboard();
-            if(document.getElementById('sec-monitor').classList.contains('active')) {
-                updateMonitorGrid();
+        async function getRatings() {
+            if (useSupabase && supabase) {
+                const { data, error } = await supabase.from('ratings').select('*');
+                if (error) {
+                    console.error('getRatings error:', error);
+                    return [];
+                }
+                return data || [];
             }
-        });
 
-        function updateAdminDashboard() {
-            let queue = processQueue();
+            return getLocalJSON('gk_ratings', []);
+        }
+
+        async function updateAdminDashboard() {
+            const queue = processQueue(await getQueue());
             document.getElementById('stat-passes').textContent = queue.length;
 
-            let storedRatings = JSON.parse(localStorage.getItem('gk_ratings') || '[]');
-            if (storedRatings.length > 0) {
-                let sumAmb = 0, sumErs = 0, sumAtm = 0, sumLic = 0, sumSou = 0;
-                storedRatings.forEach(r => {
-                    sumAmb += r.ambiente;
-                    sumErs += r.erschrecker;
-                    sumAtm += r.atmos;
-                    sumLic += r.licht;
-                    sumSou += r.sound;
-                });
-                let count = storedRatings.length;
-                let avgAmb = (sumAmb / count).toFixed(1);
-                let avgErs = (sumErs / count).toFixed(1);
-                let avgAtm = (sumAtm / count).toFixed(1);
-                let avgLic = (sumLic / count).toFixed(1);
-                let avgSou = (sumSou / count).toFixed(1);
+            const ratings = await getRatings();
 
-                let totalAvg = ((parseFloat(avgAmb) + parseFloat(avgErs) + parseFloat(avgAtm) + parseFloat(avgLic) + parseFloat(avgSou)) / 5).toFixed(1);
+            if (ratings.length > 0) {
+                let sumAmb = 0, sumErs = 0, sumAtm = 0, sumLic = 0, sumSou = 0;
+
+                ratings.forEach(r => {
+                    sumAmb += Number(r.ambiente || 0);
+                    sumErs += Number(r.erschrecker || 0);
+                    sumAtm += Number(r.atmos || 0);
+                    sumLic += Number(r.licht || 0);
+                    sumSou += Number(r.sound || 0);
+                });
+
+                const count = ratings.length;
+                const avgAmb = (sumAmb / count).toFixed(1);
+                const avgErs = (sumErs / count).toFixed(1);
+                const avgAtm = (sumAtm / count).toFixed(1);
+                const avgLic = (sumLic / count).toFixed(1);
+                const avgSou = (sumSou / count).toFixed(1);
+
+                const totalAvg = ((parseFloat(avgAmb) + parseFloat(avgErs) + parseFloat(avgAtm) + parseFloat(avgLic) + parseFloat(avgSou)) / 5).toFixed(1);
 
                 document.getElementById('cat-ambiente').textContent = avgAmb + ' ★';
                 document.getElementById('cat-erschrecker').textContent = avgErs + ' ★';
@@ -1568,13 +1773,13 @@
 
             const listContainer = document.getElementById('pass-log-list');
             if (queue.length === 0) {
-                listContainer.innerHTML = '<div class="pass-item" style="color: var(--muted);">Keine aktiven Pässe.</div>';
+                listContainer.innerHTML = '<div class=\"pass-item\" style=\"color: var(--muted);\">Keine aktiven Pässe.</div>';
             } else {
                 listContainer.innerHTML = queue.map(p => `
-                    <div class="pass-item">
-                        <span style="color: var(--accent); font-weight: bold;">${p.code} (👥 ${p.size || 1})</span>
-                        <span style="color: ${p.startTime !== null ? 'var(--success)' : 'var(--muted)'};">
-                            ${p.startTime !== null ? '✔ Auf Monitor' : '⏳ Warteschlange'}
+                    <div class=\"pass-item\">
+                        <span style=\"color: var(--accent); font-weight: bold;\">${p.code} (👥 ${p.size || 1})</span>
+                        <span style=\"color: ${p.started_at ? 'var(--success)' : 'var(--muted)'};\">
+                            ${p.started_at ? '✔ Auf Monitor' : '⏳ Warteschlange'}
                         </span>
                     </div>
                 `).join('');
@@ -1608,7 +1813,44 @@
             }, 3000);
         }
 
+        async function refreshAll() {
+            await ensureQueueAutomation();
+            await updateUserQueueStatus();
+            await updateAdminDashboard();
+            await updateMonitorGrid();
+        }
+
+        async function initRealtime() {
+            if (!useSupabase || !supabase) return;
+
+            supabase.channel('gk-live-updates')
+                .on('postgres_changes', { event: '*', schema: 'public', table: 'queue' }, async () => {
+                    await refreshAll();
+                })
+                .on('postgres_changes', { event: '*', schema: 'public', table: 'ratings' }, async () => {
+                    await refreshAll();
+                })
+                .on('postgres_changes', { event: '*', schema: 'public', table: 'settings' }, async () => {
+                    await refreshAll();
+                })
+                .subscribe();
+        }
+
+        async function bootstrap() {
+            const settings = await getSettings();
+
+            localStorage.setItem('gk_mode', settings.mode);
+            localStorage.setItem('gk_max_persons', String(settings.maxPersons));
+            localStorage.setItem('gk_timer_seconds', String(settings.timerSeconds));
+            localStorage.setItem('gk_buzzer_hotkey', settings.buzzerHotkeyEnabled ? '1' : '0');
+
+            await initRealtime();
+            addLocalStorageListener();
+            await refreshAll();
+        }
+
         updateBuzzerButtonState();
+        bootstrap();
     </script>
 </body>
 </html>
