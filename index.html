@@ -3,73 +3,68 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Gruselkeller – Halloween-Erlebnis mit Einlass, Regeln, Story und Pass-System." />
-    <title>Gruselkeller | Halloween-Erlebnis</title>
+    <meta
+      name="description"
+      content="Gruselkeller – Halloween-Erlebnis mit dunkler Atmosphäre, Einlass und klarer, professioneller Präsentation."
+    />
+    <title>Gruselkeller | Halloween-Highlight</title>
     <style>
       :root {
-        --bg: #0a0d12;
-        --bg-soft: #111822;
-        --panel: rgba(19, 25, 35, 0.92);
-        --panel-strong: #161d29;
-        --panel-muted: #1b2433;
-        --line: rgba(255,255,255,0.08);
-        --text: #edf2f7;
-        --muted: #a8b2bf;
-        --accent: #ff7b2c;
-        --accent-strong: #ff5c1f;
-        --accent-soft: rgba(255, 123, 44, 0.15);
-        --success: #7ad7a5;
-        --danger: #ff6b6b;
-        --shadow: 0 18px 48px rgba(0,0,0,0.34);
+        --bg: #090d12;
+        --bg-soft: #0f1720;
+        --panel: rgba(17, 24, 33, 0.92);
+        --panel-alt: rgba(12, 18, 27, 0.9);
+        --line: rgba(255, 255, 255, 0.08);
+        --text: #edf2f8;
+        --muted: #a8b1bf;
+        --accent: #ff7a1a;
+        --accent-strong: #ff5b2d;
+        --accent-soft: rgba(255, 122, 26, 0.12);
+        --success: #7adba5;
+        --shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
         --radius: 22px;
       }
 
       * { box-sizing: border-box; }
-
       html { scroll-behavior: smooth; }
-
       body {
         margin: 0;
         min-height: 100vh;
         background:
-          radial-gradient(circle at top, rgba(255, 123, 44, 0.16), transparent 30%),
-          linear-gradient(180deg, #070b10 0%, #0a0f16 100%);
+          radial-gradient(circle at top, rgba(255, 122, 26, 0.12), transparent 30%),
+          linear-gradient(180deg, #070a0d 0%, #0b0f15 100%);
         color: var(--text);
         font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        line-height: 1.6;
+        line-height: 1.55;
       }
-
-      img { max-width: 100%; display: block; }
 
       a { color: inherit; text-decoration: none; }
-
-      button, input, select, textarea {
-        font: inherit;
-      }
+      img { max-width: 100%; display: block; }
+      button, input, select, textarea { font: inherit; }
 
       .page-shell {
         width: min(1100px, calc(100% - 24px));
         margin: 0 auto;
-        padding: 18px 0 56px;
+        padding: 12px 0 52px;
       }
 
       .topbar {
         position: sticky;
         top: 0;
-        z-index: 30;
-        backdrop-filter: blur(14px);
-        background: rgba(10, 13, 18, 0.76);
+        z-index: 40;
+        background: rgba(9, 13, 18, 0.7);
+        backdrop-filter: blur(12px);
         border-bottom: 1px solid var(--line);
       }
 
       .topbar-inner {
         width: min(1100px, calc(100% - 24px));
+        min-height: 74px;
         margin: 0 auto;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 16px;
-        min-height: 72px;
+        gap: 12px;
       }
 
       .brand {
@@ -79,7 +74,6 @@
         font-weight: 800;
         letter-spacing: 0.08em;
         text-transform: uppercase;
-        color: var(--text);
       }
 
       .brand-mark {
@@ -88,15 +82,15 @@
         display: grid;
         place-items: center;
         border-radius: 12px;
-        background: linear-gradient(135deg, var(--accent), #ffb066);
-        color: #1a100b;
-        box-shadow: 0 12px 28px rgba(255, 123, 44, 0.3);
+        background: linear-gradient(135deg, var(--accent), #ffc06d);
+        color: #1d120d;
+        box-shadow: 0 12px 28px rgba(255, 122, 26, 0.28);
       }
 
       .brand small {
         display: block;
-        font-size: 0.63rem;
-        letter-spacing: 0.22em;
+        font-size: 0.62rem;
+        letter-spacing: 0.2em;
         color: var(--muted);
       }
 
@@ -111,49 +105,34 @@
         border: 1px solid transparent;
         background: transparent;
         color: var(--muted);
+        font-size: 0.8rem;
         font-weight: 700;
-        font-size: 0.82rem;
-        padding: 10px 14px;
+        padding: 10px 13px;
         border-radius: 999px;
         cursor: pointer;
-        transition: 0.2s ease;
+        transition: 0.18s ease;
       }
 
-      .nav-btn.active,
-      .nav-btn:hover {
+      .nav-btn:hover,
+      .nav-btn.active {
         background: rgba(255, 255, 255, 0.04);
-        border-color: rgba(255,255,255,0.08);
+        border-color: var(--line);
         color: var(--text);
       }
 
-      .cta {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        border: 0;
-        background: linear-gradient(135deg, var(--accent), var(--accent-strong));
-        color: #fff;
-        font-weight: 800;
-        border-radius: 999px;
-        padding: 14px 22px;
-        box-shadow: 0 18px 30px rgba(255, 92, 31, 0.25);
-        cursor: pointer;
-        transition: transform 0.18s ease;
+      .section {
+        display: none;
+        padding-top: 28px;
       }
 
-      .cta:hover { transform: translateY(-1px); }
-
-      .hero {
-        padding-top: 32px;
-      }
+      .section.active { display: block; }
 
       .hero-card {
         position: relative;
         overflow: hidden;
         display: grid;
-        gap: 18px;
-        background: linear-gradient(135deg, rgba(17,24,34,0.96), rgba(21,30,42,0.92));
+        gap: 20px;
+        background: linear-gradient(135deg, rgba(17, 24, 33, 0.96), rgba(14, 20, 28, 0.92));
         border: 1px solid var(--line);
         border-radius: calc(var(--radius) + 8px);
         padding: 24px;
@@ -165,8 +144,8 @@
         position: absolute;
         inset: 0 auto auto 0;
         width: 100%;
-        height: 140px;
-        background: linear-gradient(90deg, rgba(255,123,44,0.18), transparent);
+        height: 160px;
+        background: linear-gradient(90deg, rgba(255, 122, 26, 0.18), transparent 70%);
         pointer-events: none;
       }
 
@@ -176,14 +155,14 @@
         align-items: center;
         gap: 8px;
         padding: 8px 12px;
+        background: rgba(255, 122, 26, 0.08);
+        border: 1px solid rgba(255, 122, 26, 0.18);
         border-radius: 999px;
-        font-size: 0.73rem;
-        font-weight: 700;
+        color: #ffd7b2;
+        font-size: 0.72rem;
         letter-spacing: 0.1em;
         text-transform: uppercase;
-        color: #ffd1ad;
-        background: rgba(255, 123, 44, 0.08);
-        border: 1px solid rgba(255,123,44,0.18);
+        font-weight: 800;
       }
 
       h1, h2, h3, p { margin: 0; }
@@ -192,20 +171,20 @@
         position: relative;
         z-index: 1;
         display: grid;
-        gap: 16px;
+        gap: 14px;
       }
 
       h1 {
-        font-size: clamp(2.2rem, 5vw, 4.4rem);
+        font-size: clamp(2.35rem, 5vw, 4.4rem);
         line-height: 0.96;
         letter-spacing: -0.06em;
-        max-width: 12ch;
+        max-width: 11ch;
       }
 
       .hero-copy p {
-        max-width: 62ch;
-        font-size: 1.02rem;
         color: var(--muted);
+        max-width: 62ch;
+        font-size: 1.04rem;
       }
 
       .hero-actions {
@@ -215,18 +194,42 @@
         margin-top: 6px;
       }
 
-      .secondary-btn {
+      .cta,
+      .secondary-btn,
+      .btn {
         display: inline-flex;
         align-items: center;
         justify-content: center;
         min-height: 48px;
-        padding: 0 18px;
         border-radius: 999px;
-        border: 1px solid var(--line);
-        background: rgba(255,255,255,0.02);
-        color: var(--text);
-        font-weight: 700;
+        border: 0;
+        padding: 0 20px;
+        font-weight: 800;
         cursor: pointer;
+        transition: transform 0.18s ease;
+      }
+
+      .cta:hover,
+      .secondary-btn:hover,
+      .btn:hover { transform: translateY(-1px); }
+
+      .cta {
+        background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+        color: white;
+        box-shadow: 0 18px 32px rgba(255, 122, 26, 0.24);
+      }
+
+      .secondary-btn,
+      .btn-secondary {
+        background: rgba(255, 255, 255, 0.02);
+        color: var(--text);
+        border: 1px solid var(--line);
+      }
+
+      .btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
       }
 
       .meta-strip {
@@ -239,41 +242,33 @@
 
       .meta-box {
         padding: 16px 14px;
-        border-radius: 16px;
-        background: rgba(255,255,255,0.02);
+        background: rgba(255, 255, 255, 0.02);
         border: 1px solid var(--line);
+        border-radius: 16px;
       }
 
       .meta-box .label {
         display: block;
         margin-bottom: 6px;
         color: var(--muted);
-        font-size: 0.72rem;
-        letter-spacing: 0.08em;
+        font-size: 0.7rem;
+        letter-spacing: 0.09em;
         text-transform: uppercase;
       }
 
       .meta-box strong {
-        font-size: 1.15rem;
-      }
-
-      .section {
-        display: none;
-        padding-top: 28px;
-      }
-
-      .section.active {
-        display: block;
+        font-size: 1.1rem;
       }
 
       .grid-2 {
         display: grid;
         grid-template-columns: 1fr;
         gap: 18px;
+        margin-top: 20px;
       }
 
       .card {
-        background: rgba(18, 24, 34, 0.92);
+        background: rgba(17, 24, 33, 0.94);
         border: 1px solid var(--line);
         border-radius: var(--radius);
         box-shadow: var(--shadow);
@@ -281,7 +276,7 @@
       }
 
       .card h2 {
-        font-size: clamp(1.4rem, 2vw, 2rem);
+        font-size: clamp(1.45rem, 2vw, 2.1rem);
         letter-spacing: -0.04em;
         margin-bottom: 12px;
       }
@@ -299,22 +294,22 @@
 
       .feature-item {
         display: flex;
-        gap: 14px;
+        gap: 12px;
         align-items: flex-start;
-        padding: 12px 14px;
+        padding: 14px 12px;
         border-radius: 14px;
-        background: rgba(255,255,255,0.02);
         border: 1px solid var(--line);
+        background: rgba(255,255,255,0.02);
       }
 
-      .feature-item .icon {
-        width: 44px;
-        height: 44px;
+      .feature-icon {
+        width: 42px;
+        height: 42px;
         border-radius: 12px;
         display: grid;
         place-items: center;
         background: var(--accent-soft);
-        color: #ffd6b7;
+        color: #ffd5b0;
         flex-shrink: 0;
       }
 
@@ -325,12 +320,13 @@
 
       .feature-item p {
         color: var(--muted);
-        font-size: 0.95rem;
+        font-size: 0.94rem;
       }
 
-      .rule-box {
+      .rules-box {
         display: grid;
         gap: 10px;
+        margin-top: 20px;
       }
 
       .rule-item {
@@ -338,9 +334,9 @@
         align-items: flex-start;
         gap: 12px;
         padding: 14px 12px;
-        background: rgba(255,255,255,0.02);
         border: 1px solid var(--line);
         border-radius: 14px;
+        background: rgba(255,255,255,0.02);
       }
 
       .rule-item input[type="checkbox"] {
@@ -348,7 +344,7 @@
         width: 22px;
         height: 22px;
         margin: 2px 0 0;
-        border: 1.5px solid rgba(255,255,255,0.3);
+        border: 1.5px solid rgba(255,255,255,0.35);
         border-radius: 7px;
         background: transparent;
         position: relative;
@@ -372,31 +368,33 @@
         transform: rotate(45deg);
       }
 
-      .rule-item span strong { display: inline; }
       .rule-item span {
         color: var(--text);
         font-size: 0.96rem;
       }
 
-      .select-row,
-      .field {
+      .field,
+      .select-row {
         display: grid;
         gap: 8px;
         margin-top: 18px;
       }
 
       label {
-        color: #e6eaf0;
-        font-size: 0.88rem;
+        display: block;
+        color: #edf2f8;
+        font-size: 0.86rem;
         font-weight: 700;
       }
 
-      select, input, textarea {
+      select,
+      input,
+      textarea {
         width: 100%;
         border: 1px solid var(--line);
-        background: rgba(11,15,21,0.9);
-        color: var(--text);
         border-radius: 12px;
+        background: rgba(10, 15, 22, 0.92);
+        color: var(--text);
         padding: 12px 14px;
         outline: none;
       }
@@ -414,28 +412,29 @@
       .pass-panel {
         display: none;
         margin-top: 18px;
-        padding: 24px 20px;
-        border-radius: 20px;
-        border: 1px solid rgba(255, 123, 44, 0.26);
-        background: linear-gradient(180deg, rgba(255,123,44,0.08), rgba(255,255,255,0.02));
+        padding: 22px 18px;
+        border-radius: 18px;
+        background: linear-gradient(180deg, rgba(255,122,26,0.08), rgba(255,255,255,0.02));
+        border: 1px solid rgba(255, 122, 26, 0.26);
       }
 
       .pass-code {
         display: block;
-        font-size: clamp(2rem, 7vw, 3.2rem);
+        margin-top: 8px;
+        font-size: clamp(2rem, 7vw, 3rem);
         letter-spacing: 0.12em;
         font-weight: 900;
-        margin: 8px 0 12px;
-        color: #ffb579;
+        color: #ffbe84;
       }
 
       .queue-status {
         display: inline-block;
-        background: rgba(122, 215, 165, 0.08);
-        color: var(--success);
-        border: 1px solid rgba(122,215,165,0.18);
+        margin-top: 12px;
+        padding: 8px 12px;
         border-radius: 999px;
-        padding: 9px 12px;
+        background: rgba(255, 122, 26, 0.1);
+        color: #ffd7b3;
+        border: 1px solid rgba(255, 122, 26, 0.18);
         font-size: 0.8rem;
         font-weight: 700;
       }
@@ -457,8 +456,8 @@
       .legal-item {
         padding: 16px 18px;
         border-radius: 14px;
-        background: rgba(255,255,255,0.02);
         border: 1px solid var(--line);
+        background: rgba(255,255,255,0.02);
       }
 
       .legal-item strong {
@@ -474,7 +473,7 @@
       .footer {
         padding-top: 28px;
         color: var(--muted);
-        font-size: 0.82rem;
+        font-size: 0.8rem;
       }
 
       .footer-inner {
@@ -492,37 +491,34 @@
         gap: 10px;
       }
 
-      .footer-links a { color: var(--muted); }
       .footer-links a:hover { color: var(--text); }
 
-      .floating-toast {
+      .toast {
         position: fixed;
         left: 50%;
         bottom: 22px;
         transform: translateX(-50%);
-        background: rgba(18, 25, 31, 0.95);
+        background: rgba(18, 25, 31, 0.96);
         color: var(--text);
-        border: 1px solid rgba(122,215,165,0.2);
+        border: 1px solid rgba(122, 219, 165, 0.22);
         border-radius: 999px;
-        padding: 12px 18px;
-        font-size: 0.84rem;
+        padding: 11px 18px;
+        font-size: 0.82rem;
         box-shadow: var(--shadow);
         opacity: 0;
         pointer-events: none;
-        transition: opacity 0.2s ease, transform 0.2s ease;
+        transition: opacity 0.18s ease;
       }
 
-      .floating-toast.show {
+      .toast.show {
         opacity: 1;
-        transform: translateX(-50%) translateY(0);
       }
 
       @media (min-width: 760px) {
         .hero-card {
-          display: grid;
           grid-template-columns: 1.2fr 0.8fr;
           align-items: center;
-          padding: 32px;
+          min-height: 320px;
         }
 
         .grid-2 { grid-template-columns: 1.2fr 0.8fr; }
@@ -530,9 +526,9 @@
 
       @media (max-width: 560px) {
         .topbar-inner {
-          align-items: flex-start;
           padding: 12px 0;
           flex-direction: column;
+          align-items: flex-start;
         }
 
         .nav {
@@ -543,23 +539,16 @@
 
         .nav-btn {
           flex: 1 1 auto;
-          min-width: 0;
-          padding: 10px 10px;
-          font-size: 0.74rem;
+          text-align: center;
+          padding: 9px 10px;
         }
 
         .meta-strip {
           grid-template-columns: 1fr;
         }
 
-        .cta, .secondary-btn {
-          width: 100%;
-        }
-
-        .hero-actions {
-          display: grid;
-          grid-template-columns: 1fr;
-        }
+        .hero-actions { display: grid; grid-template-columns: 1fr; }
+        .cta, .secondary-btn { width: 100%; }
       }
     </style>
   </head>
@@ -585,64 +574,62 @@
 
     <main class="page-shell">
       <section class="section active" id="home">
-        <div class="hero">
-          <div class="hero-card">
-            <div class="hero-copy">
-              <span class="eyebrow">Regionale Halloween-Atmosphäre</span>
-              <h1>Der Keller, in dem das Gruseln wirklich beginnt.</h1>
-              <p>
-                Ein immersives Horror-Erlebnis mit düsterer Stimmung, präziser Inszenierung und einer Atmosph��re, die vom ersten Schritt an zieht.
-                Entdecke, was in unserem Keller wirklich passiert, wenn Dunkelheit, Licht und Angst perfekt zusammenspielen.
-              </p>
-              <div class="hero-actions">
-                <button class="cta" type="button" onclick="switchTab('regeln')">Einlass sichern</button>
-                <button class="secondary-btn" type="button" onclick="switchTab('about')">Mehr erfahren</button>
-              </div>
+        <div class="hero-card">
+          <div class="hero-copy">
+            <span class="eyebrow">Regionale Halloween-Atmosphäre</span>
+            <h1>Der Keller, der dich nicht mehr loslässt.</h1>
+            <p>
+              Ein düsteres Halloween-Erlebnis mit klarer Inszenierung, Licht, Geräuschkulisse und einer Atmosphäre,
+              die bereits beim Betreten spürbar wird. Mehr als nur ein Raum – ein intensiver Abend für alle, die echten Horror wollen.
+            </p>
+            <div class="hero-actions">
+              <button class="cta" type="button" onclick="switchTab('regeln')">Einlass sichern</button>
+              <button class="secondary-btn" type="button" onclick="switchTab('about')">Mehr erfahren</button>
             </div>
+          </div>
 
-            <div class="meta-strip" aria-label="Wichtige Informationen">
-              <div class="meta-box">
-                <span class="label">Erlebnis</span>
-                <strong>3D-Horror</strong>
-              </div>
-              <div class="meta-box">
-                <span class="label">Einlass</span>
-                <strong>Ab 8 Jahre</strong>
-              </div>
-              <div class="meta-box">
-                <span class="label">Kosten</span>
-                <strong>Kostenlos</strong>
-              </div>
+          <div class="meta-strip" aria-label="Wichtige Informationen">
+            <div class="meta-box">
+              <span class="label">Erlebnis</span>
+              <strong>Horror-Atmosphäre</strong>
+            </div>
+            <div class="meta-box">
+              <span class="label">Einlass</span>
+              <strong>Ab 8 Jahre</strong>
+            </div>
+            <div class="meta-box">
+              <span class="label">Kosten</span>
+              <strong>Kostenlos</strong>
             </div>
           </div>
         </div>
 
-        <div class="grid-2" style="margin-top: 20px;">
+        <div class="grid-2">
           <article class="card">
-            <h2>Für alle, die echte Atmosphäre wollen</h2>
+            <h2>Für alle, die echte Stimmung wollen</h2>
             <p class="lead">
-              Nicht nur ein Keller mit Lampen – sondern eine durchdachte, dichte Horror-Inszenierung mit Licht, Sound, Raumwirkung und überraschenden Momenten.
+              Der Gruselkeller ist ein durchdachtes Setting aus Licht, Klang, Raumwirkung und Überraschungen – ohne künstliche Overkill-Schau.
             </p>
             <div class="feature-list">
               <div class="feature-item">
-                <div class="icon">⚡</div>
+                <div class="feature-icon">⚡</div>
                 <div>
-                  <strong>Präzise Stimmung</strong>
-                  <p>Von erster Sekunde an wird die Dunkelheit bewusst aufgebaut, damit jeder Schritt wirkt.</p>
+                  <strong>Durchdachte Stimmung</strong>
+                  <p>Jeder Bereich wurde mit Ziel und Atmosphäre gebaut, damit der Raum nicht nur gruselig, sondern wirklich memorable wirkt.</p>
                 </div>
               </div>
               <div class="feature-item">
-                <div class="icon">🎧</div>
+                <div class="feature-icon">🎧</div>
                 <div>
                   <strong>Sound & Licht</strong>
-                  <p>Atmosphäre entsteht durch Details – nicht durch Zufall, sondern durch sorgfältige Inszenierung.</p>
+                  <p>Atmosphäre entsteht durch Details – ein stimmiger Klang, die richtige Dunkelheit und der passende Moment.</p>
                 </div>
               </div>
               <div class="feature-item">
-                <div class="icon">👻</div>
+                <div class="feature-icon">👻</div>
                 <div>
                   <strong>Erlebnis statt Show</strong>
-                  <p>Ein modernes Horror-Setting mit Raumgefühl, Überraschungen und klarer Führung durch den Verlauf.</p>
+                  <p>Das Ziel ist kein Trend, sondern ein stimmiges Halloween-Erlebnis mit Charakter, Spannung und klarer Wirkung.</p>
                 </div>
               </div>
             </div>
@@ -654,7 +641,9 @@
               Der Eintritt bleibt kostenlos. Wenn dir das Projekt gefällt, kannst du die Arbeit mit einer kleinen freiwilligen Unterstützung honorieren.
             </p>
             <div style="margin-top: 18px;">
-              <a href="https://paypal.me/roland.trissl@gmx.de" target="_blank" class="cta" style="display: inline-flex; width: 100%;">Freiwillig unterstützen</a>
+              <a href="https://paypal.me/roland.trissl@gmx.de" target="_blank" rel="noopener noreferrer" class="cta" style="display:inline-flex; width:100%;">
+                Freiwillig unterstützen
+              </a>
             </div>
           </aside>
         </div>
@@ -662,10 +651,10 @@
 
       <section class="section" id="regeln">
         <div class="card">
-          <h2>Einlass & Regeln</h2>
-          <p class="lead">Bitte lies die Hausordnung durch und akzeptiere sie, damit der Besuch für alle sicher und angenehm bleibt.</p>
+          <h2>Einlass & Hausordnung</h2>
+          <p class="lead">Bitte lies die Regeln durch und akzeptiere sie, bevor du dir deinen Einlass-Pass holst.</p>
 
-          <div class="rule-box" style="margin-top: 20px;">
+          <div class="rules-box">
             <label class="rule-item">
               <input type="checkbox" class="rule-chk" />
               <span><strong>Altersfreigabe:</strong> Einlass ab 8 Jahren. Kinder unter 8 nur in Begleitung eines Erwachsenen.</span>
@@ -676,11 +665,11 @@
             </label>
             <label class="rule-item">
               <input type="checkbox" class="rule-chk" />
-              <span><strong>Keine Gewalt:</strong> Bei Panik oder Unruhe: sofort „Stopp“ rufen. Vandalismus führt zum sofortigen Verweis.</span>
+              <span><strong>Keine Gewalt:</strong> Bei Unruhe oder Panik sofort „Stopp“ rufen. Vandalismus führt zum Verweis.</span>
             </label>
             <label class="rule-item">
               <input type="checkbox" class="rule-chk" />
-              <span><strong>Foto-Verbot:</strong> Kein Blitzlicht innerhalb des Kellers, um andere Gäste nicht zu blenden.</span>
+              <span><strong>Foto-Verbot:</strong> Kein Blitzlicht im Keller, damit andere Gäste nicht geblendet werden.</span>
             </label>
           </div>
 
@@ -696,15 +685,16 @@
             <div class="hint">Mehr als 5 Personen? Bitte auf zwei Gruppen aufteilen.</div>
           </div>
 
-          <div style="margin-top: 18px;">
-            <button class="cta" id="pass-btn" type="button" disabled>Regeln akzeptieren & Pass holen</button>
+          <div style="margin-top: 18px; display:flex; flex-wrap:wrap; gap:12px;">
+            <button class="btn btn-secondary" id="select-all-btn" type="button">Alle Regeln akzeptieren</button>
+            <button class="cta" id="pass-btn" type="button" disabled>Pass holen</button>
           </div>
 
           <div class="pass-panel" id="pass-display">
             <div class="hint">Dein Einlass-Pass</div>
             <span class="pass-code" id="pass-code">GK-0000</span>
-            <div id="pass-group-info" style="font-weight: 700; color: #ffd1ad;">3 Personen</div>
-            <div class="queue-status" id="user-queue-status" style="margin-top: 16px;">warte auf Platz...</div>
+            <div id="pass-group-info" style="font-weight: 700; color: #ffd3a1;">3 Personen</div>
+            <div class="queue-status" id="user-queue-status">Warteschlange wird geprüft…</div>
           </div>
         </div>
       </section>
@@ -713,16 +703,15 @@
         <div class="card">
           <h2>Über uns</h2>
           <div class="story-block">
-            <p><strong>Aus einem kleinen Projekt wurde ein echtes Halloween-Erlebnis.</strong></p>
+            <p><strong>Aus wenigen Anfängen wurde ein echtes Halloween-Projekt.</strong></p>
             <p>
-              Alles begann mit wenigen Materialien, viel Leidenschaft und dem Wunsch, ein düsteres, intensives Setting entstehen zu lassen.
-              Jahr für Jahr wurde daran weitergebaut – mit mehr Raum, mehr Details, mehr Licht und mehr Atmosphäre.
+              Alles begann mit wenig Platz, viel Ideen und dem Wunsch, ein gruseliges, atmosphärisches Erlebnis zu schaffen. Jahr für Jahr wurde weitergebaut – mit mehr Details, mehr Technik und mehr Liebe zum Handwerk.
             </p>
             <p>
-              Heute entsteht der Gruselkeller aus vielen kleinen Ideen, viel Eigenarbeit und einem klaren Ziel: Gästen einen atmosphärischen, spannenden Abend zu bieten, den sie nicht schnell vergessen.
+              Heute entsteht der Gruselkeller aus viel Eigenarbeit, Kreativität und der Überzeugung, dass gute Horror-Atmosphäre nicht nur von Effekten lebt, sondern von einer stimmigen Gesamtwirkung.
             </p>
             <p>
-              Der Kern bleibt dabei derselbe: Kreativität, Teamwork und ein echtes Interesse daran, Menschen zu überraschen, zu begeistern und kurz in eine andere Welt zu ziehen.
+              Unsere Motivation bleibt dieselbe: Besucherinnen und Besucher in eine Stimmung zu ziehen, die sie noch lange nach dem Besuch mitnehmen.
             </p>
           </div>
         </div>
@@ -751,69 +740,73 @@
             <span>•</span>
             <a href="#" onclick="switchTab('regeln'); return false;">Einlass</a>
             <span>•</span>
-            <a href="https://instagram.com/gruselkeller" target="_blank" rel="noreferrer">Instagram</a>
+            <a href="https://instagram.com/gruselkeller" target="_blank" rel="noopener noreferrer">Instagram</a>
           </div>
           <div>© Gruselkeller Team</div>
         </div>
       </footer>
     </main>
 
-    <div class="floating-toast" id="toast">Erfolgreich gespeichert.</div>
+    <div class="toast" id="toast">Einlass-Pass erstellt.</div>
 
     <script>
       const sections = document.querySelectorAll('.section');
       const navButtons = document.querySelectorAll('.nav-btn');
       const ruleChecks = document.querySelectorAll('.rule-chk');
       const passBtn = document.getElementById('pass-btn');
-      const passCodeEl = document.getElementById('pass-code');
+      const selectAllBtn = document.getElementById('select-all-btn');
       const passDisplay = document.getElementById('pass-display');
+      const passCode = document.getElementById('pass-code');
       const passGroupInfo = document.getElementById('pass-group-info');
       const queueStatus = document.getElementById('user-queue-status');
+      const toast = document.getElementById('toast');
 
-      function showToast(msg) {
-        const toast = document.getElementById('toast');
-        toast.textContent = msg;
+      function showToast(message) {
+        toast.textContent = message;
         toast.classList.add('show');
         setTimeout(() => toast.classList.remove('show'), 2200);
       }
 
       function switchTab(name) {
-        sections.forEach(section => section.classList.toggle('active', section.id === name));
-        navButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.target === name));
+        sections.forEach((section) => section.classList.toggle('active', section.id === name));
+        navButtons.forEach((button) => button.classList.toggle('active', button.dataset.target === name));
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
 
-      navButtons.forEach(button => {
+      navButtons.forEach((button) => {
         button.addEventListener('click', () => switchTab(button.dataset.target));
       });
 
-      function updatePassButton() {
-        const allChecked = [...ruleChecks].every(check => check.checked);
+      function updatePassButtonState() {
+        const allChecked = [...ruleChecks].every((checkbox) => checkbox.checked);
         passBtn.disabled = !allChecked;
       }
 
-      ruleChecks.forEach(check => check.addEventListener('change', updatePassButton));
+      ruleChecks.forEach((checkbox) => checkbox.addEventListener('change', updatePassButtonState));
+
+      selectAllBtn.addEventListener('click', () => {
+        ruleChecks.forEach((checkbox) => {
+          checkbox.checked = true;
+        });
+        updatePassButtonState();
+      });
 
       passBtn.addEventListener('click', () => {
         const groupSize = Number(document.getElementById('group-size-select').value);
         const randomNum = Math.floor(1000 + Math.random() * 9000);
         const code = `GK-${randomNum}`;
 
-        passCodeEl.textContent = code;
+        passCode.textContent = code;
         passGroupInfo.textContent = `${groupSize} ${groupSize === 1 ? 'Person' : 'Personen'}`;
         passDisplay.style.display = 'block';
 
         const queue = JSON.parse(localStorage.getItem('gk_queue') || '[]');
-        queue.push({ code, size: groupSize, created: Date.now(), startTime: null });
+        const entry = { code, size: groupSize, created: Date.now(), startTime: null };
+        queue.push(entry);
         localStorage.setItem('gk_queue', JSON.stringify(queue));
 
-        let waitingPosition = 1;
-        const current = queue.filter(item => item.code === code)[0];
-        if (current) {
-          const before = queue.filter(item => item.created < current.created).length;
-          waitingPosition = before + 1;
-        }
-
-        queueStatus.textContent = `Dein Platz in der Warteschlange: ${waitingPosition}`;
+        const currentPosition = queue.filter((item) => item.created <= entry.created).length;
+        queueStatus.textContent = `Platz in der Warteschlange: ${currentPosition}`;
         showToast('Einlass-Pass erstellt');
       });
 
