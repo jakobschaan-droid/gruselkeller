@@ -45,31 +45,40 @@
 
         nav {
             display: flex;
-            gap: 8px;
-            background: var(--card-bg);
-            padding: 6px;
-            border-radius: 12px;
-            border: 1px solid #262938;
+            gap: 10px;
+            background: linear-gradient(180deg, #1a1d2a, #121620);
+            padding: 8px;
+            border-radius: 14px;
+            border: 1px solid #2a3042;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
         }
 
         .nav-btn {
             flex: 1;
-            padding: 10px;
+            padding: 12px 10px;
             background: transparent;
             border: none;
             color: var(--muted);
-            font-weight: bold;
-            font-size: 0.85rem;
-            border-radius: 8px;
+            font-weight: 800;
+            font-size: 0.88rem;
+            border-radius: 10px;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.25s ease;
             text-align: center;
+            letter-spacing: 0.02em;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 102, 0, 0.08);
+            color: #fff;
+            transform: translateY(-1px);
         }
 
         .nav-btn.active {
-            background: var(--accent);
+            background: linear-gradient(135deg, var(--accent), #ff8a3d);
             color: white;
-            box-shadow: 0 2px 8px rgba(255, 102, 0, 0.4);
+            box-shadow: 0 6px 16px rgba(255, 102, 0, 0.35);
+            transform: translateY(-1px);
         }
 
         header {
@@ -112,6 +121,24 @@
             border-radius: 12px;
             padding: 20px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+        }
+
+        #sec-home .card {
+            border: 1px solid rgba(255, 102, 0, 0.35);
+            box-shadow: 0 10px 25px rgba(255, 102, 0, 0.12);
+        }
+
+        #sec-home .btn {
+            font-size: 1.08rem;
+            padding: 16px 18px;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(255, 102, 0, 0.28);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        #sec-home .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 24px rgba(255, 102, 0, 0.35);
         }
 
         .donate-card {
@@ -604,12 +631,14 @@
 
         <!-- PAGE 1: HOME -->
         <div id="sec-home" class="page-section active">
-            <div class="card" style="text-align: center;">
-                <h2>Bist du bereit für den Nervenkitzel?</h2>
-                <p class="story-p">
+            <div class="card" style="text-align: center; padding: 26px 20px; background: linear-gradient(180deg, rgba(255,102,0,0.06), rgba(22,24,34,1));">
+                <h2 style="font-size: 1.6rem; margin-bottom: 14px;">Bist du bereit für den Nervenkitzel?</h2>
+                <p class="story-p" style="font-size: 1rem; line-height: 1.7;">
                     Tritt ein in den dunkelsten Keller der Region! Erlebe echte Schreckmomente, krasse Lichter & Soundeffekte und eine einzigartige Horror-Atmosphäre.
                 </p>
-                <button class="btn" onclick="switchTab('regeln')" style="margin-top: 10px;">👉 Jetzt Regeln akzeptieren & Einlass-Pass holen</button>
+                <button class="btn" onclick="switchTab('regeln')" style="margin-top: 16px; width: 100%; max-width: 420px; margin-left: auto; margin-right: auto;">
+                    👉 Jetzt Regeln akzeptieren & Einlass-Pass holen
+                </button>
             </div>
 
             <!-- Spenden-Card -->
@@ -653,10 +682,11 @@
 
                 <div class="form-group" style="margin-top: 15px;">
                     <label for="group-size-select" style="font-weight: bold; color: var(--accent);">👥 Wie viele Personen seid ihr?</label>
-                    <select id="group-size-select">
+                    <select id="group-size-select" required>
+                        <option value="" selected disabled hidden>Bitte auswählen</option>
                         <option value="1">1 Person</option>
                         <option value="2">2 Personen</option>
-                        <option value="3" selected>3 Personen</option>
+                        <option value="3">3 Personen</option>
                         <option value="4">4 Personen</option>
                         <option value="5">5 Personen (Max. Gruppengröße)</option>
                     </select>
@@ -951,6 +981,7 @@
         const checkboxes = document.querySelectorAll('.rule-chk');
         const passBtn = document.getElementById('pass-btn');
         const selectAllBtn = document.getElementById('select-all-btn');
+        const groupSizeSelect = document.getElementById('group-size-select');
 
         checkboxes.forEach(chk => chk.addEventListener('change', checkAllDone));
 
@@ -964,10 +995,26 @@
             passBtn.disabled = !allDone;
         }
 
+        groupSizeSelect.addEventListener('invalid', (event) => {
+            event.target.setCustomValidity('Bitte füllen Sie dieses Feld aus!');
+        });
+
+        groupSizeSelect.addEventListener('input', () => {
+            groupSizeSelect.setCustomValidity('');
+        });
+
         passBtn.addEventListener('click', () => {
+            if (!groupSizeSelect.value) {
+                groupSizeSelect.setCustomValidity('Bitte füllen Sie dieses Feld aus!');
+                groupSizeSelect.reportValidity();
+                return;
+            }
+
+            groupSizeSelect.setCustomValidity('');
+
             const randomNum = Math.floor(1000 + Math.random() * 9000);
             myPassCode = `GK-${randomNum}`;
-            const groupSize = parseInt(document.getElementById('group-size-select').value);
+            const groupSize = parseInt(groupSizeSelect.value);
 
             document.getElementById('pass-code').textContent = myPassCode;
             document.getElementById('pass-group-info').textContent = `👥 ${groupSize} Person${groupSize > 1 ? 'en' : ''}`;
