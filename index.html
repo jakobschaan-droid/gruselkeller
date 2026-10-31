@@ -1,924 +1,1614 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gruselkeller</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <style>
-    :root {
-      --bg: #0b0c11;
-      --card-bg: #161822;
-      --accent: #ff6600;
-      --text: #f0f0f0;
-      --muted: #9aa0a6;
-      --success: #2ecc71;
-      --danger: #e74c3c;
-      --paypal-blue: #0070ba;
-      --font: system-ui, -apple-system, sans-serif;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gruselkeller | Das Halloween-Highlight</title>
+    <style>
+        :root {
+            --bg: #0b0c11;
+            --card-bg: #161822;
+            --accent: #ff6600;
+            --accent-hover: #e55d00;
+            --text: #f0f0f0;
+            --muted: #9aa0a6;
+            --success: #2ecc71;
+            --danger: #e74c3c;
+            --paypal-blue: #0070ba;
+            --font: system-ui, -apple-system, sans-serif;
+        }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--font);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      padding: 20px 15px;
-    }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    .container {
-      width: 100%;
-      max-width: 520px;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
+        
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 15px;
+        }
 
-    .card {
-      background: var(--card-bg);
-      border: 1px solid #262938;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 4px 12px rgba(0,0,0,.5);
-    }
+        .container {
+            width: 100%;
+            max-width: 520px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
 
-    nav {
-      display: flex;
-      gap: 10px;
-      background: linear-gradient(180deg, #1a1d2a, #121620);
-      padding: 8px;
-      border-radius: 14px;
-      border: 1px solid #2a3042;
-    }
+        nav {
+            display: flex;
+            gap: 10px;
+            background: linear-gradient(180deg, #1a1d2a, #121620);
+            padding: 8px;
+            border-radius: 14px;
+            border: 1px solid #2a3042;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+        }
 
-    .nav-btn {
-      flex: 1;
-      background: transparent;
-      border: none;
-      color: var(--muted);
-      padding: 12px 10px;
-      border-radius: 10px;
-      font-weight: 800;
-      cursor: pointer;
-    }
+        .nav-btn {
+            flex: 1;
+            padding: 12px 10px;
+            background: transparent;
+            border: none;
+            color: var(--muted);
+            font-weight: 800;
+            font-size: 0.88rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            text-align: center;
+            letter-spacing: 0.02em;
+        }
 
-    .nav-btn.active {
-      background: linear-gradient(135deg, var(--accent), #ff8a3d);
-      color: white;
-    }
+        .nav-btn:hover {
+            background: rgba(255, 102, 0, 0.08);
+            color: #fff;
+            transform: translateY(-1px);
+        }
 
-    h1, h2 { color: var(--text); }
-    h1 { font-size: 2.2rem; text-align: center; color: var(--accent); }
-    .subtitle { color: var(--muted); text-align: center; }
+        .nav-btn.active {
+            background: linear-gradient(135deg, var(--accent), #ff8a3d);
+            color: white;
+            box-shadow: 0 6px 16px rgba(255, 102, 0, 0.35);
+            transform: translateY(-1px);
+        }
 
-    .insta-btn, .btn {
-      display: block;
-      width: 100%;
-      text-align: center;
-      text-decoration: none;
-      border: none;
-      border-radius: 8px;
-      padding: 14px 12px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: transform .2s ease;
-      background: var(--accent);
-      color: white;
-    }
+        header {
+            text-align: center;
+            padding: 15px 0 5px 0;
+        }
 
-    .insta-btn {
-      margin-top: 12px;
-      background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-    }
+        h1 {
+            color: var(--accent);
+            font-size: 2.2rem;
+            margin-bottom: 5px;
+            text-shadow: 0 0 12px rgba(255, 102, 0, 0.4);
+        }
 
-    .btn:hover, .insta-btn:hover {
-      transform: translateY(-2px);
-    }
+        .subtitle {
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
 
-    .btn-secondary {
-      background: #262938;
-      color: var(--text);
-      margin-bottom: 12px;
-    }
+        .insta-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 12px;
+            padding: 8px 16px;
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            color: white;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: transform 0.2s;
+        }
 
-    .btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      transform: none;
-    }
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid #262938;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+        }
 
-    .page-section { display: none; gap: 20px; flex-direction: column; }
-    .page-section.active { display: flex; }
+        .donate-card {
+            border: 2px dashed var(--paypal-blue);
+            background: linear-gradient(135deg, #161822, #101826);
+            position: relative;
+        }
 
-    .rules-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
-    .rule-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      cursor: pointer;
-      line-height: 1.4;
-    }
+        .badge-voluntary {
+            display: inline-block;
+            background: rgba(0, 112, 186, 0.2);
+            color: #38bdf8;
+            font-size: 0.75rem;
+            font-weight: bold;
+            padding: 4px 10px;
+            border-radius: 20px;
+            margin-bottom: 10px;
+            border: 1px solid rgba(0, 112, 186, 0.4);
+        }
 
-    .rule-item input[type="checkbox"] {
-      width: 22px; height: 22px; flex-shrink: 0;
-      accent-color: var(--accent);
-      transform: translateY(2px);
-    }
+        h2 {
+            font-size: 1.25rem;
+            margin-bottom: 15px;
+            color: var(--text);
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 8px;
+        }
 
-    select, input[type="password"], input[type="number"], textarea {
-      width: 100%;
-      padding: 10px;
-      border-radius: 6px;
-      border: 1px solid #262938;
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--font);
-    }
+        .rules-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
 
-    .form-group { margin-bottom: 15px; }
+        .rule-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
 
-    #pass-display {
-      display: none;
-      text-align: center;
-      border: 2px dashed var(--accent);
-      background: linear-gradient(135deg, #1f2233, #12141c);
-    }
+        .rule-item input[type="checkbox"] {
+            appearance: none;
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--muted);
+            border-radius: 6px;
+            background: var(--bg);
+            display: grid;
+            place-content: center;
+            cursor: pointer;
+            margin-top: 1px;
+            flex-shrink: 0;
+        }
 
-    .pass-id {
-      font-family: monospace;
-      font-size: 2.2rem;
-      letter-spacing: 3px;
-      color: var(--accent);
-      margin: 10px 0;
-      font-weight: bold;
-    }
+        .rule-item input[type="checkbox"]:checked {
+            background-color: var(--accent);
+            border-color: var(--accent);
+        }
 
-    .queue-status {
-      background: rgba(255, 102, 0, 0.15);
-      color: var(--accent);
-      padding: 10px;
-      border-radius: 6px;
-      font-weight: bold;
-      margin-top: 10px;
-    }
+        .rule-item input[type="checkbox"]::before {
+            content: "";
+            width: 10px;
+            height: 6px;
+            border-left: 2px solid white;
+            border-bottom: 2px solid white;
+            transform: rotate(-45deg) translate(1px, -1px);
+            opacity: 0;
+        }
 
-    .rating-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 10px;
-      background: var(--bg);
-      padding: 8px 12px;
-      border-radius: 6px;
-    }
+        .rule-item input[type="checkbox"]:checked::before {
+            opacity: 1;
+        }
 
-    .star-select {
-      background: transparent;
-      border: none;
-      color: var(--accent);
-      font-weight: bold;
-    }
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
 
-    #admin-panel { display: none; }
-    #admin-content { display: none; }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 18px rgba(255, 102, 0, 0.25);
+        }
 
-    #toast {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--success);
-      color: white;
-      padding: 10px 18px;
-      border-radius: 8px;
-      display: none;
-      z-index: 9999;
-      font-weight: bold;
-    }
+        .btn-secondary {
+            background-color: #262938;
+            color: var(--text);
+            margin-bottom: 12px;
+            padding: 10px;
+            font-size: 0.9rem;
+        }
 
-    #sec-monitor, #sec-buzzer {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: var(--bg);
-      z-index: 9998;
-      padding: 30px 20px;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
+        .btn:disabled {
+            background-color: #333;
+            color: var(--muted);
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
 
-    #sec-monitor.active, #sec-buzzer.active { display: flex; }
+        .donate-btn {
+            background-color: var(--paypal-blue);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
 
-    .monitor-grid {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-      width: 100%;
-      max-width: 1100px;
-      margin-top: 40px;
-    }
+        #pass-display {
+            display: none;
+            text-align: center;
+            background: linear-gradient(135deg, #1f2233, #12141c);
+            border: 2px dashed var(--accent);
+        }
 
-    .monitor-card {
-      background: var(--card-bg);
-      border: 3px solid var(--accent);
-      border-radius: 16px;
-      padding: 24px 28px;
-      min-width: 240px;
-      max-width: 280px;
-    }
+        .pass-id {
+            font-family: monospace;
+            font-size: 2.2rem;
+            letter-spacing: 3px;
+            color: var(--accent);
+            margin: 10px 0;
+            font-weight: bold;
+        }
 
-    .monitor-code {
-      font-family: monospace;
-      font-size: 2.8rem;
-      font-weight: bold;
-      color: var(--accent);
-    }
+        .queue-status {
+            font-size: 0.95rem;
+            padding: 10px;
+            border-radius: 6px;
+            background: rgba(255, 102, 0, 0.15);
+            color: var(--accent);
+            margin-top: 10px;
+            font-weight: bold;
+        }
 
-    .monitor-size, .monitor-time { margin-top: 8px; }
+        .form-group {
+            margin-bottom: 15px;
+        }
 
-    .buzzer-btn {
-      width: 280px; height: 280px;
-      border-radius: 50%;
-      background: radial-gradient(circle, #ff4500, #cc0000);
-      border: 8px solid #660000;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      font-size: 2rem;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 20px;
-    }
+        label {
+            display: block;
+            font-size: 0.9rem;
+            margin-bottom: 6px;
+            color: var(--muted);
+        }
 
-    .buzzer-btn:active { transform: scale(0.96); }
+        select, textarea, input[type="password"], input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            background: var(--bg);
+            border: 1px solid #262938;
+            color: var(--text);
+            border-radius: 6px;
+            font-family: var(--font);
+            font-size: 0.95rem;
+        }
 
-    #buzzer-result-card {
-      display: none;
-      margin-top: 12px;
-      background: var(--card-bg);
-      border: 2px solid var(--accent);
-      border-radius: 12px;
-      padding: 15px 25px;
-    }
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
 
-    .pass-list {
-      background: var(--bg);
-      border: 1px solid #262938;
-      border-radius: 6px;
-      padding: 8px;
-      max-height: 180px;
-      overflow-y: auto;
-      margin-bottom: 15px;
-    }
+        .rating-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            background: var(--bg);
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
 
-    .pass-item {
-      display: flex;
-      justify-content: space-between;
-      padding: 6px 4px;
-      border-bottom: 1px solid #1a1c29;
-      font-family: monospace;
-    }
+        .star-select {
+            background: transparent;
+            border: none;
+            color: var(--accent);
+            font-weight: bold;
+            font-size: 0.95rem;
+            width: auto;
+        }
 
-    .setting-box {
-      background: var(--bg);
-      border: 1px solid #262938;
-      border-radius: 8px;
-      padding: 12px;
-      margin-bottom: 12px;
-    }
+        .page-section {
+            display: none;
+            flex-direction: column;
+            gap: 20px;
+        }
 
-    .stat-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-bottom: 15px;
-    }
+        .page-section.active {
+            display: flex;
+        }
 
-    .stat-box {
-      background: var(--bg);
-      border-radius: 6px;
-      padding: 10px;
-      text-align: center;
-    }
+        footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--muted);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
 
-    .stat-num {
-      font-size: 1.4rem;
-      font-weight: bold;
-      color: var(--accent);
-    }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
 
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
+        .footer-links a {
+            color: var(--muted);
+            text-decoration: none;
+        }
 
-    .footer-links a {
-      color: var(--muted);
-      text-decoration: none;
-      cursor: pointer;
-    }
-  </style>
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        #admin-panel {
+            display: none;
+            border-color: #d35400;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .stat-box {
+            background: var(--bg);
+            padding: 10px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .stat-num {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        .cat-stat-list {
+            background: var(--bg);
+            border: 1px solid #262938;
+            border-radius: 6px;
+            padding: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            font-size: 0.85rem;
+        }
+
+        .cat-stat-item {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .pass-list {
+            max-height: 150px;
+            overflow-y: auto;
+            background: var(--bg);
+            border: 1px solid #262938;
+            border-radius: 6px;
+            padding: 8px;
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+        }
+
+        .pass-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 4px;
+            border-bottom: 1px solid #1a1c29;
+            font-family: monospace;
+        }
+
+        /* MONITOR MODE STYLES */
+        #sec-monitor {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: var(--bg);
+            z-index: 9999;
+            padding: 40px 20px;
+            flex-direction: column;
+            align-items: center;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        #sec-monitor.active {
+            display: flex;
+        }
+
+        .monitor-grid {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .monitor-card {
+            background: var(--card-bg);
+            border: 3px solid var(--accent);
+            border-radius: 16px;
+            padding: 20px 25px;
+            text-align: center;
+            box-shadow: 0 0 25px rgba(255, 102, 0, 0.3);
+            min-width: 240px;
+            flex: 1;
+            max-width: 280px;
+        }
+
+        .monitor-code {
+            font-family: monospace;
+            font-size: 2.8rem;
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        .monitor-size {
+            font-size: 1.2rem;
+            color: #38bdf8;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .monitor-time {
+            font-size: 1rem;
+            color: var(--success);
+            margin-top: 8px;
+            font-weight: bold;
+        }
+
+        /* BUZZER / KIOSK MODE STYLES */
+        #sec-buzzer {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: var(--bg);
+            z-index: 9998;
+            padding: 20px;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        #sec-buzzer.active {
+            display: flex;
+        }
+
+        .buzzer-btn {
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #ff4500, #cc0000);
+            border: 8px solid #660000;
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 12px 35px rgba(255, 0, 0, 0.5), inset 0 6px 15px rgba(255, 255, 255, 0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+            transition: transform 0.18s ease, opacity 0.2s ease;
+            outline: none;
+        }
+
+        .buzzer-btn:active {
+            transform: scale(0.93);
+        }
+
+        .buzzer-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        #toast {
+            position: fixed;
+            bottom: 20px;
+            background: var(--success);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            display: none;
+            z-index: 10000;
+        }
+
+        .story-p {
+            line-height: 1.6;
+            color: #d0d0d0;
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+        }
+
+        .legal-p {
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: #b0b5bc;
+            margin-bottom: 10px;
+        }
+
+        .setting-box {
+            background: var(--bg);
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #262938;
+            margin-bottom: 12px;
+        }
+
+        .home-register {
+            background: linear-gradient(180deg, rgba(255,102,0,0.22), rgba(22,24,34,1));
+            border: 2px solid rgba(255, 102, 0, 0.7);
+            box-shadow: 0 15px 35px rgba(255, 102, 0, 0.2), inset 0 0 25px rgba(255,102,0,0.12);
+            padding: 22px 20px;
+        }
+
+        .home-register-top {
+            text-align: center;
+            margin-bottom: 18px;
+        }
+
+        .home-tag {
+            display: inline-block;
+            background: rgba(255, 102, 0, 0.15);
+            border: 1px solid rgba(255, 102, 0, 0.5);
+            color: #ffb380;
+            font-weight: bold;
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 7px 12px;
+            border-radius: 999px;
+            margin-bottom: 10px;
+        }
+
+        .home-register h2 {
+            font-size: 1.55rem;
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .home-register-grid {
+            display: grid;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .home-register select {
+            font-size: 1rem;
+            padding: 13px 12px;
+            background: rgba(11, 12, 17, 0.9);
+            border: 2px solid rgba(255, 102, 0, 0.45);
+            border-radius: 10px;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
+        }
+
+        .home-cta-btn {
+            padding: 16px 14px;
+            font-size: 1.08rem;
+            font-weight: 900;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent), #ff8f3d);
+            box-shadow: 0 12px 25px rgba(255, 102, 0, 0.38);
+        }
+
+        #home-group-select {
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
 
-    <header>
-      <h1>🎃 GRUSELKELLER</h1>
-      <p class="subtitle">Das krasseste Halloween-Erlebnis der Region</p>
-      <a href="https://instagram.com/gruselkeller" target="_blank" class="insta-btn">
-        📸 Folge uns auf Instagram (@gruselkeller)
-      </a>
-    </header>
+    <!-- EXTERNAL MONITOR DISPLAY -->
+    <div id="sec-monitor">
+        <h1 style="font-size: 3.2rem;">🎃 GRUSELKELLER EINLASS 🎃</h1>
+        <p class="subtitle" id="monitor-subtitle" style="font-size: 1.4rem; color: var(--success); margin-top: 10px;">✔ Berechtigte Codes für den Keller-Einlass:</p>
 
-    <nav>
-      <button class="nav-btn active" onclick="switchTab('home')">🏠 Start</button>
-      <button class="nav-btn" onclick="switchTab('regeln')">📜 Regeln</button>
-      <button class="nav-btn" onclick="switchTab('about')">💀 Über uns</button>
-    </nav>
-
-    <div id="sec-home" class="page-section active">
-      <div class="card">
-        <h2>Pass sichern & direkt anmelden</h2>
-        <div class="form-group">
-          <label>👥 Gruppengröße</label>
-          <select id="home-group-select">
-            <option value="" selected disabled hidden>Bitte auswählen</option>
-            <option value="1">1 Person</option>
-            <option value="2">2 Personen</option>
-            <option value="3">3 Personen</option>
-            <option value="4">4 Personen</option>
-            <option value="5">5 Personen</option>
-          </select>
+        <div class="monitor-grid" id="monitor-code-grid">
+            <div class="monitor-card"><div class="monitor-code">Warten...</div></div>
         </div>
-        <button class="btn" id="home-pass-btn">🚪 Jetzt Einlass-Pass holen</button>
-      </div>
 
-      <div class="card">
-        <h2>Bist du bereit für den Nervenkitzel?</h2>
-        <p class="subtitle">Tritt ein in den dunkelsten Keller der Region.</p>
-        <button class="btn" onclick="switchTab('regeln')" style="margin-top: 12px;">👉 Jetzt Regeln akzeptieren</button>
-      </div>
+        <button onclick="window.location.hash=''" style="position: absolute; bottom: 20px; right: 20px; background: none; border: none; color: #444; cursor: pointer; font-size: 0.9rem;">[Monitor Schließen]</button>
     </div>
 
-    <div id="sec-regeln" class="page-section">
-      <div class="card" id="rules-card">
-        <h2>Hausordnung & Regeln</h2>
+    <!-- BUZZER / KIOSK TERMINAL DISPLAY -->
+    <div id="sec-buzzer">
+        <h1 style="font-size: 2.5rem; color: var(--accent);">🎃 GRUSELKELLER KIOSK 🎃</h1>
+        <p class="subtitle" style="font-size: 1.2rem; margin-top: 5px;">Tippe auf den Buzzer, um deine Gruppe anzumelden!</p>
 
-        <button class="btn btn-secondary" id="select-all-btn">⚡ Alle Regeln auf einmal akzeptieren</button>
-
-        <div class="rules-list">
-          <label class="rule-item">
-            <input type="checkbox" class="rule-chk">
-            <span><strong>Altersfreigabe:</strong> Einlass ab 8 Jahre.</span>
-          </label>
-          <label class="rule-item">
-            <input type="checkbox" class="rule-chk">
-            <span><strong>Kein Anfassen:</strong> Die Erschrecker dürfen nicht berührt werden.</span>
-          </label>
-          <label class="rule-item">
-            <input type="checkbox" class="rule-chk">
-            <span><strong>Keine Gewalt:</strong> Bei Panik sofort "Stopp" rufen.</span>
-          </label>
-          <label class="rule-item">
-            <input type="checkbox" class="rule-chk">
-            <span><strong>Foto-Verbot:</strong> Kein Blitzlicht im Keller.</span>
-          </label>
-        </div>
-
-        <div class="form-group">
-          <label for="group-size-select">👥 Wie viele Personen seid ihr?</label>
-          <select id="group-size-select">
-            <option value="" selected disabled hidden>Bitte auswählen</option>
-            <option value="1">1 Person</option>
-            <option value="2">2 Personen</option>
-            <option value="3">3 Personen</option>
-            <option value="4">4 Personen</option>
-            <option value="5">5 Personen</option>
-          </select>
-        </div>
-
-        <button class="btn" id="pass-btn" disabled>Regeln akzeptieren & Pass holen</button>
-      </div>
-
-      <div class="card" id="pass-display">
-        <h2>Dein Einlass-Pass</h2>
-        <p class="subtitle">Dein persönlicher Code:</p>
-        <div class="pass-id" id="pass-code">GK-0000</div>
-        <div id="pass-group-info" style="color:#38bdf8; font-weight:bold;">👥 1 Person</div>
-        <div class="queue-status" id="user-queue-status">Prüfe Status...</div>
-      </div>
-
-      <div class="card" id="feedback-card" style="display:none;">
-        <h2>Nach dem Durchgang: Bewerten ⭐</h2>
-        <form id="feedback-form">
-          <div class="rating-row">
-            <span>🕯️ Ambiente & Deko</span>
-            <select class="star-select" id="r-ambiente">
-              <option value="5">⭐⭐⭐⭐⭐</option>
-              <option value="4">⭐⭐⭐⭐</option>
-              <option value="3">⭐⭐⭐</option>
-              <option value="2">⭐⭐</option>
-              <option value="1">⭐</option>
+        <div style="margin-top: 15px;">
+            <label style="font-size: 1rem; color: #38bdf8; font-weight: bold;">👥 Gruppengröße wählen:</label>
+            <select id="buzzer-group-select" style="width: 220px; text-align: center; font-size: 1.1rem; margin-top: 5px;" required>
+                <option value="" selected disabled hidden>Bitte auswählen</option>
+                <option value="1">1 Person</option>
+                <option value="2">2 Personen</option>
+                <option value="3">3 Personen</option>
+                <option value="4">4 Personen</option>
+                <option value="5">5 Personen</option>
             </select>
-          </div>
-
-          <div class="rating-row">
-            <span>👻 Erschrecker</span>
-            <select class="star-select" id="r-erschrecker">
-              <option value="5">⭐⭐⭐⭐⭐</option>
-              <option value="4">⭐⭐⭐⭐</option>
-              <option value="3">⭐⭐⭐</option>
-              <option value="2">⭐⭐</option>
-              <option value="1">⭐</option>
-            </select>
-          </div>
-
-          <div class="rating-row">
-            <span>🌌 Atmosphäre</span>
-            <select class="star-select" id="r-atmos">
-              <option value="5">⭐⭐⭐⭐⭐</option>
-              <option value="4">⭐⭐⭐⭐</option>
-              <option value="3">⭐⭐⭐</option>
-              <option value="2">⭐⭐</option>
-              <option value="1">⭐</option>
-            </select>
-          </div>
-
-          <div class="rating-row">
-            <span>💡 Licht</span>
-            <select class="star-select" id="r-licht">
-              <option value="5">⭐⭐⭐⭐⭐</option>
-              <option value="4">⭐⭐⭐⭐</option>
-              <option value="3">⭐⭐⭐</option>
-              <option value="2">⭐⭐</option>
-              <option value="1">⭐</option>
-            </select>
-          </div>
-
-          <div class="rating-row">
-            <span>🔊 Sound</span>
-            <select class="star-select" id="r-sound">
-              <option value="5">⭐⭐⭐⭐⭐</option>
-              <option value="4">⭐⭐⭐⭐</option>
-              <option value="3">⭐⭐⭐</option>
-              <option value="2">⭐⭐</option>
-              <option value="1">⭐</option>
-            </select>
-          </div>
-
-          <div class="form-group" style="margin-top:15px;">
-            <label for="comment">Kommentar (optional):</label>
-            <textarea id="comment" placeholder="Wer war am gruseligsten?"></textarea>
-          </div>
-
-          <button type="submit" class="btn">Bewertung abschicken</button>
-        </form>
-      </div>
-    </div>
-
-    <div id="sec-about" class="page-section">
-      <div class="card">
-        <h2>Über Uns 💀</h2>
-        <p class="subtitle" style="text-align:left; margin-bottom:10px;">Wir sind eine Gruppe von Jugendlichen aus der Region.</p>
-        <p class="subtitle" style="text-align:left; margin-bottom:10px;">Seit 5 Jahren bauen wir jedes Jahr neue Szenen, Räume und Horror-Atmosphäre auf.</p>
-        <p class="subtitle" style="text-align:left;">Danke an jeden, der uns besucht und unterstützt!</p>
-        <a href="https://instagram.com/gruselkeller" target="_blank" class="insta-btn" style="width:100%;">📸 Besuche uns auf Instagram</a>
-      </div>
-    </div>
-
-    <div class="card" id="admin-panel">
-      <h2>Veranstalter Dashboard</h2>
-
-      <div id="admin-login-box">
-        <div class="form-group">
-          <label for="admin-pin">Bitte PIN eingeben:</label>
-          <input type="password" id="admin-pin" placeholder="PIN eingeben">
-        </div>
-        <button class="btn" id="login-btn">Einloggen</button>
-      </div>
-
-      <div id="admin-content">
-        <button class="btn" id="force-start-btn" style="background:linear-gradient(45deg,#e67e22,#d35400); margin-bottom:15px;">
-          ⚡ Nächste Gruppe sofort freigeben
-        </button>
-
-        <div class="setting-box">
-          <label style="font-weight:bold; color:var(--accent);">🎛️ Organizer-Menü</label>
-          <div style="display:grid; gap:8px; margin-top:10px;">
-            <button class="btn btn-secondary" id="admin-open-monitor-btn">📺 Live-Monitor öffnen</button>
-            <button class="btn btn-secondary" id="admin-open-buzzer-btn">🕹️ Buzzer / Kiosk öffnen</button>
-            <button class="btn btn-secondary" id="admin-close-views-btn">🏠 Zurück zur Website</button>
-          </div>
         </div>
 
-        <div class="setting-box">
-          <label style="font-weight:bold; color:var(--accent);">🔔 Externer Buzzer</label>
-          <label style="display:flex; gap:10px; align-items:center; margin-top:8px;">
-            <input type="checkbox" id="admin-buzzer-hotkey">
-            <span>Mit Tastendruck <strong>B</strong> Force-Start auslösen</span>
-          </label>
+        <div class="buzzer-btn" id="main-buzzer-trigger" tabindex="0" aria-label="Buzzer für Pass">
+            <span>🔴</span>
+            <span>BUZZER</span>
+            <span style="font-size: 0.9rem; margin-top: 5px; opacity: 0.8;">PASS DRUCKEN</span>
         </div>
 
-        <div class="stat-grid">
-          <div class="stat-box">
-            <div class="stat-num" id="stat-passes">0</div>
-            <div class="subtitle">Aktive Pässe</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-num" id="stat-rating">5.0 ★</div>
-            <div class="subtitle">Gesamt-Schnitt</div>
-          </div>
+        <div id="buzzer-result-card" style="display: none; background: var(--card-bg); border: 2px solid var(--accent); padding: 15px 25px; border-radius: 12px; margin-top: 10px;">
+            <div style="font-size: 0.9rem; color: var(--muted);">DEIN CODE HAST DU DIR GESICHERT:</div>
+            <div id="buzzer-result-code" style="font-family: monospace; font-size: 2.5rem; color: var(--accent); font-weight: bold;">GK-0000</div>
+            <div id="buzzer-result-info" style="color: var(--success); font-weight: bold; margin-top: 5px;">Sichtbar auf dem Haupt-Monitor sobald du dran bist!</div>
         </div>
 
-        <button class="btn" id="reset-data-btn" style="background:var(--danger); margin-top:10px;">🗑️ Alle Bewertungen & Pässe zurücksetzen</button>
-        <button class="btn" id="logout-btn" style="background:#333; margin-top:10px;">Ausloggen</button>
-      </div>
+        <button onclick="window.location.hash=''" style="position: absolute; bottom: 20px; right: 20px; background: none; border: none; color: #444; cursor: pointer; font-size: 0.9rem;">[Terminal Beenden]</button>
     </div>
 
-    <footer>
-      <div class="footer-links">
-        <a href="#" id="admin-toggle-link">⚙️ Organizer Login</a>
-      </div>
-    </footer>
+    <!-- STANDARD WEBSITE -->
+    <div class="container" id="main-container">
+        <header>
+            <h1>🎃 GRUSELKELLER</h1>
+            <p class="subtitle">Das krasseste Halloween-Erlebnis der Region</p>
+            <a href="https://instagram.com/gruselkeller" target="_blank" class="insta-btn">
+                📸 Folge uns auf Instagram (@gruselkeller)
+            </a>
+        </header>
 
-  </div>
+        <!-- Navigation Tabs -->
+        <nav>
+            <button class="nav-btn active" onclick="switchTab('home')">🏠 Start</button>
+            <button class="nav-btn" onclick="switchTab('regeln')">📜 Einlass & Regeln</button>
+            <button class="nav-btn" onclick="switchTab('about')">💀 Über uns</button>
+        </nav>
 
-  <div id="sec-monitor">
-    <h1>🎃 GRUSELKELLER EINLASS 🎃</h1>
-    <p class="subtitle" style="font-size:1.3rem; color:var(--success);">✔ Berechtigte Codes für den Keller-Einlass:</p>
-    <div class="monitor-grid" id="monitor-code-grid">
-      <div class="monitor-card">
-        <div class="monitor-code">Warten...</div>
-      </div>
-    </div>
-    <button onclick="document.getElementById('sec-monitor').classList.remove('active')" style="position:absolute; right:20px; bottom:20px; background:none; color:#444; border:none; cursor:pointer;">[Monitor schließen]</button>
-  </div>
+        <!-- PAGE 1: HOME -->
+        <div id="sec-home" class="page-section active">
+            <div class="card home-register">
+                <div class="home-register-top">
+                    <div class="home-tag">Schneller Einlass</div>
+                    <h2>Pass sichern & direkt anmelden</h2>
+                </div>
 
-  <div id="sec-buzzer">
-    <h1>🎃 GRUSELKELLER KIOSK 🎃</h1>
-    <p class="subtitle">Tippe auf den Buzzer, um deine Gruppe anzumelden!</p>
+                <div class="home-register-grid">
+                    <label for="home-group-select" style="color: #ffb380; font-weight: bold; font-size: 0.9rem;">👥 Gruppengröße</label>
+                    <select id="home-group-select" required>
+                        <option value="" selected disabled hidden>Bitte auswählen</option>
+                        <option value="1">1 Person</option>
+                        <option value="2">2 Personen</option>
+                        <option value="3">3 Personen</option>
+                        <option value="4">4 Personen</option>
+                        <option value="5">5 Personen</option>
+                    </select>
 
-    <label style="margin-top:15px; font-weight:bold; color:#38bdf8;">👥 Gruppengröße wählen:</label>
-    <select id="buzzer-group-select" style="width:220px; margin-top:6px;">
-      <option value="" selected disabled hidden>Bitte auswählen</option>
-      <option value="1">1 Person</option>
-      <option value="2">2 Personen</option>
-      <option value="3">3 Personen</option>
-      <option value="4">4 Personen</option>
-      <option value="5">5 Personen</option>
-    </select>
+                    <button class="btn home-cta-btn" id="home-pass-btn">
+                        🚪 Jetzt Einlass-Pass holen
+                    </button>
+                </div>
+            </div>
 
-    <div class="buzzer-btn" id="main-buzzer-trigger">
-      <span>🔴</span>
-      <span>BUZZER</span>
-      <span style="font-size:0.9rem; opacity:.8;">PASS DRUCKEN</span>
-    </div>
+            <div class="card" style="text-align: center; padding: 26px 20px; background: linear-gradient(180deg, rgba(255,102,0,0.06), rgba(22,24,34,1));">
+                <h2 style="font-size: 1.5rem; margin-bottom: 14px; border-bottom: none;">Bist du bereit für den Nervenkitzel?</h2>
+                <p class="story-p" style="font-size: 1rem; line-height: 1.7;">
+                    Tritt ein in den dunkelsten Keller der Region! Erlebe echte Schreckmomente, krasse Lichter & Soundeffekte und eine einzigartige Horror-Atmosphäre.
+                </p>
+                <button class="btn" onclick="switchTab('regeln')" style="margin-top: 16px; width: 100%; max-width: 420px; margin-left: auto; margin-right: auto;">
+                    👉 Jetzt Regeln akzeptieren & Einlass-Pass holen
+                </button>
+            </div>
 
-    <div id="buzzer-result-card">
-      <div style="font-size:0.9rem; color:var(--muted);">DEIN CODE HAST DU DIR GESICHERT:</div>
-      <div id="buzzer-result-code" style="font-family:monospace; font-size:2.5rem; color:var(--accent); font-weight:bold;">GK-0000</div>
-    </div>
-
-    <button onclick="document.getElementById('sec-buzzer').classList.remove('active')" style="position:absolute; right:20px; bottom:20px; background:none; color:#444; border:none; cursor:pointer;">[Terminal schließen]</button>
-  </div>
-
-  <div id="toast"></div>
-
-  <script>
-    // ===== Supabase =====
-    const supabaseUrl = "https://ztcvxszayrfyupslvgnt.supabase.co";
-    const supabaseAnonKey = "sb_publishable_oDYuO7dNU74I472U1UQTgA_11UwAxKw";
-    const supabase = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
-
-    const ADMIN_PIN = "3110";
-
-    // ===== Helpers =====
-    function showToast(msg) {
-      const toast = document.getElementById("toast");
-      toast.textContent = msg;
-      toast.style.display = "block";
-      clearTimeout(showToast.timer);
-      showToast.timer = setTimeout(() => toast.style.display = "none", 2200);
-    }
-
-    function normalizeGroupSize(v) {
-      const n = Number(v);
-      if (!Number.isFinite(n)) return 1;
-      return Math.min(5, Math.max(1, Math.round(n)));
-    }
-
-    function generateCode() {
-      return `GK-${Math.floor(1000 + Math.random() * 9000)}`;
-    }
-
-    function switchTab(name) {
-      const sections = document.querySelectorAll(".page-section");
-      sections.forEach(s => s.classList.remove("active"));
-
-      if (name === "home") document.getElementById("sec-home").classList.add("active");
-      if (name === "regeln") document.getElementById("sec-regeln").classList.add("active");
-      if (name === "about") document.getElementById("sec-about").classList.add("active");
-
-      document.querySelectorAll(".nav-btn").forEach(btn => btn.classList.remove("active"));
-      if (name === "home") document.querySelectorAll(".nav-btn")[0].classList.add("active");
-      if (name === "regeln") document.querySelectorAll(".nav-btn")[1].classList.add("active");
-      if (name === "about") document.querySelectorAll(".nav-btn")[2].classList.add("active");
-    }
-
-    async function getWaitingPasses() {
-      const { data, error } = await supabase
-        .from("queue_passes")
-        .select("*")
-        .eq("status", "waiting")
-        .order("created_at", { ascending: true });
-
-      if (error) {
-        console.error(error);
-        return [];
-      }
-      return data || [];
-    }
-
-    async function refreshQueueList() {
-      const queue = await getWaitingPasses();
-      const list = document.getElementById("pass-log-list");
-      if (!list) return;
-
-      if (!queue.length) {
-        list.innerHTML = '<div class="pass-item" style="color:var(--muted);">Keine Pässe in der Liste.</div>';
-        return;
-      }
-
-      list.innerHTML = "";
-      queue.forEach(item => {
-        const row = document.createElement("div");
-        row.className = "pass-item";
-        row.innerHTML = `<span>${item.code}</span><strong>${item.group_size || 1}P</strong>`;
-        list.appendChild(row);
-      });
-    }
-
-    async function refreshStats() {
-      const { data: queueData } = await supabase.from("queue_passes").select("id").eq("status", "waiting");
-      const { data: ratingData } = await supabase.from("ratings").select("*");
-
-      document.getElementById("stat-passes").textContent = String((queueData || []).length);
-
-      if (ratingData && ratingData.length) {
-        const avg = ratingData.reduce((sum, r) => {
-          const values = [
-            Number(r.ambiente || 0),
-            Number(r.erschrecker || 0),
-            Number(r.atmos || 0),
-            Number(r.licht || 0),
-            Number(r.sound || 0)
-          ];
-          return sum + (values.reduce((s, v) => s + v, 0) / values.length);
-        }, 0) / ratingData.length;
-
-        document.getElementById("stat-rating").textContent = `${avg.toFixed(1)} ★`;
-      } else {
-        document.getElementById("stat-rating").textContent = "5.0 ★";
-      }
-    }
-
-    async function renderMonitor() {
-      const queue = await getWaitingPasses();
-      const grid = document.getElementById("monitor-code-grid");
-      if (!queue.length) {
-        grid.innerHTML = '<div class="monitor-card"><div class="monitor-code">Warten...</div></div>';
-        return;
-      }
-
-      const first = queue[0];
-      grid.innerHTML = `
-        <div class="monitor-card">
-          <div class="monitor-code">${first.code}</div>
-          <div class="monitor-size">${first.group_size || 1} Personen</div>
-          <div class="monitor-time">Jetzt aufrufen</div>
+            <!-- Spenden-Card -->
+            <div class="card donate-card" style="text-align: center;">
+                <span class="badge-voluntary">✨ 100% Freiwillig & Ohne Zwang</span>
+                <h2>☕ Unterstütze das Projekt</h2>
+                <p class="story-p">
+                    Der Eintritt zu unserem Gruselkeller ist komplett kostenlos! Wir stecken das alles in unserer Freizeit zusammen. Wenn es dir gefallen hat und du uns mit ein paar Cent oder Euro für neue Requisiten & Effekte unterstützen möchtest, freuen wir uns riesig – ein Muss ist das aber natürlich absolut nicht! ❤️
+                </p>
+                <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=roland.trissl%40gmx.de&currency_code=EUR&item_name=Gruselkeller+Spende" target="_blank" class="btn donate-btn">
+                    💳 Freiwillig per PayPal unterstützen
+                </a>
+            </div>
         </div>
-      `;
-    }
 
-    async function createPass(groupSize) {
-      const size = normalizeGroupSize(groupSize);
-      const code = generateCode();
+        <!-- PAGE 2: REGELN, PASS & BEWERTUNG -->
+        <div id="sec-regeln" class="page-section">
+            <div class="card" id="rules-card">
+                <h2>Hausordnung & Regeln</h2>
 
-      const { data, error } = await supabase
-        .from("queue_passes")
-        .insert([{ code, group_size: size, status: "waiting" }])
-        .select()
-        .single();
+                <button class="btn btn-secondary" id="select-all-btn">⚡ Alle Regeln auf einmal akzeptieren</button>
 
-      if (error) {
-        console.error(error);
-        showToast("Fehler beim Speichern");
-        return null;
-      }
+                <div class="rules-list">
+                    <label class="rule-item">
+                        <input type="checkbox" class="rule-chk">
+                        <span><strong>Altersfreigabe:</strong> Einlass ab 8 Jahre (darunter nur in Begleitung eines Volljährigen).</span>
+                    </label>
+                    <label class="rule-item">
+                        <input type="checkbox" class="rule-chk">
+                        <span><strong>Kein Anfassen:</strong> Die Erschrecker dürfen nicht berührt werden. Gleiches gilt umgekehrt.</span>
+                    </label>
+                    <label class="rule-item">
+                        <input type="checkbox" class="rule-chk">
+                        <span><strong>Keine Gewalt:</strong> Bei Panik sofort "Stopp" rufen. Vandalismus führt zum sofortigen Verweis.</span>
+                    </label>
+                    <label class="rule-item">
+                        <input type="checkbox" class="rule-chk">
+                        <span><strong>Foto-Verbot:</strong> Kein Blitzlicht im Keller, um andere Gäste nicht zu blenden.</span>
+                    </label>
+                </div>
 
-      document.getElementById("pass-code").textContent = data.code;
-      document.getElementById("pass-group-info").textContent = `👥 ${size} Person${size > 1 ? "en" : ""}`;
-      document.getElementById("pass-display").style.display = "block";
-      document.getElementById("user-queue-status").textContent = "Dein Pass wurde gespeichert";
+                <div class="form-group" style="margin-top: 15px;">
+                    <label for="group-size-select" style="font-weight: bold; color: var(--accent);">👥 Wie viele Personen seid ihr?</label>
+                    <select id="group-size-select" required>
+                        <option value="" selected disabled hidden>Bitte auswählen</option>
+                        <option value="1">1 Person</option>
+                        <option value="2">2 Personen</option>
+                        <option value="3">3 Personen</option>
+                        <option value="4">4 Personen</option>
+                        <option value="5">5 Personen (Max. Gruppengröße)</option>
+                    </select>
+                    <p style="font-size: 0.75rem; color: var(--muted); margin-top: 4px;">* Seid ihr mehr als 5 Personen? Bitte teilt euch auf und holt zwei separate Pässe!</p>
+                </div>
 
-      await refreshQueueList();
-      await refreshStats();
-      await renderMonitor();
+                <button class="btn" id="pass-btn" disabled>Regeln akzeptieren & Pass holen</button>
+            </div>
 
-      return data;
-    }
+            <!-- PASS DISPLAY -->
+            <div class="card" id="pass-display">
+                <h2>Dein Einlass-Pass</h2>
+                <p class="subtitle">Dein persönlicher Code:</p>
+                <div class="pass-id" id="pass-code">GK-8849</div>
+                <div id="pass-group-info" style="color: #38bdf8; font-weight: bold; margin-bottom: 10px;">👥 3 Personen</div>
 
-    async function forceStartNextGroup() {
-      const queue = await getWaitingPasses();
-      if (!queue.length) {
-        showToast("Keine wartende Gruppe");
-        return;
-      }
+                <div class="queue-status" id="user-queue-status">
+                    Prüfe Status...
+                </div>
+            </div>
 
-      const next = queue[0];
-      const { error } = await supabase
-        .from("queue_passes")
-        .update({ status: "called", called_at: new Date().toISOString() })
-        .eq("id", next.id);
+            <!-- FEEDBACK CARD -->
+            <div class="card" id="feedback-card" style="display: none;">
+                <h2>Nach dem Durchgang: Bewerten ⭐</h2>
+                <p class="story-p" style="font-size: 0.85rem;">Wie war dein Erlebnis im Keller?</p>
 
-      if (error) {
-        console.error(error);
-        showToast("Fehler beim Aufrufen");
-        return;
-      }
+                <form id="feedback-form">
+                    <div class="rating-row">
+                        <span class="rating-label">🕯️ Ambiente & Deko</span>
+                        <select class="star-select" id="r-ambiente">
+                            <option value="5">⭐⭐⭐⭐⭐ (5)</option>
+                            <option value="4">⭐⭐⭐⭐ (4)</option>
+                            <option value="3">⭐⭐⭐ (3)</option>
+                            <option value="2">⭐⭐ (2)</option>
+                            <option value="1">⭐ (1)</option>
+                        </select>
+                    </div>
 
-      document.getElementById("sec-monitor").classList.add("active");
-      document.getElementById("monitor-code-grid").innerHTML = `
-        <div class="monitor-card">
-          <div class="monitor-code">${next.code}</div>
-          <div class="monitor-size">${next.group_size || 1} Personen</div>
-          <div class="monitor-time">Jetzt aufgerufen</div>
+                    <div class="rating-row">
+                        <span class="rating-label">👻 Erschrecker & Performance</span>
+                        <select class="star-select" id="r-erschrecker">
+                            <option value="5">⭐⭐⭐⭐⭐ (5)</option>
+                            <option value="4">⭐⭐⭐⭐ (4)</option>
+                            <option value="3">⭐⭐⭐ (3)</option>
+                            <option value="2">⭐⭐ (2)</option>
+                            <option value="1">⭐ (1)</option>
+                        </select>
+                    </div>
+
+                    <div class="rating-row">
+                        <span class="rating-label">🌌 Atmosphäre & Raumgestaltung</span>
+                        <select class="star-select" id="r-atmos">
+                            <option value="5">⭐⭐⭐⭐⭐ (5)</option>
+                            <option value="4">⭐⭐⭐⭐ (4)</option>
+                            <option value="3">⭐⭐⭐ (3)</option>
+                            <option value="2">⭐⭐ (2)</option>
+                            <option value="1">⭐ (1)</option>
+                        </select>
+                    </div>
+
+                    <div class="rating-row">
+                        <span class="rating-label">💡 Licht- & Spezialeffekte</span>
+                        <select class="star-select" id="r-licht">
+                            <option value="5">⭐⭐⭐⭐⭐ (5)</option>
+                            <option value="4">⭐⭐⭐⭐ (4)</option>
+                            <option value="3">⭐⭐⭐ (3)</option>
+                            <option value="2">⭐⭐ (2)</option>
+                            <option value="1">⭐ (1)</option>
+                        </select>
+                    </div>
+
+                    <div class="rating-row">
+                        <span class="rating-label">🔊 Sound & Musik</span>
+                        <select class="star-select" id="r-sound">
+                            <option value="5">⭐⭐⭐⭐⭐ (5)</option>
+                            <option value="4">⭐⭐⭐⭐ (4)</option>
+                            <option value="3">⭐⭐⭐ (3)</option>
+                            <option value="2">⭐⭐ (2)</option>
+                            <option value="1">⭐ (1)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 15px;">
+                        <label for="comment">Kommentar (optional):</label>
+                        <textarea id="comment" placeholder="Wer war am gruseligsten? Was war am besten?"></textarea>
+                    </div>
+                    <button type="submit" class="btn">Bewertung abschicken</button>
+                </form>
+            </div>
         </div>
-      `;
 
-      await refreshQueueList();
-      await refreshStats();
-      showToast(`Gruppe ${next.code} aufgerufen`);
-    }
+        <!-- PAGE 3: ÜBER UNS -->
+        <div id="sec-about" class="page-section">
+            <div class="card">
+                <h2>Über Uns 💀</h2>
+                <p class="story-p">
+                    <strong>Von zwei Schnüren zur echten Horror-Atmosphäre!</strong>
+                </p>
+                <p class="story-p">
+                    Wir sind eine Gruppe von Jugendlichen aus der Region. Angefangen hat alles vor 5 Jahren: Ganz klein mit gerade einmal zwei Schnüren, einer Person in einer Badewanne und kaum Platz im Keller.
+                </p>
+                <p class="story-p">
+                    Aber anstatt jedes Jahr einfach das Gleiche zu machen, haben wir uns immer weiter gesteigert! Von Jahr zu Jahr haben wir mehr Raum erschlossen, verdammt viel Arbeit reingesteckt, neue Technik gelernt und coole Licht- & Soundeffekte verbaut.
+                </p>
+                <p class="story-p">
+                    Jedes Jahr stecken wir extrem viel Herzblut und Freizeit rein, um euch das krasseste Halloween-Erlebnis zu bieten. Danke an jeden Einzelnen, der uns besucht und unterstützt! 🔥
+                </p>
+                <a href="https://instagram.com/gruselkeller" target="_blank" class="insta-btn" style="width: 100%;">
+                    📸 Besuche uns auf Instagram
+                </a>
+            </div>
+        </div>
 
-    function updateRuleButtonState() {
-      const allChecked = [...document.querySelectorAll(".rule-chk")].every(cb => cb.checked);
-      document.getElementById("pass-btn").disabled = !allChecked;
-    }
+        <!-- PAGE 4: IMPRESSUM -->
+        <div id="sec-impressum" class="page-section">
+            <div class="card">
+                <h2>Impressum</h2>
+                <p class="legal-p"><strong>Angaben gemäß § 5 DDG:</strong></p>
+                <p class="legal-p">
+                    Jakob Thorsten Schaan, Johannes Benjamin Schaan, David Trissel<br>
+                    Friedensstraße 3<br>
+                    Fautenbach
+                </p>
+                <p class="legal-p"><strong>Kontakt:</strong></p>
+                <p class="legal-p">
+                    E-Mail: jakob.schaan@gmail.com<br>
+                    Telefon: +49 151 17530499
+                </p>
+                <p class="legal-p"><strong>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV:</strong></p>
+                <p class="legal-p">
+                    Jakob Thorsten Schaan, Johannes Benjamin Schaan, David Trissel<br>
+                    Friedensstraße 3, Fautenbach
+                </p>
+            </div>
+        </div>
 
-    async function handlePassButton() {
-      const selected = document.getElementById("group-size-select").value;
-      if (!selected) return showToast("Bitte Gruppengröße wählen");
+        <!-- PAGE 5: DATENSCHUTZ -->
+        <div id="sec-datenschutz" class="page-section">
+            <div class="card">
+                <h2>Datenschutzerklärung</h2>
+                <p class="legal-p"><strong>1. Datenschutz auf einen Blick</strong></p>
+                <p class="legal-p">
+                    Wir nehmen den Schutz eurer persönlichen Daten sehr ernst. Diese Webseite speichert keine personenbezogenen Daten auf externen Servern.
+                </p>
+                <p class="legal-p"><strong>2. Hosting über GitHub Pages</strong></p>
+                <p class="legal-p">
+                    Diese Webseite wird über GitHub Pages (GitHub Inc., 88 Colin P Kelly Jr St, San Francisco, CA 94107, USA) bereitgestellt. Beim Aufruf der Seite erfasst GitHub automatisch Informationen in sog. Server-Log-Dateien (z. B. IP-Adresse, Webbrowser, Betriebssystem).
+                </p>
+                <p class="legal-p"><strong>3. Lokale Speicherung (LocalStorage)</strong></p>
+                <p class="legal-p">
+                    Zur Steuerung der Einlass-Warteschlange und zur Erfassung von anonymen Bewertungen verwendet diese App den lokalen Speicher des Browsers (LocalStorage). Dabei werden zufällig generierte Einlass-Codes und die abgegebenen Sterne-Bewertungen lokal auf dem Gerät gespeichert. Es findet keine dauerhafte personenbezogene Speicherung statt.
+                </p>
+                <p class="legal-p"><strong>4. Externe Dienste & Links</strong></p>
+                <p class="legal-p">
+                    Diese Webseite enthält Verlinkungen zu externen Anbietern (Instagram, PayPal). Beim Anklicken dieser Links verlässt du unsere Webseite.
+                </p>
+            </div>
+        </div>
 
-      const allChecked = [...document.querySelectorAll(".rule-chk")].every(cb => cb.checked);
-      if (!allChecked) return showToast("Bitte alle Regeln akzeptieren");
+        <!-- Admin Panel Card -->
+        <div class="card" id="admin-panel">
+            <h2>Veranstalter Dashboard</h2>
+            <div id="admin-login-box">
+                <div class="form-group">
+                    <label for="admin-pin">Bitte PIN eingeben:</label>
+                    <input type="password" id="admin-pin" placeholder="PIN eingeben">
+                </div>
+                <button class="btn" id="login-btn">Einloggen</button>
+            </div>
 
-      const pass = await createPass(selected);
-      if (pass) {
-        switchTab("home");
-      }
-    }
+            <div id="admin-content" style="display: none;">
 
-    async function handleHomePassButton() {
-      const selected = document.getElementById("home-group-select").value;
-      if (!selected) return showToast("Bitte Gruppengröße wählen");
+                <button class="btn" id="force-start-btn" style="background: linear-gradient(45deg, #e67e22, #d35400); font-size: 1.1rem; padding: 16px; margin-bottom: 15px; border: 2px solid #f39c12;">
+                    ⚡ Nächste Gruppe sofort freigeben (Force-Start)
+                </button>
 
-      await createPass(selected);
-      switchTab("home");
-    }
+                <div class="setting-box">
+                    <label style="color: var(--accent); font-weight: bold;">🎛️ Organizer-Menü</label>
+                    <div style="display: grid; gap: 8px; margin-top: 10px;">
+                        <button class="btn" id="admin-open-monitor-btn">📺 Live-Monitor öffnen</button>
+                        <button class="btn btn-secondary" id="admin-open-buzzer-btn">🕹️ Buzzer / Kiosk öffnen</button>
+                        <button class="btn btn-secondary" id="admin-close-views-btn">🏠 Zurück zur Website</button>
+                    </div>
+                </div>
 
-    async function handleBuzzerPass() {
-      const selected = document.getElementById("buzzer-group-select").value;
-      if (!selected) return showToast("Bitte Gruppengröße wählen");
+                <div class="setting-box">
+                    <label style="color: var(--accent); font-weight: bold;">🔔 Externer Buzzer</label>
+                    <label style="display: flex; align-items: center; gap: 10px; margin-top: 8px;">
+                        <input type="checkbox" id="admin-buzzer-hotkey">
+                        <span>Mit Tastendruck <strong>B</strong> aktivieren</span>
+                    </label>
+                </div>
 
-      const pass = await createPass(selected);
-      if (pass) {
-        document.getElementById("buzzer-result-card").style.display = "block";
-        document.getElementById("buzzer-result-code").textContent = pass.code;
-        showToast("Pass gespeichert");
-      }
-    }
+                <div class="stat-grid">
+                    <div class="stat-box">
+                        <div class="stat-num" id="stat-passes">0</div>
+                        <div class="subtitle">Aktive Pässe</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-num" id="stat-rating">5.0 ★</div>
+                        <div class="subtitle">Gesamt-Schnitt</div>
+                    </div>
+                </div>
 
-    function loginToAdmin() {
-      const pin = document.getElementById("admin-pin").value.trim();
-      if (pin !== ADMIN_PIN) {
-        showToast("PIN falsch");
-        return;
-      }
+                <div class="setting-box">
+                    <label for="admin-mode-select" style="color: var(--accent); font-weight: bold;">🎛️ Steuerungs-Modus:</label>
+                    <select id="admin-mode-select" style="margin-top: 5px;">
+                        <option value="strict">Reißverschluss-Prinzip (Strikt max. 1 Gruppe auf Monitor)</option>
+                        <option value="fill">Auffüll-Prinzip (Kleine Gruppen rücken nach)</option>
+                        <option value="manual">Reiner Manueller Einlass (Nur Force-Start Buttons)</option>
+                    </select>
+                </div>
 
-      document.getElementById("admin-login-box").style.display = "none";
-      document.getElementById("admin-content").style.display = "block";
-      showToast("Erfolgreich eingeloggt");
-    }
+                <div class="setting-box">
+                    <label for="admin-max-persons" style="color: var(--accent); font-weight: bold;">👥 Max. Personen im Keller:</label>
+                    <input type="number" id="admin-max-persons" min="1" max="20" value="5" style="margin-top: 5px;">
+                </div>
 
-    function logoutAdmin() {
-      document.getElementById("admin-login-box").style.display = "block";
-      document.getElementById("admin-content").style.display = "none";
-      document.getElementById("admin-pin").value = "";
-      showToast("Ausgeloggt");
-    }
+                <div class="setting-box">
+                    <label for="admin-timer-seconds" style="color: var(--accent); font-weight: bold;">⏱️ Aufruf-Intervall / Timer (Sekunden):</label>
+                    <input type="number" id="admin-timer-seconds" min="10" max="300" value="60" style="margin-top: 5px;">
+                    <p style="font-size: 0.75rem; color: var(--muted); margin-top: 4px;">Zeit, nach der ein Code automatisch vom Monitor verschwindet (Inaktiv bei Manuellem Einlass).</p>
+                </div>
 
-    async function resetAllData() {
-      if (!confirm("Alle Bewertungen und Pässe wirklich zurücksetzen?")) return;
+                <button class="btn" id="save-settings-btn" style="margin-bottom: 15px;">💾 Einstellungen Speichern</button>
 
-      const { error: passError } = await supabase.from("queue_passes").delete().neq("id", "00000000-0000-0000-0000-000000000000");
-      const { error: ratingError } = await supabase.from("ratings").delete().neq("id", "00000000-0000-0000-0000-000000000000");
+                <label>Durchschnitt je Kategorie:</label>
+                <div class="cat-stat-list">
+                    <div class="cat-stat-item"><span>🕯️ Ambiente & Deko:</span><strong id="cat-ambiente">5.0 ★</strong></div>
+                    <div class="cat-stat-item"><span>👻 Erschrecker:</span><strong id="cat-erschrecker">5.0 ★</strong></div>
+                    <div class="cat-stat-item"><span>🌌 Atmosphäre & Wände:</span><strong id="cat-atmos">5.0 ★</strong></div>
+                    <div class="cat-stat-item"><span>💡 Licht-Effekte:</span><strong id="cat-licht">5.0 ★</strong></div>
+                    <div class="cat-stat-item"><span>🔊 Sound & Musik:</span><strong id="cat-sound">5.0 ★</strong></div>
+                </div>
 
-      if (passError || ratingError) {
-        console.error(passError || ratingError);
-        showToast("Reset fehlgeschlagen");
-        return;
-      }
+                <label>Aktive Pässe in der Warteschlange:</label>
+                <div class="pass-list" id="pass-log-list">
+                    <div class="pass-item" style="color: var(--muted);">Keine Pässe in der Liste.</div>
+                </div>
 
-      document.getElementById("pass-display").style.display = "none";
-      await refreshQueueList();
-      await refreshStats();
-      await renderMonitor();
-      showToast("Daten zurückgesetzt");
-    }
+                <button class="btn" id="reset-data-btn" style="background-color: var(--danger); margin-bottom: 10px;">🗑️ Alle Bewertungen & Pässe zurücksetzen</button>
+                <button class="btn" id="print-qr-btn" style="background-color: #2c3e50; margin-bottom: 10px;">QR-Schild Drucken 🖨️</button>
+                <button class="btn" id="logout-btn" style="background-color: #333;">Ausloggen</button>
+            </div>
+        </div>
 
-    function setupFeedback() {
-      document.getElementById("feedback-form").addEventListener("submit", async (event) => {
-        event.preventDefault();
+        <footer>
+            <div class="footer-links">
+                <a href="#" onclick="switchTab('impressum'); return false;">Impressum</a> |
+                <a href="#" onclick="switchTab('datenschutz'); return false;">Datenschutz</a> |
+                <a href="#" id="toggle-admin">⚙️ Organizer Login</a>
+            </div>
+            <div>© Gruselkeller Team</div>
+        </footer>
+    </div>
 
-        const payload = {
-          ambiente: Number(document.getElementById("r-ambiente").value),
-          erschrecker: Number(document.getElementById("r-erschrecker").value),
-          atmos: Number(document.getElementById("r-atmos").value),
-          licht: Number(document.getElementById("r-licht").value),
-          sound: Number(document.getElementById("r-sound").value),
-          comment: document.getElementById("comment").value.trim()
-        };
+    <div id="toast">Erfolgreich gespeichert!</div>
 
-        const { error } = await supabase.from("ratings").insert([payload]);
-        if (error) {
-          console.error(error);
-          showToast("Bewertung konnte nicht gespeichert werden");
-          return;
+    <script>
+        let myPassCode = null;
+        let lastBuzzerPress = 0;
+        const BUZZER_COOLDOWN_MS = 15000;
+
+        const buzzerTrigger = document.getElementById('main-buzzer-trigger');
+        const buzzerGroupSelect = document.getElementById('buzzer-group-select');
+
+        function getSettings() {
+            return {
+                mode: localStorage.getItem('gk_mode') || 'strict',
+                maxPersons: parseInt(localStorage.getItem('gk_max_persons') || '5'),
+                timerSeconds: parseInt(localStorage.getItem('gk_timer_seconds') || '60'),
+                buzzerHotkeyEnabled: localStorage.getItem('gk_buzzer_hotkey') === '1'
+            };
         }
 
-        showToast("Bewertung gespeichert");
-        document.getElementById("feedback-form").reset();
-        await refreshStats();
-      });
-    }
+        function switchTab(tabName) {
+            document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
 
-    document.addEventListener("DOMContentLoaded", async () => {
-      document.querySelectorAll(".rule-chk").forEach(cb => cb.addEventListener("change", updateRuleButtonState));
-      document.getElementById("pass-btn").addEventListener("click", handlePassButton);
-      document.getElementById("home-pass-btn").addEventListener("click", handleHomePassButton);
-      document.getElementById("main-buzzer-trigger").addEventListener("click", handleBuzzerPass);
-      document.getElementById("select-all-btn").addEventListener("click", () => {
-        document.querySelectorAll(".rule-chk").forEach(cb => cb.checked = true);
-        updateRuleButtonState();
-      });
-
-      document.getElementById("login-btn").addEventListener("click", loginToAdmin);
-      document.getElementById("logout-btn").addEventListener("click", logoutAdmin);
-      document.getElementById("reset-data-btn").addEventListener("click", resetAllData);
-      document.getElementById("force-start-btn").addEventListener("click", forceStartNextGroup);
-
-      document.getElementById("admin-toggle-link").addEventListener("click", (e) => {
-        e.preventDefault();
-        document.getElementById("admin-panel").style.display = "block";
-        document.getElementById("admin-pin").focus();
-      });
-
-      document.getElementById("admin-open-monitor-btn").addEventListener("click", () => {
-        document.getElementById("sec-monitor").classList.add("active");
-      });
-      document.getElementById("admin-open-buzzer-btn").addEventListener("click", () => {
-        document.getElementById("sec-buzzer").classList.add("active");
-      });
-      document.getElementById("admin-close-views-btn").addEventListener("click", () => {
-        document.getElementById("sec-monitor").classList.remove("active");
-        document.getElementById("sec-buzzer").classList.remove("active");
-      });
-
-      // B-Taste
-      document.addEventListener("keydown", (event) => {
-        const active = document.getElementById("admin-buzzer-hotkey").checked;
-        if (event.key.toLowerCase() === "b" && active) {
-          forceStartNextGroup();
+            if(tabName === 'home') {
+                document.getElementById('sec-home').classList.add('active');
+                document.querySelectorAll('.nav-btn')[0].classList.add('active');
+            } else if(tabName === 'regeln') {
+                document.getElementById('sec-regeln').classList.add('active');
+                document.querySelectorAll('.nav-btn')[1].classList.add('active');
+            } else if(tabName === 'about') {
+                document.getElementById('sec-about').classList.add('active');
+                document.querySelectorAll('.nav-btn')[2].classList.add('active');
+            } else if(tabName === 'impressum') {
+                document.getElementById('sec-impressum').classList.add('active');
+            } else if(tabName === 'datenschutz') {
+                document.getElementById('sec-datenschutz').classList.add('active');
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-      });
 
-      setupFeedback();
+        const checkboxes = document.querySelectorAll('.rule-chk');
+        const passBtn = document.getElementById('pass-btn');
+        const selectAllBtn = document.getElementById('select-all-btn');
+        const groupSizeSelect = document.getElementById('group-size-select');
+        const homeGroupSelect = document.getElementById('home-group-select');
+        const homePassBtn = document.getElementById('home-pass-btn');
 
-      await refreshQueueList();
-      await refreshStats();
-      await renderMonitor();
-    });
-  </script>
+        checkboxes.forEach(chk => chk.addEventListener('change', checkAllDone));
+
+        selectAllBtn.addEventListener('click', () => {
+            checkboxes.forEach(chk => chk.checked = true);
+            checkAllDone();
+        });
+
+        function checkAllDone() {
+            const allDone = Array.from(checkboxes).every(c => c.checked);
+            passBtn.disabled = !allDone;
+        }
+
+        function validateAndReturnGroupSize(selectEl) {
+            if (!selectEl.value) {
+                selectEl.setCustomValidity('Bitte füllen Sie dieses Feld aus!');
+                selectEl.reportValidity();
+                return null;
+            }
+            selectEl.setCustomValidity('');
+            return parseInt(selectEl.value, 10);
+        }
+
+        function createPass(groupSize) {
+            const randomNum = Math.floor(1000 + Math.random() * 9000);
+            myPassCode = `GK-${randomNum}`;
+
+            document.getElementById('pass-code').textContent = myPassCode;
+            document.getElementById('pass-group-info').textContent = `👥 ${groupSize} Person${groupSize > 1 ? 'en' : ''}`;
+            document.getElementById('rules-card').style.display = 'none';
+            document.getElementById('pass-display').style.display = 'block';
+            document.getElementById('feedback-card').style.display = 'block';
+
+            let queue = JSON.parse(localStorage.getItem('gk_queue') || '[]');
+            queue.push({ code: myPassCode, size: groupSize, created: Date.now(), startTime: null });
+            localStorage.setItem('gk_queue', JSON.stringify(queue));
+
+            window.dispatchEvent(new Event('storage'));
+            updateUserQueueStatus();
+            updateAdminDashboard();
+        }
+
+        groupSizeSelect.addEventListener('invalid', (event) => {
+            event.target.setCustomValidity('Bitte füllen Sie dieses Feld aus!');
+        });
+
+        groupSizeSelect.addEventListener('input', () => {
+            groupSizeSelect.setCustomValidity('');
+        });
+
+        homeGroupSelect.addEventListener('invalid', (event) => {
+            event.target.setCustomValidity('Bitte füllen Sie dieses Feld aus!');
+        });
+
+        homeGroupSelect.addEventListener('input', () => {
+            homeGroupSelect.setCustomValidity('');
+        });
+
+        passBtn.addEventListener('click', () => {
+            const groupSize = validateAndReturnGroupSize(groupSizeSelect);
+            if (groupSize === null) return;
+            createPass(groupSize);
+        });
+
+        homePassBtn.addEventListener('click', () => {
+            const groupSize = validateAndReturnGroupSize(homeGroupSelect);
+            if (groupSize === null) return;
+
+            groupSizeSelect.value = String(groupSize);
+            switchTab('regeln');
+            showToast('Bitte Regeln akzeptieren und Pass holen!');
+        });
+
+        function processQueue() {
+            let queue = JSON.parse(localStorage.getItem('gk_queue') || '[]');
+            const now = Date.now();
+            const settings = getSettings();
+            const timerMs = settings.timerSeconds * 1000;
+
+            if (settings.mode !== 'manual') {
+                queue = queue.filter(item => {
+                    if (item.startTime !== null) {
+                        return (now - item.startTime) < timerMs;
+                    }
+                    return true;
+                });
+            }
+
+            let activeGroupsCount = queue.filter(item => item.startTime !== null).length;
+            let activePersons = queue
+                .filter(item => item.startTime !== null)
+                .reduce((sum, item) => sum + (item.size || 1), 0);
+
+            if (settings.mode !== 'manual') {
+                for (let i = 0; i < queue.length; i++) {
+                    if (queue[i].startTime === null) {
+                        let itemSize = queue[i].size || 1;
+
+                        if (settings.mode === 'strict') {
+                            if (activeGroupsCount === 0) {
+                                queue[i].startTime = Date.now();
+                                activeGroupsCount++;
+                                activePersons += itemSize;
+                            }
+                            break;
+                        } else if (settings.mode === 'fill') {
+                            if (activePersons + itemSize <= settings.maxPersons) {
+                                queue[i].startTime = Date.now();
+                                activePersons += itemSize;
+                                activeGroupsCount++;
+                            }
+                        }
+                    }
+                }
+            }
+
+            localStorage.setItem('gk_queue', JSON.stringify(queue));
+            return queue;
+        }
+
+        function updateUserQueueStatus() {
+            if (!myPassCode) return;
+
+            let queue = processQueue();
+            let myItem = queue.find(item => item.code === myPassCode);
+            const statusBox = document.getElementById('user-queue-status');
+
+            if (!myItem) {
+                statusBox.style.background = "rgba(46, 204, 113, 0.15)";
+                statusBox.style.color = "var(--success)";
+                statusBox.innerHTML = "✔ Dein Durchgang ist abgeschlossen oder dein Code ist abgelaufen.";
+            } else if (myItem.startTime !== null) {
+                statusBox.style.background = "rgba(46, 204, 113, 0.2)";
+                statusBox.style.color = "var(--success)";
+                statusBox.innerHTML = "🟢 DEIN CODE IST JETZT AUF DEM MONITOR!<br>Du darfst eintreten!";
+            } else {
+                let waitingBeforeMe = queue.filter(item => item.startTime === null && item.created < myItem.created).length + 1;
+                statusBox.style.background = "rgba(255, 102, 0, 0.15)";
+                statusBox.style.color = "var(--accent)";
+                statusBox.innerHTML = `⏳ Du bist in der Warteschleife (Platz ${waitingBeforeMe}).<br>Bitte habe kurz Geduld, bis dein Code auf dem Monitor erscheint!`;
+            }
+        }
+
+        setInterval(updateUserQueueStatus, 1000);
+
+        document.getElementById('feedback-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const ratingObj = {
+                ambiente: parseInt(document.getElementById('r-ambiente').value),
+                erschrecker: parseInt(document.getElementById('r-erschrecker').value),
+                atmos: parseInt(document.getElementById('r-atmos').value),
+                licht: parseInt(document.getElementById('r-licht').value),
+                sound: parseInt(document.getElementById('r-sound').value)
+            };
+
+            let storedRatings = JSON.parse(localStorage.getItem('gk_ratings') || '[]');
+            storedRatings.push(ratingObj);
+            localStorage.setItem('gk_ratings', JSON.stringify(storedRatings));
+
+            if (myPassCode) {
+                let queue = JSON.parse(localStorage.getItem('gk_queue') || '[]');
+                queue = queue.filter(item => item.code !== myPassCode);
+                localStorage.setItem('gk_queue', JSON.stringify(queue));
+                myPassCode = null;
+            }
+
+            window.dispatchEvent(new Event('storage'));
+
+            showToast('Vielen Dank für deine Bewertung! 🎃');
+            document.getElementById('feedback-card').style.display = 'none';
+            updateUserQueueStatus();
+            updateAdminDashboard();
+            updateMonitorGrid();
+        });
+
+        // FORCE START BUTTON
+        document.getElementById('force-start-btn').addEventListener('click', () => {
+            let queue = JSON.parse(localStorage.getItem('gk_queue') || '[]');
+            queue = queue.filter(item => item.startTime === null);
+
+            let nextInLine = queue[0];
+
+            if (nextInLine) {
+                nextInLine.startTime = Date.now();
+                localStorage.setItem('gk_queue', JSON.stringify(queue));
+                window.dispatchEvent(new Event('storage'));
+                showToast(`Gruppe ${nextInLine.code} manuell freigegeben! ⚡`);
+            } else {
+                alert('Es ist aktuell keine Gruppe in der Warteschlange!');
+            }
+        });
+
+        function updateBuzzerButtonState() {
+            const now = Date.now();
+            const remaining = BUZZER_COOLDOWN_MS - (now - lastBuzzerPress);
+
+            if (remaining > 0) {
+                const seconds = Math.ceil(remaining / 1000);
+
+                buzzerTrigger.disabled = true;
+                buzzerTrigger.style.opacity = '0.65';
+                buzzerTrigger.innerHTML = `
+                    <span>⏳</span>
+                    <span>WAIT</span>
+                    <span style="font-size: 0.9rem; margin-top: 5px; opacity: 0.8;">${seconds}s</span>
+                `;
+
+                buzzerGroupSelect.value = '';
+                return;
+            }
+
+            buzzerTrigger.disabled = false;
+            buzzerTrigger.style.opacity = '1';
+            buzzerTrigger.innerHTML = `
+                <span>🔴</span>
+                <span>BUZZER</span>
+                <span style="font-size: 0.9rem; margin-top: 5px; opacity: 0.8;">PASS DRUCKEN</span>
+            `;
+
+            if (!document.activeElement || !['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) {
+                buzzerTrigger.focus();
+            }
+
+            buzzerGroupSelect.value = '';
+        }
+
+        // Live-Cooldown-Update
+        setInterval(updateBuzzerButtonState, 250);
+
+        // BUZZER TRIGGER LOGIK
+        function triggerBuzzer() {
+            const now = Date.now();
+
+            if (now - lastBuzzerPress < BUZZER_COOLDOWN_MS) {
+                const secs = Math.ceil((BUZZER_COOLDOWN_MS - (now - lastBuzzerPress)) / 1000);
+                showToast(`Bitte warte ${secs} Sekunden, bevor du erneut drückst!`);
+                updateBuzzerButtonState();
+                return;
+            }
+
+            const groupSelect = document.getElementById('buzzer-group-select');
+
+            if (!groupSelect.value) {
+                showToast('Bitte wählen Sie eine Gruppengröße aus!');
+                return;
+            }
+
+            lastBuzzerPress = now;
+            updateBuzzerButtonState();
+
+            const randomNum = Math.floor(1000 + Math.random() * 9000);
+            const buzCode = `GK-${randomNum}`;
+            const groupSize = parseInt(groupSelect.value, 10);
+
+            let queue = JSON.parse(localStorage.getItem('gk_queue') || '[]');
+            queue.push({ code: buzCode, size: groupSize, created: Date.now(), startTime: null });
+            localStorage.setItem('gk_queue', JSON.stringify(queue));
+
+            window.dispatchEvent(new Event('storage'));
+
+            groupSelect.value = '';
+            buzzerTrigger.focus();
+
+            document.getElementById('buzzer-result-code').textContent = buzCode;
+            document.getElementById('buzzer-result-card').style.display = 'block';
+
+            showToast(`Buzzer gedrückt: Code ${buzCode} erstellt!`);
+
+            setTimeout(() => {
+                document.getElementById('buzzer-result-card').style.display = 'none';
+            }, 12000);
+
+            setTimeout(() => {
+                updateBuzzerButtonState();
+            }, BUZZER_COOLDOWN_MS);
+        }
+
+        buzzerTrigger.addEventListener('click', triggerBuzzer);
+
+        buzzerTrigger.addEventListener('keydown', (e) => {
+            if (e.code === 'Space' || e.code === 'Enter') {
+                e.preventDefault();
+                triggerBuzzer();
+            }
+        });
+
+        window.addEventListener('keydown', (e) => {
+            const isTextInput = ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName);
+
+            if (!isTextInput && getSettings().buzzerHotkeyEnabled && (e.key.toLowerCase() === 'b' || e.code === 'KeyB')) {
+                e.preventDefault();
+                triggerBuzzer();
+                return;
+            }
+
+            if (document.getElementById('sec-buzzer').classList.contains('active')) {
+                if (e.code === 'Space' || e.code === 'Enter') {
+                    e.preventDefault();
+                    triggerBuzzer();
+                }
+            }
+        });
+
+        function enableMonitorView() {
+            document.getElementById('sec-monitor').classList.add('active');
+            document.getElementById('sec-buzzer').classList.remove('active');
+            document.getElementById('main-container').style.display = 'none';
+            updateMonitorGrid();
+        }
+
+        function enableBuzzerView() {
+            document.getElementById('sec-buzzer').classList.add('active');
+            document.getElementById('sec-monitor').classList.remove('active');
+            document.getElementById('main-container').style.display = 'none';
+            buzzerTrigger.focus();
+        }
+
+        function disableViews() {
+            document.getElementById('sec-monitor').classList.remove('active');
+            document.getElementById('sec-buzzer').classList.remove('active');
+            document.getElementById('main-container').style.display = 'flex';
+        }
+
+        function updateMonitorGrid() {
+            let settings = getSettings();
+            let modeText = settings.mode === 'strict' ? 'Reißverschluss-Prinzip (Einzeltakt)' : (settings.mode === 'manual' ? 'Manueller Einlass' : `Auffüllung max. ${settings.maxPersons} Personen`);
+            document.getElementById('monitor-subtitle').textContent = `✔ Berechtigte Codes (${modeText}):`;
+
+            let queue = processQueue();
+            let activeOnMonitor = queue.filter(item => item.startTime !== null);
+            const grid = document.getElementById('monitor-code-grid');
+
+            if (activeOnMonitor.length === 0) {
+                grid.innerHTML = '<div class="monitor-card"><div class="monitor-code">Warten...</div></div>';
+            } else {
+                grid.innerHTML = activeOnMonitor.map(p => `
+                    <div class="monitor-card">
+                        <div class="monitor-code">${p.code}</div>
+                        <div class="monitor-size">👥 ${p.size || 1} Person${(p.size || 1) > 1 ? 'en' : ''}</div>
+                        <div class="monitor-time">✔ Bitte Eintreten</div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', checkHash);
+        window.addEventListener('hashchange', checkHash);
+
+        function checkHash() {
+            if (window.location.hash === '#monitor') enableMonitorView();
+            else if (window.location.hash === '#buzzer') enableBuzzerView();
+            else disableViews();
+        }
+
+        setInterval(() => {
+            if(document.getElementById('sec-monitor').classList.contains('active')) {
+                updateMonitorGrid();
+            }
+        }, 1000);
+
+        const toggleAdmin = document.getElementById('toggle-admin');
+        const adminPanel = document.getElementById('admin-panel');
+        const adminLoginBox = document.getElementById('admin-login-box');
+        const adminContent = document.getElementById('admin-content');
+        const loginBtn = document.getElementById('login-btn');
+        const adminPin = document.getElementById('admin-pin');
+        const logoutBtn = document.getElementById('logout-btn');
+
+        toggleAdmin.addEventListener('click', (e) => {
+            e.preventDefault();
+            adminPanel.style.display = adminPanel.style.display === 'block' ? 'none' : 'block';
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        });
+
+        loginBtn.addEventListener('click', () => {
+            if (adminPin.value === '3110') {
+                adminLoginBox.style.display = 'none';
+                adminContent.style.display = 'block';
+
+                let settings = getSettings();
+                document.getElementById('admin-mode-select').value = settings.mode;
+                document.getElementById('admin-max-persons').value = settings.maxPersons;
+                document.getElementById('admin-timer-seconds').value = settings.timerSeconds;
+                document.getElementById('admin-buzzer-hotkey').checked = settings.buzzerHotkeyEnabled;
+
+                updateAdminDashboard();
+                showToast('Erfolgreich eingeloggt!');
+            } else {
+                alert('Falsche PIN!');
+            }
+        });
+
+        logoutBtn.addEventListener('click', () => {
+            adminContent.style.display = 'none';
+            adminLoginBox.style.display = 'block';
+            adminPin.value = '';
+            adminPanel.style.display = 'none';
+        });
+
+        document.getElementById('save-settings-btn').addEventListener('click', () => {
+            const mode = document.getElementById('admin-mode-select').value;
+            const maxPersons = parseInt(document.getElementById('admin-max-persons').value);
+            const timerSeconds = parseInt(document.getElementById('admin-timer-seconds').value);
+            const buzzerHotkeyEnabled = document.getElementById('admin-buzzer-hotkey').checked;
+
+            if (maxPersons >= 1 && timerSeconds >= 10) {
+                localStorage.setItem('gk_mode', mode);
+                localStorage.setItem('gk_max_persons', maxPersons);
+                localStorage.setItem('gk_timer_seconds', timerSeconds);
+                localStorage.setItem('gk_buzzer_hotkey', buzzerHotkeyEnabled ? '1' : '0');
+
+                window.dispatchEvent(new Event('storage'));
+                showToast('Einstellungen gespeichert!');
+            } else {
+                alert('Ungültige Werte! Mindestens 1 Person und 10 Sekunden Timer eintragen.');
+            }
+        });
+
+        document.getElementById('reset-data-btn').addEventListener('click', () => {
+            if (confirm('Möchtest du wirklich alle Bewertungen und aktiven Pässe unwiderruflich löschen?')) {
+                localStorage.removeItem('gk_queue');
+                localStorage.removeItem('gk_ratings');
+                localStorage.removeItem('gk_pass_list');
+                localStorage.removeItem('gk_buzzer_hotkey');
+                myPassCode = null;
+
+                window.dispatchEvent(new Event('storage'));
+
+                updateAdminDashboard();
+                updateMonitorGrid();
+                showToast('Alle Daten wurden vollständig gelöscht!');
+            }
+        });
+
+        document.getElementById('admin-open-monitor-btn').addEventListener('click', () => {
+            window.location.hash = '#monitor';
+            showToast('Live-Monitor geöffnet');
+        });
+
+        document.getElementById('admin-open-buzzer-btn').addEventListener('click', () => {
+            window.location.hash = '#buzzer';
+            showToast('Buzzer/Kiosk geöffnet');
+        });
+
+        document.getElementById('admin-close-views-btn').addEventListener('click', () => {
+            window.location.hash = '';
+            showToast('Zur Website zurück');
+        });
+
+        window.addEventListener('storage', () => {
+            updateAdminDashboard();
+            if(document.getElementById('sec-monitor').classList.contains('active')) {
+                updateMonitorGrid();
+            }
+        });
+
+        function updateAdminDashboard() {
+            let queue = processQueue();
+            document.getElementById('stat-passes').textContent = queue.length;
+
+            let storedRatings = JSON.parse(localStorage.getItem('gk_ratings') || '[]');
+            if (storedRatings.length > 0) {
+                let sumAmb = 0, sumErs = 0, sumAtm = 0, sumLic = 0, sumSou = 0;
+                storedRatings.forEach(r => {
+                    sumAmb += r.ambiente;
+                    sumErs += r.erschrecker;
+                    sumAtm += r.atmos;
+                    sumLic += r.licht;
+                    sumSou += r.sound;
+                });
+                let count = storedRatings.length;
+                let avgAmb = (sumAmb / count).toFixed(1);
+                let avgErs = (sumErs / count).toFixed(1);
+                let avgAtm = (sumAtm / count).toFixed(1);
+                let avgLic = (sumLic / count).toFixed(1);
+                let avgSou = (sumSou / count).toFixed(1);
+
+                let totalAvg = ((parseFloat(avgAmb) + parseFloat(avgErs) + parseFloat(avgAtm) + parseFloat(avgLic) + parseFloat(avgSou)) / 5).toFixed(1);
+
+                document.getElementById('cat-ambiente').textContent = avgAmb + ' ★';
+                document.getElementById('cat-erschrecker').textContent = avgErs + ' ★';
+                document.getElementById('cat-atmos').textContent = avgAtm + ' ★';
+                document.getElementById('cat-licht').textContent = avgLic + ' ★';
+                document.getElementById('cat-sound').textContent = avgSou + ' ★';
+                document.getElementById('stat-rating').textContent = totalAvg + ' ★';
+            } else {
+                document.getElementById('cat-ambiente').textContent = '0.0 ★';
+                document.getElementById('cat-erschrecker').textContent = '0.0 ★';
+                document.getElementById('cat-atmos').textContent = '0.0 ★';
+                document.getElementById('cat-licht').textContent = '0.0 ★';
+                document.getElementById('cat-sound').textContent = '0.0 ★';
+                document.getElementById('stat-rating').textContent = '0.0 ★';
+            }
+
+            const listContainer = document.getElementById('pass-log-list');
+            if (queue.length === 0) {
+                listContainer.innerHTML = '<div class="pass-item" style="color: var(--muted);">Keine aktiven Pässe.</div>';
+            } else {
+                listContainer.innerHTML = queue.map(p => `
+                    <div class="pass-item">
+                        <span style="color: var(--accent); font-weight: bold;">${p.code} (👥 ${p.size || 1})</span>
+                        <span style="color: ${p.startTime !== null ? 'var(--success)' : 'var(--muted)'};">
+                            ${p.startTime !== null ? '✔ Auf Monitor' : '⏳ Warteschlange'}
+                        </span>
+                    </div>
+                `).join('');
+            }
+        }
+
+        document.getElementById('print-qr-btn').addEventListener('click', () => {
+            const qrUrl = window.location.origin + window.location.pathname + '#regeln';
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html>
+                <head><title>QR-Code Gruselkeller</title></head>
+                <body style="text-align: center; font-family: sans-serif; padding-top: 50px;">
+                    <h1>🎃 GRUSELKELLER EINLASS 🎃</h1>
+                    <p style="font-size: 20px;">Scanne den QR-Code, um die Regeln zu akzeptieren:</p>
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(qrUrl)}" alt="QR Code">
+                    <p style="margin-top: 20px; font-weight: bold; font-size: 24px;">@gruselkeller</p>
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print();
+        });
+
+        function showToast(text) {
+            const toast = document.getElementById('toast');
+            toast.textContent = text;
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
+        }
+
+        updateBuzzerButtonState();
+    </script>
 </body>
 </html>
