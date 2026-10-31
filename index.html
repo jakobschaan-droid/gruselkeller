@@ -19,12 +19,7 @@
             --font: system-ui, -apple-system, sans-serif;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             background-color: var(--bg);
             color: var(--text);
@@ -35,606 +30,161 @@
             align-items: center;
             padding: 20px 15px;
         }
-
-        .container {
-            width: 100%;
-            max-width: 520px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
+        .container { width: 100%; max-width: 520px; display: flex; flex-direction: column; gap: 20px; }
         nav {
-            display: flex;
-            gap: 10px;
-            background: linear-gradient(180deg, #1a1d2a, #121620);
-            padding: 8px;
-            border-radius: 14px;
-            border: 1px solid #2a3042;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+            display: flex; gap: 10px; background: linear-gradient(180deg, #1a1d2a, #121620);
+            padding: 8px; border-radius: 14px; border: 1px solid #2a3042; box-shadow: 0 8px 20px rgba(0,0,0,0.25);
         }
-
         .nav-btn {
-            flex: 1;
-            padding: 12px 10px;
-            background: transparent;
-            border: none;
-            color: var(--muted);
-            font-weight: 800;
-            font-size: 0.88rem;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            text-align: center;
-            letter-spacing: 0.02em;
+            flex: 1; padding: 12px 10px; background: transparent; border: none; color: var(--muted);
+            font-weight: 800; font-size: 0.88rem; border-radius: 10px; cursor: pointer; transition: all 0.25s ease;
+            text-align: center; letter-spacing: 0.02em;
         }
-
         .nav-btn:hover {
-            background: rgba(255, 102, 0, 0.08);
-            color: #fff;
-            transform: translateY(-1px);
+            background: rgba(255, 102, 0, 0.08); color: #fff; transform: translateY(-1px);
         }
-
         .nav-btn.active {
-            background: linear-gradient(135deg, var(--accent), #ff8a3d);
-            color: white;
-            box-shadow: 0 6px 16px rgba(255, 102, 0, 0.35);
-            transform: translateY(-1px);
+            background: linear-gradient(135deg, var(--accent), #ff8a3d); color: white;
+            box-shadow: 0 6px 16px rgba(255, 102, 0, 0.35); transform: translateY(-1px);
         }
-
-        header {
-            text-align: center;
-            padding: 15px 0 5px 0;
-        }
-
+        header { text-align: center; padding: 15px 0 5px 0; }
         h1 {
-            color: var(--accent);
-            font-size: 2.2rem;
-            margin-bottom: 5px;
+            color: var(--accent); font-size: 2.2rem; margin-bottom: 5px;
             text-shadow: 0 0 12px rgba(255, 102, 0, 0.4);
         }
-
-        .subtitle {
-            color: var(--muted);
-            font-size: 0.95rem;
-        }
-
+        .subtitle { color: var(--muted); font-size: 0.95rem; }
         .insta-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 12px;
-            padding: 8px 16px;
-            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-            color: white;
-            border-radius: 20px;
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: bold;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            transition: transform 0.2s;
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-top: 12px;
+            padding: 8px 16px; background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            color: white; border-radius: 20px; text-decoration: none; font-size: 0.9rem; font-weight: bold;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3); transition: transform 0.2s;
         }
-
         .card {
-            background-color: var(--card-bg);
-            border: 1px solid #262938;
-            border-radius: 12px;
-            padding: 20px;
+            background-color: var(--card-bg); border: 1px solid #262938; border-radius: 12px; padding: 20px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.5);
         }
-
-        .donate-card {
-            border: 2px dashed var(--paypal-blue);
-            background: linear-gradient(135deg, #161822, #101826);
-            position: relative;
-        }
-
+        .donate-card { border: 2px dashed var(--paypal-blue); background: linear-gradient(135deg, #161822, #101826); position: relative; }
         .badge-voluntary {
-            display: inline-block;
-            background: rgba(0, 112, 186, 0.2);
-            color: #38bdf8;
-            font-size: 0.75rem;
-            font-weight: bold;
-            padding: 4px 10px;
-            border-radius: 20px;
-            margin-bottom: 10px;
+            display: inline-block; background: rgba(0, 112, 186, 0.2); color: #38bdf8;
+            font-size: 0.75rem; font-weight: bold; padding: 4px 10px; border-radius: 20px; margin-bottom: 10px;
             border: 1px solid rgba(0, 112, 186, 0.4);
         }
-
         h2 {
-            font-size: 1.25rem;
-            margin-bottom: 15px;
-            color: var(--text);
-            border-bottom: 2px solid var(--accent);
+            font-size: 1.25rem; margin-bottom: 15px; color: var(--text); border-bottom: 2px solid var(--accent);
             padding-bottom: 8px;
         }
-
-        .rules-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .rule-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            cursor: pointer;
-            font-size: 0.95rem;
-            line-height: 1.4;
-        }
-
+        .rules-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+        .rule-item { display: flex; align-items: flex-start; gap: 12px; cursor: pointer; font-size: 0.95rem; line-height: 1.4; }
         .rule-item input[type="checkbox"] {
-            appearance: none;
-            width: 22px;
-            height: 22px;
-            border: 2px solid var(--muted);
-            border-radius: 6px;
-            background: var(--bg);
-            display: grid;
-            place-content: center;
-            cursor: pointer;
-            margin-top: 1px;
-            flex-shrink: 0;
+            appearance: none; width: 22px; height: 22px; border: 2px solid var(--muted); border-radius: 6px;
+            background: var(--bg); display: grid; place-content: center; cursor: pointer; margin-top: 1px; flex-shrink: 0;
         }
-
-        .rule-item input[type="checkbox"]:checked {
-            background-color: var(--accent);
-            border-color: var(--accent);
-        }
-
+        .rule-item input[type="checkbox"]:checked { background-color: var(--accent); border-color: var(--accent); }
         .rule-item input[type="checkbox"]::before {
-            content: "";
-            width: 10px;
-            height: 6px;
-            border-left: 2px solid white;
-            border-bottom: 2px solid white;
-            transform: rotate(-45deg) translate(1px, -1px);
-            opacity: 0;
+            content: ""; width: 10px; height: 6px; border-left: 2px solid white; border-bottom: 2px solid white;
+            transform: rotate(-45deg) translate(1px, -1px); opacity: 0;
         }
-
-        .rule-item input[type="checkbox"]:checked::before {
-            opacity: 1;
-        }
-
+        .rule-item input[type="checkbox"]:checked::before { opacity: 1; }
         .btn {
-            width: 100%;
-            padding: 14px;
-            background-color: var(--accent);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            text-align: center;
-            text-decoration: none;
-            display: block;
+            width: 100%; padding: 14px; background-color: var(--accent); color: white; border: none; border-radius: 8px;
+            font-size: 1rem; font-weight: bold; cursor: pointer; text-align: center; text-decoration: none; display: block;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 18px rgba(255, 102, 0, 0.25);
-        }
-
-        .btn-secondary {
-            background-color: #262938;
-            color: var(--text);
-            margin-bottom: 12px;
-            padding: 10px;
-            font-size: 0.9rem;
-        }
-
-        .btn:disabled {
-            background-color: #333;
-            color: var(--muted);
-            cursor: not-allowed;
-            box-shadow: none;
-            transform: none;
-        }
-
-        .donate-btn {
-            background-color: var(--paypal-blue);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        #pass-display {
-            display: none;
-            text-align: center;
-            background: linear-gradient(135deg, #1f2233, #12141c);
-            border: 2px dashed var(--accent);
-        }
-
-        .pass-id {
-            font-family: monospace;
-            font-size: 2.2rem;
-            letter-spacing: 3px;
-            color: var(--accent);
-            margin: 10px 0;
-            font-weight: bold;
-        }
-
-        .queue-status {
-            font-size: 0.95rem;
-            padding: 10px;
-            border-radius: 6px;
-            background: rgba(255, 102, 0, 0.15);
-            color: var(--accent);
-            margin-top: 10px;
-            font-weight: bold;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        label {
-            display: block;
-            font-size: 0.9rem;
-            margin-bottom: 6px;
-            color: var(--muted);
-        }
-
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 18px rgba(255, 102, 0, 0.25); }
+        .btn-secondary { background-color: #262938; color: var(--text); margin-bottom: 12px; padding: 10px; font-size: 0.9rem; }
+        .btn:disabled { background-color: #333; color: var(--muted); cursor: not-allowed; box-shadow: none; transform: none; }
+        .donate-btn { background-color: var(--paypal-blue); color: white; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        #pass-display { display: none; text-align: center; background: linear-gradient(135deg, #1f2233, #12141c); border: 2px dashed var(--accent); }
+        .pass-id { font-family: monospace; font-size: 2.2rem; letter-spacing: 3px; color: var(--accent); margin: 10px 0; font-weight: bold; }
+        .queue-status { font-size: 0.95rem; padding: 10px; border-radius: 6px; background: rgba(255, 102, 0, 0.15); color: var(--accent); margin-top: 10px; font-weight: bold; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-size: 0.9rem; margin-bottom: 6px; color: var(--muted); }
         select, textarea, input[type="password"], input[type="number"] {
-            width: 100%;
-            padding: 10px;
-            background: var(--bg);
-            border: 1px solid #262938;
-            color: var(--text);
-            border-radius: 6px;
-            font-family: var(--font);
-            font-size: 0.95rem;
+            width: 100%; padding: 10px; background: var(--bg); border: 1px solid #262938; color: var(--text); border-radius: 6px;
+            font-family: var(--font); font-size: 0.95rem;
         }
-
-        textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-
-        .rating-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-            background: var(--bg);
-            padding: 8px 12px;
-            border-radius: 6px;
-        }
-
-        .star-select {
-            background: transparent;
-            border: none;
-            color: var(--accent);
-            font-weight: bold;
-            font-size: 0.95rem;
-            width: auto;
-        }
-
-        .page-section {
-            display: none;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .page-section.active {
-            display: flex;
-        }
-
-        footer {
-            margin-top: 20px;
-            text-align: center;
-            font-size: 0.8rem;
-            color: var(--muted);
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
-        .footer-links a {
-            color: var(--muted);
-            text-decoration: none;
-        }
-
-        .footer-links a:hover {
-            color: var(--accent);
-        }
-
-        #admin-panel {
-            display: none;
-            border-color: #d35400;
-        }
-
-        .stat-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .stat-box {
-            background: var(--bg);
-            padding: 10px;
-            border-radius: 6px;
-            text-align: center;
-        }
-
-        .stat-num {
-            font-size: 1.4rem;
-            font-weight: bold;
-            color: var(--accent);
-        }
-
-        .cat-stat-list {
-            background: var(--bg);
-            border: 1px solid #262938;
-            border-radius: 6px;
-            padding: 10px;
-            margin-bottom: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            font-size: 0.85rem;
-        }
-
-        .cat-stat-item {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .pass-list {
-            max-height: 150px;
-            overflow-y: auto;
-            background: var(--bg);
-            border: 1px solid #262938;
-            border-radius: 6px;
-            padding: 8px;
-            font-size: 0.85rem;
-            margin-bottom: 15px;
-        }
-
-        .pass-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 6px 4px;
-            border-bottom: 1px solid #1a1c29;
-            font-family: monospace;
-        }
-
+        textarea { resize: vertical; min-height: 80px; }
+        .rating-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; background: var(--bg); padding: 8px 12px; border-radius: 6px; }
+        .star-select { background: transparent; border: none; color: var(--accent); font-weight: bold; font-size: 0.95rem; width: auto; }
+        .page-section { display: none; flex-direction: column; gap: 20px; }
+        .page-section.active { display: flex; }
+        footer { margin-top: 20px; text-align: center; font-size: 0.8rem; color: var(--muted); display: flex; flex-direction: column; gap: 10px; }
+        .footer-links { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+        .footer-links a { color: var(--muted); text-decoration: none; }
+        .footer-links a:hover { color: var(--accent); }
+        #admin-panel { display: none; border-color: #d35400; }
+        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
+        .stat-box { background: var(--bg); padding: 10px; border-radius: 6px; text-align: center; }
+        .stat-num { font-size: 1.4rem; font-weight: bold; color: var(--accent); }
+        .cat-stat-list { background: var(--bg); border: 1px solid #262938; border-radius: 6px; padding: 10px; margin-bottom: 15px; display: flex; flex-direction: column; gap: 6px; font-size: 0.85rem; }
+        .cat-stat-item { display: flex; justify-content: space-between; }
+        .pass-list { max-height: 150px; overflow-y: auto; background: var(--bg); border: 1px solid #262938; border-radius: 6px; padding: 8px; font-size: 0.85rem; margin-bottom: 15px; }
+        .pass-item { display: flex; justify-content: space-between; padding: 6px 4px; border-bottom: 1px solid #1a1c29; font-family: monospace; }
         #sec-monitor {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: var(--bg);
-            z-index: 9999;
-            padding: 40px 20px;
-            flex-direction: column;
-            align-items: center;
-            box-sizing: border-box;
-            overflow: hidden;
+            display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: var(--bg);
+            z-index: 9999; padding: 40px 20px; flex-direction: column; align-items: center; box-sizing: border-box; overflow: hidden;
         }
-
-        #sec-monitor.active {
-            display: flex;
-        }
-
-        .monitor-grid {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            width: 100%;
-            max-width: 1200px;
-            margin-top: 40px;
-            flex-wrap: wrap;
-        }
-
+        #sec-monitor.active { display: flex; }
+        .monitor-grid { display: flex; justify-content: center; gap: 20px; width: 100%; max-width: 1200px; margin-top: 40px; flex-wrap: wrap; }
         .monitor-card {
-            background: var(--card-bg);
-            border: 3px solid var(--accent);
-            border-radius: 16px;
-            padding: 20px 25px;
-            text-align: center;
-            box-shadow: 0 0 25px rgba(255, 102, 0, 0.3);
-            min-width: 240px;
-            flex: 1;
-            max-width: 280px;
+            background: var(--card-bg); border: 3px solid var(--accent); border-radius: 16px; padding: 20px 25px; text-align: center;
+            box-shadow: 0 0 25px rgba(255, 102, 0, 0.3); min-width: 240px; flex: 1; max-width: 280px;
         }
-
-        .monitor-code {
-            font-family: monospace;
-            font-size: 2.8rem;
-            font-weight: bold;
-            color: var(--accent);
-        }
-
-        .monitor-size {
-            font-size: 1.2rem;
-            color: #38bdf8;
-            font-weight: bold;
-            margin-top: 5px;
-        }
-
-        .monitor-time {
-            font-size: 1rem;
-            color: var(--success);
-            margin-top: 8px;
-            font-weight: bold;
-        }
-
+        .monitor-code { font-family: monospace; font-size: 2.8rem; font-weight: bold; color: var(--accent); }
+        .monitor-size { font-size: 1.2rem; color: #38bdf8; font-weight: bold; margin-top: 5px; }
+        .monitor-time { font-size: 1rem; color: var(--success); margin-top: 8px; font-weight: bold; }
         #sec-buzzer {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: var(--bg);
-            z-index: 9998;
-            padding: 20px;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            box-sizing: border-box;
-            text-align: center;
+            display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: var(--bg);
+            z-index: 9998; padding: 20px; flex-direction: column; align-items: center; justify-content: center; box-sizing: border-box; text-align: center;
         }
-
-        #sec-buzzer.active {
-            display: flex;
-        }
-
+        #sec-buzzer.active { display: flex; }
         .buzzer-btn {
-            width: 280px;
-            height: 280px;
-            border-radius: 50%;
-            background: radial-gradient(circle, #ff4500, #cc0000);
-            border: 8px solid #660000;
-            color: white;
-            font-size: 2rem;
-            font-weight: bold;
-            cursor: pointer;
+            width: 280px; height: 280px; border-radius: 50%; background: radial-gradient(circle, #ff4500, #cc0000);
+            border: 8px solid #660000; color: white; font-size: 2rem; font-weight: bold; cursor: pointer;
             box-shadow: 0 12px 35px rgba(255, 0, 0, 0.5), inset 0 6px 15px rgba(255, 255, 255, 0.4);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin: 20px 0;
-            transition: transform 0.18s ease, opacity 0.2s ease;
-            outline: none;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 20px 0;
+            transition: transform 0.18s ease, opacity 0.2s ease; outline: none;
         }
-
-        .buzzer-btn:active {
-            transform: scale(0.93);
-        }
-
-        .buzzer-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-
+        .buzzer-btn:active { transform: scale(0.93); }
+        .buzzer-btn:disabled { opacity: 0.6; cursor: not-allowed; }
         #toast {
-            position: fixed;
-            bottom: 20px;
-            background: var(--success);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-weight: bold;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            display: none;
-            z-index: 10000;
+            position: fixed; bottom: 20px; background: var(--success); color: white; padding: 10px 20px; border-radius: 8px;
+            font-weight: bold; box-shadow: 0 4px 12px rgba(0,0,0,0.3); display: none; z-index: 10000;
         }
-
-        .story-p {
-            line-height: 1.6;
-            color: #d0d0d0;
-            font-size: 0.95rem;
-            margin-bottom: 12px;
-        }
-
-        .legal-p {
-            font-size: 0.85rem;
-            line-height: 1.5;
-            color: #b0b5bc;
-            margin-bottom: 10px;
-        }
-
-        .setting-box {
-            background: var(--bg);
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid #262938;
-            margin-bottom: 12px;
-        }
-
+        .story-p { line-height: 1.6; color: #d0d0d0; font-size: 0.95rem; margin-bottom: 12px; }
+        .legal-p { font-size: 0.85rem; line-height: 1.5; color: #b0b5bc; margin-bottom: 10px; }
+        .setting-box { background: var(--bg); padding: 12px; border-radius: 8px; border: 1px solid #262938; margin-bottom: 12px; }
         .home-register {
-            background: linear-gradient(180deg, rgba(255,102,0,0.22), rgba(22,24,34,1));
-            border: 2px solid rgba(255, 102, 0, 0.7);
-            box-shadow: 0 15px 35px rgba(255, 102, 0, 0.2), inset 0 0 25px rgba(255,102,0,0.12);
-            padding: 22px 20px;
+            background: linear-gradient(180deg, rgba(255,102,0,0.22), rgba(22,24,34,1)); border: 2px solid rgba(255, 102, 0, 0.7);
+            box-shadow: 0 15px 35px rgba(255, 102, 0, 0.2), inset 0 0 25px rgba(255,102,0,0.12); padding: 22px 20px;
         }
-
-        .home-register-top {
-            text-align: center;
-            margin-bottom: 18px;
-        }
-
+        .home-register-top { text-align: center; margin-bottom: 18px; }
         .home-tag {
-            display: inline-block;
-            background: rgba(255, 102, 0, 0.15);
-            border: 1px solid rgba(255, 102, 0, 0.5);
-            color: #ffb380;
-            font-weight: bold;
-            font-size: 0.72rem;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            padding: 7px 12px;
-            border-radius: 999px;
-            margin-bottom: 10px;
+            display: inline-block; background: rgba(255, 102, 0, 0.15); border: 1px solid rgba(255, 102, 0, 0.5);
+            color: #ffb380; font-weight: bold; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+            padding: 7px 12px; border-radius: 999px; margin-bottom: 10px;
         }
-
-        .home-register h2 {
-            font-size: 1.55rem;
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-
-        .home-register-grid {
-            display: grid;
-            gap: 12px;
-            margin-top: 16px;
-        }
-
+        .home-register h2 { font-size: 1.55rem; border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .home-register-grid { display: grid; gap: 12px; margin-top: 16px; }
         .home-register select {
-            font-size: 1rem;
-            padding: 13px 12px;
-            background: rgba(11, 12, 17, 0.9);
-            border: 2px solid rgba(255, 102, 0, 0.45);
-            border-radius: 10px;
-            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
+            font-size: 1rem; padding: 13px 12px; background: rgba(11, 12, 17, 0.9); border: 2px solid rgba(255, 102, 0, 0.45);
+            border-radius: 10px; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
         }
-
         .home-cta-btn {
-            padding: 16px 14px;
-            font-size: 1.08rem;
-            font-weight: 900;
-            border-radius: 12px;
-            background: linear-gradient(135deg, var(--accent), #ff8f3d);
-            box-shadow: 0 12px 25px rgba(255, 102, 0, 0.38);
+            padding: 16px 14px; font-size: 1.08rem; font-weight: 900; border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent), #ff8f3d); box-shadow: 0 12px 25px rgba(255, 102, 0, 0.38);
         }
-
-        #home-group-select {
-            width: 100%;
-        }
+        #home-group-select { width: 100%; }
     </style>
 </head>
 <body>
-
     <div id="sec-monitor">
         <h1 style="font-size: 3.2rem;">🎃 GRUSELKELLER EINLASS 🎃</h1>
         <p class="subtitle" id="monitor-subtitle" style="font-size: 1.4rem; color: var(--success); margin-top: 10px;">✔ Berechtigte Codes für den Keller-Einlass:</p>
-
         <div class="monitor-grid" id="monitor-code-grid">
             <div class="monitor-card"><div class="monitor-code">Warten...</div></div>
         </div>
-
-        <button onclick="window.location.hash=''" style="position: absolute; bottom: 20px; right: 20px; background: none; border: none; color: #444; cursor: pointer; font-size: 0.9rem;">[Monitor Schließen]</button>
+        <button onclick="window.location.hash=''" style="position: absolute; bottom: 20px; right: 20px; background: none; border: none; color: #444; cursor: pointer; font-size: 0.9rem;">[Monitor schließen]</button>
     </div>
 
     <div id="sec-buzzer">
@@ -665,16 +215,14 @@
             <div id="buzzer-result-info" style="color: var(--success); font-weight: bold; margin-top: 5px;">Sichtbar auf dem Haupt-Monitor sobald du dran bist!</div>
         </div>
 
-        <button onclick="window.location.hash=''" style="position: absolute; bottom: 20px; right: 20px; background: none; border: none; color: #444; cursor: pointer; font-size: 0.9rem;">[Terminal Beenden]</button>
+        <button onclick="window.location.hash=''" style="position: absolute; bottom: 20px; right: 20px; background: none; border: none; color: #444; cursor: pointer; font-size: 0.9rem;">[Terminal beenden]</button>
     </div>
 
     <div class="container" id="main-container">
         <header>
             <h1>🎃 GRUSELKELLER</h1>
             <p class="subtitle">Das krasseste Halloween-Erlebnis der Region</p>
-            <a href="https://instagram.com/gruselkeller" target="_blank" class="insta-btn">
-                📸 Folge uns auf Instagram (@gruselkeller)
-            </a>
+            <a href="https://instagram.com/gruselkeller" target="_blank" class="insta-btn">📸 Folge uns auf Instagram (@gruselkeller)</a>
         </header>
 
         <nav>
@@ -701,9 +249,7 @@
                         <option value="5">5 Personen</option>
                     </select>
 
-                    <button class="btn home-cta-btn" id="home-pass-btn">
-                        🚪 Jetzt Einlass-Pass holen
-                    </button>
+                    <button class="btn home-cta-btn" id="home-pass-btn">🚪 Jetzt Einlass-Pass holen</button>
                 </div>
             </div>
 
@@ -721,7 +267,7 @@
                 <span class="badge-voluntary">✨ 100% Freiwillig & Ohne Zwang</span>
                 <h2>☕ Unterstütze das Projekt</h2>
                 <p class="story-p">
-                    Der Eintritt zu unserem Gruselkeller ist komplett kostenlos! Wir stecken das alles in unserer Freizeit zusammen. Wenn es dir gefallen hat und du uns mit ein paar Cent oder Euro für neue Requisiten & Effekte unterstützen möchtest, freuen wir uns riesig – ein Muss ist das aber natürlich absolut nicht! ❤️
+                    Der Eintritt zu unserem Gruselkeller ist komplett kostenlos! Wir stecken das alles in unserer Freizeit zusammen. Wenn es dir gefallen hat und du uns mit ein paar Cent oder Euro für neue Requisiten und Effekte unterstützen möchtest, freuen wir uns riesig – aber ein Muss ist das natürlich nicht.
                 </p>
                 <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=roland.trissl%40gmx.de&currency_code=EUR&item_name=Gruselkeller+Spende" target="_blank" class="btn donate-btn">
                     💳 Freiwillig per PayPal unterstützen
@@ -732,26 +278,13 @@
         <div id="sec-regeln" class="page-section">
             <div class="card" id="rules-card">
                 <h2>Hausordnung & Regeln</h2>
-
                 <button class="btn btn-secondary" id="select-all-btn">⚡ Alle Regeln auf einmal akzeptieren</button>
 
                 <div class="rules-list">
-                    <label class="rule-item">
-                        <input type="checkbox" class="rule-chk">
-                        <span><strong>Altersfreigabe:</strong> Einlass ab 8 Jahre (darunter nur in Begleitung eines Volljährigen).</span>
-                    </label>
-                    <label class="rule-item">
-                        <input type="checkbox" class="rule-chk">
-                        <span><strong>Kein Anfassen:</strong> Die Erschrecker dürfen nicht berührt werden. Gleiches gilt umgekehrt.</span>
-                    </label>
-                    <label class="rule-item">
-                        <input type="checkbox" class="rule-chk">
-                        <span><strong>Keine Gewalt:</strong> Bei Panik sofort "Stopp" rufen. Vandalismus führt zum sofortigen Verweis.</span>
-                    </label>
-                    <label class="rule-item">
-                        <input type="checkbox" class="rule-chk">
-                        <span><strong>Foto-Verbot:</strong> Kein Blitzlicht im Keller, um andere Gäste nicht zu blenden.</span>
-                    </label>
+                    <label class="rule-item"><input type="checkbox" class="rule-chk"><span><strong>Altersfreigabe:</strong> Einlass ab 8 Jahre (darunter nur in Begleitung eines Volljährigen).</span></label>
+                    <label class="rule-item"><input type="checkbox" class="rule-chk"><span><strong>Kein Anfassen:</strong> Die Erschrecker dürfen nicht berührt werden. Gleiches gilt umgekehrt.</span></label>
+                    <label class="rule-item"><input type="checkbox" class="rule-chk"><span><strong>Keine Gewalt:</strong> Bei Panik sofort "Stopp" rufen. Vandalismus führt zum sofortigen Verweis.</span></label>
+                    <label class="rule-item"><input type="checkbox" class="rule-chk"><span><strong>Foto-Verbot:</strong> Kein Blitzlicht im Keller, um andere Gäste nicht zu blenden.</span></label>
                 </div>
 
                 <div class="form-group" style="margin-top: 15px;">
@@ -775,76 +308,19 @@
                 <p class="subtitle">Dein persönlicher Code:</p>
                 <div class="pass-id" id="pass-code">GK-8849</div>
                 <div id="pass-group-info" style="color: #38bdf8; font-weight: bold; margin-bottom: 10px;">👥 3 Personen</div>
-
-                <div class="queue-status" id="user-queue-status">
-                    Prüfe Status...
-                </div>
+                <div class="queue-status" id="user-queue-status">Prüfe Status...</div>
             </div>
 
             <div class="card" id="feedback-card" style="display: none;">
                 <h2>Nach dem Durchgang: Bewerten ⭐</h2>
                 <p class="story-p" style="font-size: 0.85rem;">Wie war dein Erlebnis im Keller?</p>
-
                 <form id="feedback-form">
-                    <div class="rating-row">
-                        <span class="rating-label">🕯️ Ambiente & Deko</span>
-                        <select class="star-select" id="r-ambiente">
-                            <option value="5">⭐⭐⭐⭐⭐ (5)</option>
-                            <option value="4">⭐⭐⭐⭐ (4)</option>
-                            <option value="3">⭐⭐⭐ (3)</option>
-                            <option value="2">⭐⭐ (2)</option>
-                            <option value="1">⭐ (1)</option>
-                        </select>
-                    </div>
-
-                    <div class="rating-row">
-                        <span class="rating-label">👻 Erschrecker & Performance</span>
-                        <select class="star-select" id="r-erschrecker">
-                            <option value="5">⭐⭐⭐⭐⭐ (5)</option>
-                            <option value="4">⭐⭐⭐⭐ (4)</option>
-                            <option value="3">⭐⭐⭐ (3)</option>
-                            <option value="2">⭐⭐ (2)</option>
-                            <option value="1">⭐ (1)</option>
-                        </select>
-                    </div>
-
-                    <div class="rating-row">
-                        <span class="rating-label">🌌 Atmosphäre & Raumgestaltung</span>
-                        <select class="star-select" id="r-atmos">
-                            <option value="5">⭐⭐⭐⭐⭐ (5)</option>
-                            <option value="4">⭐⭐⭐⭐ (4)</option>
-                            <option value="3">⭐⭐⭐ (3)</option>
-                            <option value="2">⭐⭐ (2)</option>
-                            <option value="1">⭐ (1)</option>
-                        </select>
-                    </div>
-
-                    <div class="rating-row">
-                        <span class="rating-label">💡 Licht- & Spezialeffekte</span>
-                        <select class="star-select" id="r-licht">
-                            <option value="5">⭐⭐⭐⭐⭐ (5)</option>
-                            <option value="4">⭐⭐⭐⭐ (4)</option>
-                            <option value="3">⭐⭐⭐ (3)</option>
-                            <option value="2">⭐⭐ (2)</option>
-                            <option value="1">⭐ (1)</option>
-                        </select>
-                    </div>
-
-                    <div class="rating-row">
-                        <span class="rating-label">🔊 Sound & Musik</span>
-                        <select class="star-select" id="r-sound">
-                            <option value="5">⭐⭐⭐⭐⭐ (5)</option>
-                            <option value="4">⭐⭐⭐⭐ (4)</option>
-                            <option value="3">⭐⭐⭐ (3)</option>
-                            <option value="2">⭐⭐ (2)</option>
-                            <option value="1">⭐ (1)</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group" style="margin-top: 15px;">
-                        <label for="comment">Kommentar (optional):</label>
-                        <textarea id="comment" placeholder="Wer war am gruseligsten? Was war am besten?"></textarea>
-                    </div>
+                    <div class="rating-row"><span class="rating-label">🕯️ Ambiente & Deko</span><select class="star-select" id="r-ambiente"><option value="5">⭐⭐⭐⭐⭐ (5)</option><option value="4">⭐⭐⭐⭐ (4)</option><option value="3">⭐⭐⭐ (3)</option><option value="2">⭐⭐ (2)</option><option value="1">⭐ (1)</option></select></div>
+                    <div class="rating-row"><span class="rating-label">👻 Erschrecker & Performance</span><select class="star-select" id="r-erschrecker"><option value="5">⭐⭐⭐⭐⭐ (5)</option><option value="4">⭐⭐⭐⭐ (4)</option><option value="3">⭐⭐⭐ (3)</option><option value="2">⭐⭐ (2)</option><option value="1">⭐ (1)</option></select></div>
+                    <div class="rating-row"><span class="rating-label">🌌 Atmosphäre & Raumgestaltung</span><select class="star-select" id="r-atmos"><option value="5">⭐⭐⭐⭐⭐ (5)</option><option value="4">⭐⭐⭐⭐ (4)</option><option value="3">⭐⭐⭐ (3)</option><option value="2">⭐⭐ (2)</option><option value="1">⭐ (1)</option></select></div>
+                    <div class="rating-row"><span class="rating-label">💡 Licht- & Spezialeffekte</span><select class="star-select" id="r-licht"><option value="5">⭐⭐⭐⭐⭐ (5)</option><option value="4">⭐⭐⭐⭐ (4)</option><option value="3">⭐⭐⭐ (3)</option><option value="2">⭐⭐ (2)</option><option value="1">⭐ (1)</option></select></div>
+                    <div class="rating-row"><span class="rating-label">🔊 Sound & Musik</span><select class="star-select" id="r-sound"><option value="5">⭐⭐⭐⭐⭐ (5)</option><option value="4">⭐⭐⭐⭐ (4)</option><option value="3">⭐⭐⭐ (3)</option><option value="2">⭐⭐ (2)</option><option value="1">⭐ (1)</option></select></div>
+                    <div class="form-group" style="margin-top: 15px;"><label for="comment">Kommentar (optional):</label><textarea id="comment" placeholder="Wer war am gruseligsten? Was war am besten?"></textarea></div>
                     <button type="submit" class="btn">Bewertung abschicken</button>
                 </form>
             </div>
@@ -853,21 +329,11 @@
         <div id="sec-about" class="page-section">
             <div class="card">
                 <h2>Über Uns 💀</h2>
-                <p class="story-p">
-                    <strong>Von zwei Schnüren zur echten Horror-Atmosphäre!</strong>
-                </p>
-                <p class="story-p">
-                    Wir sind eine Gruppe von Jugendlichen aus der Region. Angefangen hat alles vor 5 Jahren: Ganz klein mit gerade einmal zwei Schnüren, einer Person in einer Badewanne und kaum Platz im Keller.
-                </p>
-                <p class="story-p">
-                    Aber anstatt jedes Jahr einfach das Gleiche zu machen, haben wir uns immer weiter gesteigert! Von Jahr zu Jahr haben wir mehr Raum erschlossen, verdammt viel Arbeit reingesteckt, neue Technik gelernt und coole Licht- & Soundeffekte verbaut.
-                </p>
-                <p class="story-p">
-                    Jedes Jahr stecken wir extrem viel Herzblut und Freizeit rein, um euch das krasseste Halloween-Erlebnis zu bieten. Danke an jeden Einzelnen, der uns besucht und unterstützt! 🔥
-                </p>
-                <a href="https://instagram.com/gruselkeller" target="_blank" class="insta-btn" style="width: 100%;">
-                    📸 Besuche uns auf Instagram
-                </a>
+                <p class="story-p"><strong>Von zwei Schnüren zur echten Horror-Atmosphäre!</strong></p>
+                <p class="story-p">Wir sind eine Gruppe von Jugendlichen aus der Region. Angefangen hat alles vor 5 Jahren: Ganz klein mit gerade einmal zwei Schnüren, einer Person in einer Badewanne und kaum Platz im Keller.</p>
+                <p class="story-p">Aber anstatt jedes Jahr einfach das Gleiche zu machen, haben wir uns immer weiter gesteigert! Von Jahr zu Jahr haben wir mehr Raum erschlossen, viel Arbeit reingesteckt, Technik gelernt und coole Licht- & Soundeffekte eingebaut.</p>
+                <p class="story-p">Jedes Jahr stecken wir extrem viel Herzblut und Freizeit rein, um euch das krasseste Halloween-Erlebnis zu bieten. Danke an jeden Einzelnen, der uns besucht und unterstützt!</p>
+                <a href="https://instagram.com/gruselkeller" target="_blank" class="insta-btn" style="width: 100%;">📸 Besuche uns auf Instagram</a>
             </div>
         </div>
 
@@ -875,21 +341,11 @@
             <div class="card">
                 <h2>Impressum</h2>
                 <p class="legal-p"><strong>Angaben gemäß § 5 DDG:</strong></p>
-                <p class="legal-p">
-                    Jakob Thorsten Schaan, Johannes Benjamin Schaan, David Trissel<br>
-                    Friedensstraße 3<br>
-                    Fautenbach
-                </p>
+                <p class="legal-p">Jakob Thorsten Schaan, Johannes Benjamin Schaan, David Trissel<br>Friedensstraße 3<br>Fautenbach</p>
                 <p class="legal-p"><strong>Kontakt:</strong></p>
-                <p class="legal-p">
-                    E-Mail: jakob.schaan@gmail.com<br>
-                    Telefon: +49 151 17530499
-                </p>
+                <p class="legal-p">E-Mail: jakob.schaan@gmail.com<br>Telefon: +49 151 17530499</p>
                 <p class="legal-p"><strong>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV:</strong></p>
-                <p class="legal-p">
-                    Jakob Thorsten Schaan, Johannes Benjamin Schaan, David Trissel<br>
-                    Friedensstraße 3, Fautenbach
-                </p>
+                <p class="legal-p">Jakob Thorsten Schaan, Johannes Benjamin Schaan, David Trissel<br>Friedensstraße 3, Fautenbach</p>
             </div>
         </div>
 
@@ -897,21 +353,17 @@
             <div class="card">
                 <h2>Datenschutzerklärung</h2>
                 <p class="legal-p"><strong>1. Datenschutz auf einen Blick</strong></p>
-                <p class="legal-p">
-                    Wir nehmen den Schutz eurer persönlichen Daten sehr ernst. Diese Webseite speichert keine personenbezogenen Daten auf externen Servern.
-                </p>
-                <p class="legal-p"><strong>2. Hosting über GitHub Pages</strong></p>
-                <p class="legal-p">
-                    Diese Webseite wird über GitHub Pages (GitHub Inc., 88 Colin P Kelly Jr St, San Francisco, CA 94107, USA) bereitgestellt. Beim Aufruf der Seite erfasst GitHub automatisch Informationen in sog. Server-Log-Dateien (z. B. IP-Adresse, Webbrowser, Betriebssystem).
-                </p>
-                <p class="legal-p"><strong>3. Lokale Speicherung (LocalStorage)</strong></p>
-                <p class="legal-p">
-                    Zur Steuerung der Einlass-Warteschlange und zur Erfassung von anonymen Bewertungen verwendet diese App den lokalen Speicher des Browsers (LocalStorage). Dabei werden zufällig generierte Einlass-Codes und die abgegebenen Sterne-Bewertungen lokal auf dem Gerät gespeichert. Es findet keine dauerhafte personenbezogene Speicherung statt.
-                </p>
-                <p class="legal-p"><strong>4. Externe Dienste & Links</strong></p>
-                <p class="legal-p">
-                    Diese Webseite enthält Verlinkungen zu externen Anbietern (Instagram, PayPal). Beim Anklicken dieser Links verlässt du unsere Webseite.
-                </p>
+                <p class="legal-p">Diese Webseite verarbeitet nur anonyme Einlassdaten für die Warteschlange. Es werden keine personenbezogenen Kundendaten wie Namen, Adressen, Geburtsdaten oder Kontaktdaten abgefragt oder gespeichert.</p>
+                <p class="legal-p"><strong>2. Welche Daten werden gespeichert?</strong></p>
+                <p class="legal-p">Für den Einlass werden zufällig erzeugte Passcodes, die Gruppengröße, der Zeitpunkt der Erstellung und der Zeitpunkt des Aufrufs auf dem Monitor in der Datenbank gespeichert. Für Bewertungen werden nur Sternebewertungen gespeichert, aber keine Namen, E-Mail-Adressen, Telefonnummern oder sonstigen Identifikationsdaten.</p>
+                <p class="legal-p"><strong>3. Hosting und Drittanbieter</strong></p>
+                <p class="legal-p">Diese Webseite wird über GitHub Pages gehostet. Beim Aufruf können technische Informationen wie IP-Adresse, Browserdaten und Zugriffszeiten durch den Hosting-Anbieter verarbeitet werden. Zusätzlich nutzt die App Supabase als zentrale Datenbank für Warteschlange und Bewertungen. Supabase speichert dort nur die anonymen Einlassdaten und Bewertungswerte.</p>
+                <p class="legal-p"><strong>4. Dauer der Speicherung</strong></p>
+                <p class="legal-p">Die Warteschlangen-Einträge bleiben nur so lange gespeichert, wie sie für den Einlass relevant sind. Bewertungen werden anonymisiert und nur für Statistiken verwendet. Es findet keine langfristige personenbezogene Speicherung statt.</p>
+                <p class="legal-p"><strong>5. Rechte</strong></p>
+                <p class="legal-p">Da keine personenbezogenen Daten erhoben werden, gibt es keine personenbezogenen Auskunfts- oder Löschungsansprüche im Sinne einer klassischen Kundendatenbank. Bei Fragen zur Verarbeitung anonymisierter Warteschlangen- und Bewertungsdaten kann der Betreiber kontaktiert werden.</p>
+                <p class="legal-p"><strong>6. Externe Dienste & Links</strong></p>
+                <p class="legal-p">Diese Webseite enthält Verlinkungen zu externen Anbietern (Instagram, PayPal). Beim Anklicken dieser Links verlässt du unsere Webseite. Für diese Drittanbieter gelten deren eigene Datenschutzbestimmungen.</p>
             </div>
         </div>
 
@@ -926,9 +378,7 @@
             </div>
 
             <div id="admin-content" style="display: none;">
-                <button class="btn" id="force-start-btn" style="background: linear-gradient(45deg, #e67e22, #d35400); font-size: 1.1rem; padding: 16px; margin-bottom: 15px; border: 2px solid #f39c12;">
-                    ⚡ Nächste Gruppe sofort freigeben (Force-Start)
-                </button>
+                <button class="btn" id="force-start-btn" style="background: linear-gradient(45deg, #e67e22, #d35400); font-size: 1.1rem; padding: 16px; margin-bottom: 15px; border: 2px solid #f39c12;">⚡ Nächste Gruppe sofort freigeben (Force-Start)</button>
 
                 <div class="setting-box">
                     <label style="color: var(--accent); font-weight: bold;">🎛️ Organizer-Menü</label>
@@ -948,14 +398,8 @@
                 </div>
 
                 <div class="stat-grid">
-                    <div class="stat-box">
-                        <div class="stat-num" id="stat-passes">0</div>
-                        <div class="subtitle">Aktive Pässe</div>
-                    </div>
-                    <div class="stat-box">
-                        <div class="stat-num" id="stat-rating">5.0 ★</div>
-                        <div class="subtitle">Gesamt-Schnitt</div>
-                    </div>
+                    <div class="stat-box"><div class="stat-num" id="stat-passes">0</div><div class="subtitle">Aktive Pässe</div></div>
+                    <div class="stat-box"><div class="stat-num" id="stat-rating">5.0 ★</div><div class="subtitle">Gesamt-Schnitt</div></div>
                 </div>
 
                 <div class="setting-box">
@@ -990,9 +434,7 @@
                 </div>
 
                 <label>Aktive Pässe in der Warteschlange:</label>
-                <div class="pass-list" id="pass-log-list">
-                    <div class="pass-item" style="color: var(--muted);">Keine Pässe in der Liste.</div>
-                </div>
+                <div class="pass-list" id="pass-log-list"><div class="pass-item" style="color: var(--muted);">Keine Pässe in der Liste.</div></div>
 
                 <button class="btn" id="reset-data-btn" style="background-color: var(--danger); margin-bottom: 10px;">🗑️ Alle Bewertungen & Pässe zurücksetzen</button>
                 <button class="btn" id="print-qr-btn" style="background-color: #2c3e50; margin-bottom: 10px;">QR-Schild Drucken 🖨️</button>
@@ -1013,8 +455,9 @@
     <div id="toast">Erfolgreich gespeichert!</div>
 
     <script>
-        const SUPABASE_URL = 'https://ztcvxszayrfyupslvgnt.co';
-        const SUPABASE_ANON_KEY = 'sb_publishable_oDYuO7dNU74I472U1UQTgA_11UwAxKw';
+        const SUPABASE_URL = 'DEIN_SUPABASE_URL';
+        const SUPABASE_ANON_KEY = 'DEIN_SUPABASE_ANON_KEY';
+        const ADMIN_PIN = '3110';
 
         const useSupabase = !!(SUPABASE_URL && SUPABASE_URL !== 'DEIN_SUPABASE_URL' && SUPABASE_ANON_KEY && SUPABASE_ANON_KEY !== 'DEIN_SUPABASE_ANON_KEY');
         const supabase = useSupabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
@@ -1030,19 +473,6 @@
             if (buzzerGroupSelect) buzzerGroupSelect.value = '';
         }
 
-        function getLocalJSON(key, fallback) {
-            try {
-                const raw = localStorage.getItem(key);
-                return raw ? JSON.parse(raw) : fallback;
-            } catch {
-                return fallback;
-            }
-        }
-
-        function setLocalJSON(key, value) {
-            localStorage.setItem(key, JSON.stringify(value));
-        }
-
         function readSettingsLocal() {
             return {
                 mode: localStorage.getItem('gk_mode') || 'strict',
@@ -1052,84 +482,34 @@
             };
         }
 
-        async function getSettings() {
-            if (useSupabase && supabase) {
-                const { data, error } = await supabase.from('settings').select('*').eq('id', 'main').maybeSingle();
-
-                if (error && !error.message.includes('No rows')) {
-                    console.error('Settings error:', error);
-                }
-
-                if (!data) {
-                    return readSettingsLocal();
-                }
-
-                const settings = {
-                    mode: data.mode || 'strict',
-                    maxPersons: Number(data.max_persons || 5),
-                    timerSeconds: Number(data.timer_seconds || 60),
-                    buzzerHotkeyEnabled: !!data.buzzer_hotkey_enabled
-                };
-
-                localStorage.setItem('gk_mode', settings.mode);
-                localStorage.setItem('gk_max_persons', settings.maxPersons);
-                localStorage.setItem('gk_timer_seconds', settings.timerSeconds);
-                localStorage.setItem('gk_buzzer_hotkey', settings.buzzerHotkeyEnabled ? '1' : '0');
-
-                return settings;
+        function setLocalJSON(key, value) { localStorage.setItem(key, JSON.stringify(value)); }
+        function getLocalJSON(key, fallback) {
+            try {
+                const raw = localStorage.getItem(key);
+                return raw ? JSON.parse(raw) : fallback;
+            } catch {
+                return fallback;
             }
-
-            return readSettingsLocal();
-        }
-
-        async function saveSettingsToDB(settings) {
-            if (useSupabase && supabase) {
-                const payload = {
-                    id: 'main',
-                    mode: settings.mode,
-                    max_persons: settings.maxPersons,
-                    timer_seconds: settings.timerSeconds,
-                    buzzer_hotkey_enabled: settings.buzzerHotkeyEnabled
-                };
-
-                const { error } = await supabase.from('settings').upsert(payload);
-                if (error) {
-                    console.error('saveSettingsToDB error:', error);
-                    return false;
-                }
-                return true;
-            }
-
-            localStorage.setItem('gk_mode', settings.mode);
-            localStorage.setItem('gk_max_persons', String(settings.maxPersons));
-            localStorage.setItem('gk_timer_seconds', String(settings.timerSeconds));
-            localStorage.setItem('gk_buzzer_hotkey', settings.buzzerHotkeyEnabled ? '1' : '0');
-            return true;
-        }
-
-        function getSettingsSync() {
-            return readSettingsLocal();
         }
 
         function switchTab(tabName) {
             document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
 
-            if(tabName === 'home') {
+            if (tabName === 'home') {
                 document.getElementById('sec-home').classList.add('active');
                 document.querySelectorAll('.nav-btn')[0].classList.add('active');
-            } else if(tabName === 'regeln') {
+            } else if (tabName === 'regeln') {
                 document.getElementById('sec-regeln').classList.add('active');
                 document.querySelectorAll('.nav-btn')[1].classList.add('active');
-            } else if(tabName === 'about') {
+            } else if (tabName === 'about') {
                 document.getElementById('sec-about').classList.add('active');
                 document.querySelectorAll('.nav-btn')[2].classList.add('active');
-            } else if(tabName === 'impressum') {
+            } else if (tabName === 'impressum') {
                 document.getElementById('sec-impressum').classList.add('active');
-            } else if(tabName === 'datenschutz') {
+            } else if (tabName === 'datenschutz') {
                 document.getElementById('sec-datenschutz').classList.add('active');
             }
-
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -1141,7 +521,6 @@
         const homePassBtn = document.getElementById('home-pass-btn');
 
         checkboxes.forEach(chk => chk.addEventListener('change', checkAllDone));
-
         selectAllBtn.addEventListener('click', () => {
             checkboxes.forEach(chk => chk.checked = true);
             checkAllDone();
@@ -1153,38 +532,62 @@
         }
 
         function validateAndReturnGroupSize(selectEl) {
-            if (!selectEl.value) {
-                selectEl.setCustomValidity('Bitte füllen Sie dieses Feld aus!');
-                selectEl.reportValidity();
+            if (!selectEl || !selectEl.value) {
+                if (selectEl) {
+                    selectEl.setCustomValidity('Bitte füllen Sie dieses Feld aus!');
+                    selectEl.reportValidity();
+                }
                 return null;
             }
             selectEl.setCustomValidity('');
-            return parseInt(selectEl.value, 10);
+            return Number(selectEl.value);
+        }
+
+        async function getSettings() {
+            if (useSupabase && supabase) {
+                const { data, error } = await supabase.from('settings').select('*').eq('id', 'main').maybeSingle();
+                if (error && !error.message.includes('No rows')) console.error('Settings error:', error);
+                if (data) {
+                    const settings = { mode: data.mode || 'strict', maxPersons: Number(data.max_persons || 5), timerSeconds: Number(data.timer_seconds || 60), buzzerHotkeyEnabled: !!data.buzzer_hotkey_enabled };
+                    localStorage.setItem('gk_mode', settings.mode);
+                    localStorage.setItem('gk_max_persons', String(settings.maxPersons));
+                    localStorage.setItem('gk_timer_seconds', String(settings.timerSeconds));
+                    localStorage.setItem('gk_buzzer_hotkey', settings.buzzerHotkeyEnabled ? '1' : '0');
+                    return settings;
+                }
+            }
+            return readSettingsLocal();
+        }
+
+        async function saveSettingsToDB(settings) {
+            if (useSupabase && supabase) {
+                const payload = { id: 'main', mode: settings.mode, max_persons: settings.maxPersons, timer_seconds: settings.timerSeconds, buzzer_hotkey_enabled: settings.buzzerHotkeyEnabled };
+                const { error } = await supabase.from('settings').upsert(payload);
+                if (error) { console.error('saveSettingsToDB error:', error); return false; }
+                return true;
+            }
+            localStorage.setItem('gk_mode', settings.mode);
+            localStorage.setItem('gk_max_persons', String(settings.maxPersons));
+            localStorage.setItem('gk_timer_seconds', String(settings.timerSeconds));
+            localStorage.setItem('gk_buzzer_hotkey', settings.buzzerHotkeyEnabled ? '1' : '0');
+            return true;
         }
 
         async function getQueue() {
             if (useSupabase && supabase) {
                 const { data, error } = await supabase.from('queue').select('*').order('created_at', { ascending: true });
-                if (error) {
-                    console.error('Queue error:', error);
-                    return [];
-                }
+                if (error) { console.error('Queue error:', error); return []; }
                 return data || [];
             }
-
             return getLocalJSON('gk_queue', []);
         }
 
         async function addQueueItem(item) {
             if (useSupabase && supabase) {
                 const { error } = await supabase.from('queue').insert([item]);
-                if (error) {
-                    console.error('addQueueItem error:', error);
-                    return false;
-                }
+                if (error) { console.error('addQueueItem error:', error); return false; }
                 return true;
             }
-
             const queue = getLocalJSON('gk_queue', []);
             queue.push(item);
             setLocalJSON('gk_queue', queue);
@@ -1193,18 +596,10 @@
 
         async function updateQueueStarted(code, startedAtIso) {
             if (useSupabase && supabase) {
-                const { error } = await supabase
-                    .from('queue')
-                    .update({ started_at: startedAtIso })
-                    .eq('code', code);
-
-                if (error) {
-                    console.error('updateQueueStarted error:', error);
-                    return false;
-                }
+                const { error } = await supabase.from('queue').update({ started_at: startedAtIso }).eq('code', code);
+                if (error) { console.error('updateQueueStarted error:', error); return false; }
                 return true;
             }
-
             const queue = getLocalJSON('gk_queue', []);
             const updated = queue.map(item => item.code === code ? { ...item, started_at: startedAtIso } : item);
             setLocalJSON('gk_queue', updated);
@@ -1214,13 +609,9 @@
         async function deleteQueueByCode(code) {
             if (useSupabase && supabase) {
                 const { error } = await supabase.from('queue').delete().eq('code', code);
-                if (error) {
-                    console.error('deleteQueueByCode error:', error);
-                    return false;
-                }
+                if (error) { console.error('deleteQueueByCode error:', error); return false; }
                 return true;
             }
-
             const queue = getLocalJSON('gk_queue', []).filter(item => item.code !== code);
             setLocalJSON('gk_queue', queue);
             return true;
@@ -1228,12 +619,20 @@
 
         async function clearQueue() {
             if (useSupabase && supabase) {
-                const { error } = await supabase.from('queue').delete().neq('code', '');
+                const { error } = await supabase.from('queue').delete().neq('id', '');
                 if (error) console.error(error);
                 return;
             }
-
             localStorage.removeItem('gk_queue');
+        }
+
+        async function getRatings() {
+            if (useSupabase && supabase) {
+                const { data, error } = await supabase.from('ratings').select('*');
+                if (error) { console.error('getRatings error:', error); return []; }
+                return data || [];
+            }
+            return getLocalJSON('gk_ratings', []);
         }
 
         async function clearRatings() {
@@ -1242,14 +641,13 @@
                 if (error) console.error(error);
                 return;
             }
-
             localStorage.removeItem('gk_ratings');
         }
 
         function processQueue(queue) {
             const items = Array.isArray(queue) ? queue : [];
             const now = Date.now();
-            const settings = getSettingsSync();
+            const settings = readSettingsLocal();
             const timerMs = Number(settings.timerSeconds || 60) * 1000;
 
             return items.filter(item => {
@@ -1261,14 +659,6 @@
             });
         }
 
-        function addLocalStorageListener() {
-            window.addEventListener('storage', () => {
-                if (!useSupabase) {
-                    refreshAll();
-                }
-            });
-        }
-
         async function ensureQueueAutomation() {
             const settings = await getSettings();
             if (settings.mode === 'manual') return;
@@ -1276,24 +666,22 @@
             const queue = await getQueue();
             const activeItems = processQueue(queue);
             let activeGroupsCount = activeItems.filter(item => item.started_at).length;
-            let activePersons = activeItems
-                .filter(item => item.started_at)
-                .reduce((sum, item) => sum + Number(item.size || 1), 0);
+            let activePersons = activeItems.filter(item => item.started_at).reduce((sum, item) => sum + Number(item.size || 1), 0);
 
             for (const item of queue) {
                 if (item.started_at) continue;
-
                 const itemSize = Number(item.size || 1);
+                const now = new Date().toISOString();
 
                 if (settings.mode === 'strict') {
                     if (activeGroupsCount === 0) {
-                        await updateQueueStarted(item.code, new Date().toISOString());
+                        await updateQueueStarted(item.code, now);
                         activeGroupsCount++;
                         activePersons += itemSize;
                     }
                 } else if (settings.mode === 'fill') {
                     if (activePersons + itemSize <= settings.maxPersons) {
-                        await updateQueueStarted(item.code, new Date().toISOString());
+                        await updateQueueStarted(item.code, now);
                         activeGroupsCount++;
                         activePersons += itemSize;
                     }
@@ -1314,7 +702,7 @@
 
             const item = {
                 code: myPassCode,
-                size: groupSize,
+                size: Number(groupSize),
                 created_at: new Date().toISOString(),
                 started_at: null
             };
@@ -1323,21 +711,10 @@
             await refreshAll();
         }
 
-        groupSizeSelect.addEventListener('invalid', (event) => {
-            event.target.setCustomValidity('Bitte füllen Sie dieses Feld aus!');
-        });
-
-        groupSizeSelect.addEventListener('input', () => {
-            groupSizeSelect.setCustomValidity('');
-        });
-
-        homeGroupSelect.addEventListener('invalid', (event) => {
-            event.target.setCustomValidity('Bitte füllen Sie dieses Feld aus!');
-        });
-
-        homeGroupSelect.addEventListener('input', () => {
-            homeGroupSelect.setCustomValidity('');
-        });
+        groupSizeSelect.addEventListener('invalid', e => e.target.setCustomValidity('Bitte füllen Sie dieses Feld aus!'));
+        groupSizeSelect.addEventListener('input', () => groupSizeSelect.setCustomValidity(''));
+        homeGroupSelect.addEventListener('invalid', e => e.target.setCustomValidity('Bitte füllen Sie dieses Feld aus!'));
+        homeGroupSelect.addEventListener('input', () => homeGroupSelect.setCustomValidity(''));
 
         passBtn.addEventListener('click', async () => {
             const groupSize = validateAndReturnGroupSize(groupSizeSelect);
@@ -1348,7 +725,6 @@
         homePassBtn.addEventListener('click', () => {
             const groupSize = validateAndReturnGroupSize(homeGroupSelect);
             if (groupSize === null) return;
-
             groupSizeSelect.value = String(groupSize);
             switchTab('regeln');
             showToast('Bitte Regeln akzeptieren und Pass holen!');
@@ -1356,38 +732,34 @@
 
         async function updateUserQueueStatus() {
             if (!myPassCode) return;
-
             await ensureQueueAutomation();
             const queue = processQueue(await getQueue());
             const myItem = queue.find(item => item.code === myPassCode);
             const statusBox = document.getElementById('user-queue-status');
 
             if (!myItem) {
-                statusBox.style.background = "rgba(46, 204, 113, 0.15)";
-                statusBox.style.color = "var(--success)";
-                statusBox.innerHTML = "✔ Dein Durchgang ist abgeschlossen oder dein Code ist abgelaufen.";
+                statusBox.style.background = 'rgba(46, 204, 113, 0.15)';
+                statusBox.style.color = 'var(--success)';
+                statusBox.innerHTML = '✔ Dein Durchgang ist abgeschlossen oder dein Code ist abgelaufen.';
                 return;
             }
 
             if (myItem.started_at) {
-                statusBox.style.background = "rgba(46, 204, 113, 0.2)";
-                statusBox.style.color = "var(--success)";
-                statusBox.innerHTML = "🟢 DEIN CODE IST JETZT AUF DEM MONITOR!<br>Du darfst eintreten!";
+                statusBox.style.background = 'rgba(46, 204, 113, 0.2)';
+                statusBox.style.color = 'var(--success)';
+                statusBox.innerHTML = '🟢 DEIN CODE IST JETZT AUF DEM MONITOR!<br>Du darfst eintreten!';
             } else {
                 const beforeMe = queue.filter(item => !item.started_at && new Date(item.created_at).getTime() < new Date(myItem.created_at).getTime()).length + 1;
-                statusBox.style.background = "rgba(255, 102, 0, 0.15)";
-                statusBox.style.color = "var(--accent)";
+                statusBox.style.background = 'rgba(255, 102, 0, 0.15)';
+                statusBox.style.color = 'var(--accent)';
                 statusBox.innerHTML = `⏳ Du bist in der Warteschleife (Platz ${beforeMe}).<br>Bitte habe kurz Geduld, bis dein Code auf dem Monitor erscheint!`;
             }
         }
 
-        setInterval(async () => {
-            await updateUserQueueStatus();
-        }, 1000);
+        setInterval(async () => { await updateUserQueueStatus(); }, 1000);
 
         document.getElementById('feedback-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-
             const ratingObj = {
                 ambiente: Number(document.getElementById('r-ambiente').value),
                 erschrecker: Number(document.getElementById('r-erschrecker').value),
@@ -1398,13 +770,9 @@
 
             if (useSupabase && supabase) {
                 const { error } = await supabase.from('ratings').insert([ratingObj]);
-                if (error) {
-                    console.error('rating insert error:', error);
-                    alert('Fehler beim Speichern der Bewertung');
-                    return;
-                }
+                if (error) { console.error('rating insert error:', error); alert('Fehler beim Speichern der Bewertung'); return; }
             } else {
-                let storedRatings = getLocalJSON('gk_ratings', []);
+                const storedRatings = getLocalJSON('gk_ratings', []);
                 storedRatings.push(ratingObj);
                 setLocalJSON('gk_ratings', storedRatings);
             }
@@ -1424,50 +792,31 @@
         async function forceStartNextGroup() {
             const queue = await getQueue();
             const nextInLine = queue.find(item => !item.started_at);
-
-            if (!nextInLine) {
-                showToast('Es ist aktuell keine Gruppe in der Warteschlange!');
-                return;
-            }
-
+            if (!nextInLine) { showToast('Es ist aktuell keine Gruppe in der Warteschlange!'); return; }
             await updateQueueStarted(nextInLine.code, new Date().toISOString());
             await refreshAll();
             showToast(`Gruppe ${nextInLine.code} manuell freigegeben! ⚡`);
         }
 
-        document.getElementById('force-start-btn').addEventListener('click', async () => {
-            await forceStartNextGroup();
-        });
+        document.getElementById('force-start-btn').addEventListener('click', async () => { await forceStartNextGroup(); });
 
         function updateBuzzerButtonState() {
             if (!buzzerTrigger) return;
-
             const now = Date.now();
             const remaining = BUZZER_COOLDOWN_MS - (now - lastBuzzerPress);
 
             if (remaining > 0) {
                 const seconds = Math.ceil(remaining / 1000);
-
                 buzzerTrigger.disabled = true;
                 buzzerTrigger.style.opacity = '0.65';
-                buzzerTrigger.innerHTML = `
-                    <span>⏳</span>
-                    <span>WAIT</span>
-                    <span style="font-size: 0.9rem; margin-top: 5px; opacity: 0.8;">${seconds}s</span>
-                `;
-
+                buzzerTrigger.innerHTML = `<span>⏳</span><span>WAIT</span><span style="font-size: 0.9rem; margin-top: 5px; opacity: 0.8;">${seconds}s</span>`;
                 return;
             }
 
             buzzerTrigger.disabled = false;
             buzzerTrigger.style.opacity = '1';
-            buzzerTrigger.innerHTML = `
-                <span>🔴</span>
-                <span>BUZZER</span>
-                <span style="font-size: 0.9rem; margin-top: 5px; opacity: 0.8;">PASS DRUCKEN</span>
-            `;
-
-            if (!document.activeElement || !['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) {
+            buzzerTrigger.innerHTML = `<span>🔴</span><span>BUZZER</span><span style="font-size: 0.9rem; margin-top: 5px; opacity: 0.8;">PASS DRUCKEN</span>`;
+            if (!document.activeElement || !['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)) {
                 buzzerTrigger.focus();
             }
         }
@@ -1476,7 +825,6 @@
 
         async function triggerBuzzer() {
             const now = Date.now();
-
             if (now - lastBuzzerPress < BUZZER_COOLDOWN_MS) {
                 const secs = Math.ceil((BUZZER_COOLDOWN_MS - (now - lastBuzzerPress)) / 1000);
                 showToast(`Bitte warte ${secs} Sekunden, bevor du erneut drückst!`);
@@ -1485,56 +833,43 @@
             }
 
             const groupSelect = document.getElementById('buzzer-group-select');
-
-            if (!groupSelect.value) {
-                showToast('Bitte wählen Sie eine Gruppengröße aus!');
+            const selectedSize = Number(groupSelect.value);
+            if (!groupSelect.value || !Number.isInteger(selectedSize) || selectedSize < 1 || selectedSize > 5) {
+                showToast('Bitte wählen Sie eine gültige Gruppengröße aus!');
                 return;
             }
 
             lastBuzzerPress = now;
-            resetBuzzerSelection();
-            updateBuzzerButtonState();
-
             const randomNum = Math.floor(1000 + Math.random() * 9000);
             const buzCode = `GK-${randomNum}`;
-            const groupSize = parseInt(groupSelect.value, 10);
 
             const item = {
                 code: buzCode,
-                size: groupSize,
+                size: selectedSize,
                 created_at: new Date().toISOString(),
                 started_at: null
             };
 
             await addQueueItem(item);
+            resetBuzzerSelection();
+            updateBuzzerButtonState();
+
             document.getElementById('buzzer-result-code').textContent = buzCode;
             document.getElementById('buzzer-result-card').style.display = 'block';
-
             showToast(`Buzzer gedrückt: Code ${buzCode} erstellt!`);
 
-            setTimeout(() => {
-                document.getElementById('buzzer-result-card').style.display = 'none';
-            }, 12000);
-
-            setTimeout(() => {
-                updateBuzzerButtonState();
-            }, BUZZER_COOLDOWN_MS);
-
+            setTimeout(() => { document.getElementById('buzzer-result-card').style.display = 'none'; }, 12000);
+            setTimeout(() => { updateBuzzerButtonState(); }, BUZZER_COOLDOWN_MS);
             await refreshAll();
         }
 
         buzzerTrigger.addEventListener('click', triggerBuzzer);
-
         buzzerTrigger.addEventListener('keydown', (e) => {
-            if (e.code === 'Space' || e.code === 'Enter') {
-                e.preventDefault();
-                triggerBuzzer();
-            }
+            if (e.code === 'Space' || e.code === 'Enter') { e.preventDefault(); triggerBuzzer(); }
         });
 
         window.addEventListener('keydown', async (e) => {
             const isTextInput = ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName);
-
             const settings = await getSettings();
 
             if (!isTextInput && settings.buzzerHotkeyEnabled && (e.key.toLowerCase() === 'b' || e.code === 'KeyB')) {
@@ -1543,11 +878,9 @@
                 return;
             }
 
-            if (document.getElementById('sec-buzzer').classList.contains('active')) {
-                if (e.code === 'Space' || e.code === 'Enter') {
-                    e.preventDefault();
-                    triggerBuzzer();
-                }
+            if (document.getElementById('sec-buzzer').classList.contains('active') && (e.code === 'Space' || e.code === 'Enter')) {
+                e.preventDefault();
+                triggerBuzzer();
             }
         });
 
@@ -1575,10 +908,7 @@
         async function updateMonitorGrid() {
             await ensureQueueAutomation();
             const settings = await getSettings();
-            const modeText = settings.mode === 'strict'
-                ? 'Reißverschluss-Prinzip (Einzeltakt)'
-                : (settings.mode === 'manual' ? 'Manueller Einlass' : `Auffüllung max. ${settings.maxPersons} Personen`);
-
+            const modeText = settings.mode === 'strict' ? 'Reißverschluss-Prinzip (Einzeltakt)' : (settings.mode === 'manual' ? 'Manueller Einlass' : `Auffüllung max. ${settings.maxPersons} Personen`);
             document.getElementById('monitor-subtitle').textContent = `✔ Berechtigte Codes (${modeText}):`;
 
             const queue = processQueue(await getQueue());
@@ -1598,19 +928,17 @@
             }
         }
 
-        window.addEventListener('DOMContentLoaded', checkHash);
-        window.addEventListener('hashchange', checkHash);
-
         function checkHash() {
             if (window.location.hash === '#monitor') enableMonitorView();
             else if (window.location.hash === '#buzzer') enableBuzzerView();
             else disableViews();
         }
 
+        window.addEventListener('DOMContentLoaded', checkHash);
+        window.addEventListener('hashchange', checkHash);
+
         setInterval(async () => {
-            if(document.getElementById('sec-monitor').classList.contains('active')) {
-                await updateMonitorGrid();
-            }
+            if (document.getElementById('sec-monitor').classList.contains('active')) await updateMonitorGrid();
         }, 1000);
 
         const toggleAdmin = document.getElementById('toggle-admin');
@@ -1623,21 +951,20 @@
 
         toggleAdmin.addEventListener('click', (e) => {
             e.preventDefault();
-            adminPanel.style.display = adminPanel.style.display === 'block' ? 'none' : 'block';
-            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            const nextVisible = adminPanel.style.display !== 'block';
+            adminPanel.style.display = nextVisible ? 'block' : 'none';
+            if (nextVisible) window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
         });
 
         loginBtn.addEventListener('click', async () => {
-            if (adminPin.value === '3110') {
+            if (adminPin.value === ADMIN_PIN) {
                 adminLoginBox.style.display = 'none';
                 adminContent.style.display = 'block';
-
                 const settings = await getSettings();
                 document.getElementById('admin-mode-select').value = settings.mode;
                 document.getElementById('admin-max-persons').value = settings.maxPersons;
                 document.getElementById('admin-timer-seconds').value = settings.timerSeconds;
                 document.getElementById('admin-buzzer-hotkey').checked = settings.buzzerHotkeyEnabled;
-
                 await updateAdminDashboard();
                 showToast('Erfolgreich eingeloggt!');
             } else {
@@ -1659,21 +986,13 @@
             const buzzerHotkeyEnabled = document.getElementById('admin-buzzer-hotkey').checked;
 
             if (maxPersons >= 1 && timerSeconds >= 10) {
-                const settings = {
-                    mode,
-                    maxPersons,
-                    timerSeconds,
-                    buzzerHotkeyEnabled
-                };
-
+                const settings = { mode, maxPersons, timerSeconds, buzzerHotkeyEnabled };
                 const saved = await saveSettingsToDB(settings);
-
                 if (saved) {
                     localStorage.setItem('gk_mode', mode);
                     localStorage.setItem('gk_max_persons', String(maxPersons));
                     localStorage.setItem('gk_timer_seconds', String(timerSeconds));
                     localStorage.setItem('gk_buzzer_hotkey', buzzerHotkeyEnabled ? '1' : '0');
-
                     await refreshAll();
                     showToast('Einstellungen gespeichert!');
                 }
@@ -1688,7 +1007,6 @@
                 await clearRatings();
                 localStorage.removeItem('gk_my_pass_code');
                 myPassCode = null;
-
                 await refreshAll();
                 showToast('Alle Daten wurden vollständig gelöscht!');
             }
@@ -1709,28 +1027,13 @@
             showToast('Zur Website zurück');
         });
 
-        async function getRatings() {
-            if (useSupabase && supabase) {
-                const { data, error } = await supabase.from('ratings').select('*');
-                if (error) {
-                    console.error('getRatings error:', error);
-                    return [];
-                }
-                return data || [];
-            }
-
-            return getLocalJSON('gk_ratings', []);
-        }
-
         async function updateAdminDashboard() {
             const queue = processQueue(await getQueue());
             document.getElementById('stat-passes').textContent = queue.length;
 
             const ratings = await getRatings();
-
             if (ratings.length > 0) {
                 let sumAmb = 0, sumErs = 0, sumAtm = 0, sumLic = 0, sumSou = 0;
-
                 ratings.forEach(r => {
                     sumAmb += Number(r.ambiente || 0);
                     sumErs += Number(r.erschrecker || 0);
@@ -1738,16 +1041,13 @@
                     sumLic += Number(r.licht || 0);
                     sumSou += Number(r.sound || 0);
                 });
-
                 const count = ratings.length;
                 const avgAmb = (sumAmb / count).toFixed(1);
                 const avgErs = (sumErs / count).toFixed(1);
                 const avgAtm = (sumAtm / count).toFixed(1);
                 const avgLic = (sumLic / count).toFixed(1);
                 const avgSou = (sumSou / count).toFixed(1);
-
                 const totalAvg = ((parseFloat(avgAmb) + parseFloat(avgErs) + parseFloat(avgAtm) + parseFloat(avgLic) + parseFloat(avgSou)) / 5).toFixed(1);
-
                 document.getElementById('cat-ambiente').textContent = avgAmb + ' ★';
                 document.getElementById('cat-erschrecker').textContent = avgErs + ' ★';
                 document.getElementById('cat-atmos').textContent = avgAtm + ' ★';
@@ -1765,14 +1065,12 @@
 
             const listContainer = document.getElementById('pass-log-list');
             if (queue.length === 0) {
-                listContainer.innerHTML = '<div class=\"pass-item\" style=\"color: var(--muted);\">Keine aktiven Pässe.</div>';
+                listContainer.innerHTML = '<div class="pass-item" style="color: var(--muted);">Keine aktiven Pässe.</div>';
             } else {
                 listContainer.innerHTML = queue.map(p => `
-                    <div class=\"pass-item\">
-                        <span style=\"color: var(--accent); font-weight: bold;\">${p.code} (👥 ${p.size || 1})</span>
-                        <span style=\"color: ${p.started_at ? 'var(--success)' : 'var(--muted)'};\">
-                            ${p.started_at ? '✔ Auf Monitor' : '⏳ Warteschlange'}
-                        </span>
+                    <div class="pass-item">
+                        <span style="color: var(--accent); font-weight: bold;">${p.code} (👥 ${p.size || 1})</span>
+                        <span style="color: ${p.started_at ? 'var(--success)' : 'var(--muted)'};">${p.started_at ? '✔ Auf Monitor' : '⏳ Warteschlange'}</span>
                     </div>
                 `).join('');
             }
@@ -1782,15 +1080,13 @@
             const qrUrl = window.location.origin + window.location.pathname + '#regeln';
             const printWindow = window.open('', '_blank');
             printWindow.document.write(`
-                <html>
-                <head><title>QR-Code Gruselkeller</title></head>
+                <html><head><title>QR-Code Gruselkeller</title></head>
                 <body style="text-align: center; font-family: sans-serif; padding-top: 50px;">
                     <h1>🎃 GRUSELKELLER EINLASS 🎃</h1>
                     <p style="font-size: 20px;">Scanne den QR-Code, um die Regeln zu akzeptieren:</p>
                     <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(qrUrl)}" alt="QR Code">
                     <p style="margin-top: 20px; font-weight: bold; font-size: 24px;">@gruselkeller</p>
-                </body>
-                </html>
+                </body></html>
             `);
             printWindow.document.close();
             printWindow.print();
@@ -1800,9 +1096,7 @@
             const toast = document.getElementById('toast');
             toast.textContent = text;
             toast.style.display = 'block';
-            setTimeout(() => {
-                toast.style.display = 'none';
-            }, 3000);
+            setTimeout(() => { toast.style.display = 'none'; }, 3000);
         }
 
         async function refreshAll() {
@@ -1814,30 +1108,20 @@
 
         async function initRealtime() {
             if (!useSupabase || !supabase) return;
-
             supabase.channel('gk-live-updates')
-                .on('postgres_changes', { event: '*', schema: 'public', table: 'queue' }, async () => {
-                    await refreshAll();
-                })
-                .on('postgres_changes', { event: '*', schema: 'public', table: 'ratings' }, async () => {
-                    await refreshAll();
-                })
-                .on('postgres_changes', { event: '*', schema: 'public', table: 'settings' }, async () => {
-                    await refreshAll();
-                })
+                .on('postgres_changes', { event: '*', schema: 'public', table: 'queue' }, async () => { await refreshAll(); })
+                .on('postgres_changes', { event: '*', schema: 'public', table: 'ratings' }, async () => { await refreshAll(); })
+                .on('postgres_changes', { event: '*', schema: 'public', table: 'settings' }, async () => { await refreshAll(); })
                 .subscribe();
         }
 
         async function bootstrap() {
             const settings = await getSettings();
-
             localStorage.setItem('gk_mode', settings.mode);
             localStorage.setItem('gk_max_persons', String(settings.maxPersons));
             localStorage.setItem('gk_timer_seconds', String(settings.timerSeconds));
             localStorage.setItem('gk_buzzer_hotkey', settings.buzzerHotkeyEnabled ? '1' : '0');
-
             await initRealtime();
-            addLocalStorageListener();
             await refreshAll();
         }
 
