@@ -943,7 +943,7 @@
                     <label style="color: var(--accent); font-weight: bold;">🔔 Externer Buzzer</label>
                     <label style="display: flex; align-items: center; gap: 10px; margin-top: 8px;">
                         <input type="checkbox" id="admin-buzzer-hotkey">
-                        <span>Mit Tastendruck <strong>B</strong> aktivieren</span>
+                        <span>Mit Tastendruck <strong>B</strong> Force-Start auslösen</span>
                     </label>
                 </div>
 
@@ -1237,7 +1237,7 @@
             updateMonitorGrid();
         });
 
-        document.getElementById('force-start-btn').addEventListener('click', () => {
+        function forceStartNextGroup() {
             let queue = JSON.parse(localStorage.getItem('gk_queue') || '[]');
             queue = queue.filter(item => item.startTime === null);
 
@@ -1249,8 +1249,12 @@
                 window.dispatchEvent(new Event('storage'));
                 showToast(`Gruppe ${nextInLine.code} manuell freigegeben! ⚡`);
             } else {
-                alert('Es ist aktuell keine Gruppe in der Warteschlange!');
+                showToast('Es ist aktuell keine Gruppe in der Warteschlange!');
             }
+        }
+
+        document.getElementById('force-start-btn').addEventListener('click', () => {
+            forceStartNextGroup();
         });
 
         function updateBuzzerButtonState() {
@@ -1349,7 +1353,7 @@
 
             if (!isTextInput && getSettings().buzzerHotkeyEnabled && (e.key.toLowerCase() === 'b' || e.code === 'KeyB')) {
                 e.preventDefault();
-                triggerBuzzer();
+                forceStartNextGroup();
                 return;
             }
 
